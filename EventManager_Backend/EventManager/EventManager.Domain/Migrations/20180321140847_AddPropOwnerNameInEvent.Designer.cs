@@ -11,9 +11,10 @@ using System;
 namespace EventManager.Domain.Migrations
 {
     [DbContext(typeof(EventManagerContext))]
-    partial class EventManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20180321140847_AddPropOwnerNameInEvent")]
+    partial class AddPropOwnerNameInEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
