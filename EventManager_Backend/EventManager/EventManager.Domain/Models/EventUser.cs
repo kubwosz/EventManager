@@ -13,10 +13,10 @@ namespace EventManager.Domain.Models
 
         public int EventId { get; set; }
 
+        [ForeignKey("EventId")]
         public virtual Event Event { get; set; }
 
-        // Nazwa UserId
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
 
         [ForeignKey("UserId")]
         public virtual SimpleUser SimpleUser { get; set; }

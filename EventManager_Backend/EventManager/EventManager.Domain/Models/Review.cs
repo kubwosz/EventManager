@@ -13,6 +13,7 @@ namespace EventManager.Domain.Models
 
         public int LectureId { get; set; }
 
+        [ForeignKey("LectureId")]
         public virtual Lecture Lecture { get; set; }
 
         public int ReviewerId { get; set; }

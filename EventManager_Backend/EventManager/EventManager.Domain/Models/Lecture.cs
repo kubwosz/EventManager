@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace EventManager.Domain.Models
@@ -12,6 +13,7 @@ namespace EventManager.Domain.Models
 
         public int EventId { get; set; }
 
+        [ForeignKey("EventId")]
         public virtual Event Event { get; set; }
 
         public string Name { get; set; }
