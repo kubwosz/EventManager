@@ -11,8 +11,8 @@ using System;
 namespace EventManager.Domain.Migrations
 {
     [DbContext(typeof(EventManagerContext))]
-    [Migration("20180320194326_Init")]
-    partial class Init
+    [Migration("20180321134558_AddPropInLecture")]
+    partial class AddPropInLecture
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,15 +34,11 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<int>("ParticipantNumber");
 
-                    b.Property<int>("SimpleUserId");
-
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SimpleUserId");
-
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.EventUser", b =>
@@ -52,13 +48,13 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<int>("EventId");
 
-                    b.Property<int>("SimpleUserId");
+                    b.Property<int?>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("SimpleUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("EventUser");
                 });
@@ -74,6 +70,8 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<int>("EventId");
 
+                    b.Property<string>("Name");
+
                     b.Property<int>("ParticipantNumber");
 
                     b.Property<DateTime>("StartDate");
@@ -82,7 +80,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Lecture");
+                    b.ToTable("Lectures");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.LectureUser", b =>
@@ -92,13 +90,13 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<int>("LectureId");
 
-                    b.Property<int>("SimpleUserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LectureId");
 
-                    b.HasIndex("SimpleUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("LectureUser");
                 });
@@ -116,13 +114,13 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<int>("Rate");
 
-                    b.Property<int>("SimpleUserID");
+                    b.Property<int>("ReviewerId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LectureId");
 
-                    b.HasIndex("SimpleUserID");
+                    b.HasIndex("ReviewerId");
 
                     b.ToTable("Review");
                 });
@@ -138,15 +136,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("simpleUsers");
-                });
-
-            modelBuilder.Entity("EventManager.Domain.Models.Event", b =>
-                {
-                    b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
-                        .WithMany("Events")
-                        .HasForeignKey("SimpleUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.ToTable("SimpleUser");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.EventUser", b =>
@@ -158,8 +148,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
                         .WithMany("EventUsers")
-                        .HasForeignKey("SimpleUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Lecture", b =>
@@ -179,7 +168,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
                         .WithMany("LectureUsers")
-                        .HasForeignKey("SimpleUserId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -192,7 +181,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
                         .WithMany("Reviews")
-                        .HasForeignKey("SimpleUserID")
+                        .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

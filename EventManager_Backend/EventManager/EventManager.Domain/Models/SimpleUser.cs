@@ -14,7 +14,7 @@ namespace EventManager.Domain.Models
 
         public string Surname { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
+        //public virtual ICollection<Event> Events { get; set; }
 
         public virtual ICollection<LectureUser> LectureUsers { get; set; }
 

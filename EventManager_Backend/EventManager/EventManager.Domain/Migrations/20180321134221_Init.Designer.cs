@@ -11,9 +11,10 @@ using System;
 namespace EventManager.Domain.Migrations
 {
     [DbContext(typeof(EventManagerContext))]
-    partial class EventManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20180321134221_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,8 +69,6 @@ namespace EventManager.Domain.Migrations
                     b.Property<DateTime>("EndDate");
 
                     b.Property<int>("EventId");
-
-                    b.Property<string>("Name");
 
                     b.Property<int>("ParticipantNumber");
 

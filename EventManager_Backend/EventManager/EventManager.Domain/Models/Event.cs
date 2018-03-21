@@ -11,11 +11,10 @@ namespace EventManager.Domain.Models
         [Key]
         public int Id { get; set; }
 
-        // Nazwa OwnerId
-        public int SimpleUserId { get; set; }
+        //public int OwnerId { get; set; }
 
         //[ForeignKey("OwnerId")]
-        public virtual SimpleUser SimpleUser { get; set; }
+        //public virtual SimpleUser SimpleUser { get; set; }
 
         public string Name { get; set; }
 

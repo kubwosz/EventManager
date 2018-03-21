@@ -16,8 +16,9 @@ namespace EventManager.Domain.Models
         public virtual Event Event { get; set; }
 
         // Nazwa UserId
-        public int SimpleUserId { get; set; }
+        public int? UserId { get; set; }
 
+        [ForeignKey("UserId")]
         public virtual SimpleUser SimpleUser { get; set; }
     }
 }

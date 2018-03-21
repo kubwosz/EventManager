@@ -15,9 +15,9 @@ namespace EventManager.Domain.Models
 
         public virtual Lecture Lecture { get; set; }
 
-        // Nazwa ReviewerId
-        public int SimpleUserID { get; set; }
+        public int ReviewerId { get; set; }
 
+        [ForeignKey("ReviewerId")]
         public virtual SimpleUser SimpleUser { get; set; }
 
         public int Rate { get; set; }

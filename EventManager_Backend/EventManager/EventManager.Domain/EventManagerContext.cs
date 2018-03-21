@@ -13,6 +13,8 @@ namespace EventManager.Domain
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EventManager;Trusted_Connection=True;");
         }
 
-        public DbSet<SimpleUser> simpleUsers { get; set; }
+        public DbSet<Event> Events { get; set; }
+
+        public DbSet<Lecture> Lectures { get; set; }
     }
 }
