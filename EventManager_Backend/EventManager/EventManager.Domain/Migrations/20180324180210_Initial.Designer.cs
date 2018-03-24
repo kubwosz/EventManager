@@ -11,8 +11,8 @@ using System;
 namespace EventManager.Domain.Migrations
 {
     [DbContext(typeof(EventManagerContext))]
-    [Migration("20180321225126_RepairedUserIdInEventUser")]
-    partial class RepairedUserIdInEventUser
+    [Migration("20180324180210_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,13 +32,15 @@ namespace EventManager.Domain.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("OwnerName");
+                    b.Property<int>("OwnerId");
 
                     b.Property<int>("ParticipantNumber");
 
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Events");
                 });
@@ -58,7 +60,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Lecture", b =>
@@ -100,7 +102,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LectureUser");
+                    b.ToTable("LectureUsers");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Review", b =>
@@ -124,7 +126,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.SimpleUser", b =>
@@ -138,7 +140,15 @@ namespace EventManager.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SimpleUser");
+                    b.ToTable("SimpleUsers");
+                });
+
+            modelBuilder.Entity("EventManager.Domain.Models.Event", b =>
+                {
+                    b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
+                        .WithMany("Events")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.EventUser", b =>

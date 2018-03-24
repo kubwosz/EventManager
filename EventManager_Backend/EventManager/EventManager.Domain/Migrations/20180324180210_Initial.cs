@@ -5,29 +5,12 @@ using System.Collections.Generic;
 
 namespace EventManager.Domain.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    ParticipantNumber = table.Column<int>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SimpleUser",
+                name: "SimpleUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -37,7 +20,57 @@ namespace EventManager.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SimpleUser", x => x.Id);
+                    table.PrimaryKey("PK_SimpleUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    OwnerId = table.Column<int>(nullable: false),
+                    ParticipantNumber = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Events_SimpleUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "SimpleUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    EventId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventUsers_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventUsers_SimpleUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "SimpleUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,6 +82,7 @@ namespace EventManager.Domain.Migrations
                     Description = table.Column<string>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: false),
                     EventId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     ParticipantNumber = table.Column<int>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false)
                 },
@@ -64,33 +98,7 @@ namespace EventManager.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventUser",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EventId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventUser", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventUser_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EventUser_SimpleUser_UserId",
-                        column: x => x.UserId,
-                        principalTable: "SimpleUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LectureUser",
+                name: "LectureUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -100,23 +108,23 @@ namespace EventManager.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LectureUser", x => x.Id);
+                    table.PrimaryKey("PK_LectureUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LectureUser_Lectures_LectureId",
+                        name: "FK_LectureUsers_Lectures_LectureId",
                         column: x => x.LectureId,
                         principalTable: "Lectures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LectureUser_SimpleUser_UserId",
+                        name: "FK_LectureUsers_SimpleUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "SimpleUser",
+                        principalTable: "SimpleUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -129,29 +137,34 @@ namespace EventManager.Domain.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_Lectures_LectureId",
+                        name: "FK_Reviews_Lectures_LectureId",
                         column: x => x.LectureId,
                         principalTable: "Lectures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Review_SimpleUser_ReviewerId",
+                        name: "FK_Reviews_SimpleUsers_ReviewerId",
                         column: x => x.ReviewerId,
-                        principalTable: "SimpleUser",
+                        principalTable: "SimpleUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventUser_EventId",
-                table: "EventUser",
+                name: "IX_Events_OwnerId",
+                table: "Events",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventUsers_EventId",
+                table: "EventUsers",
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventUser_UserId",
-                table: "EventUser",
+                name: "IX_EventUsers_UserId",
+                table: "EventUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -160,45 +173,45 @@ namespace EventManager.Domain.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LectureUser_LectureId",
-                table: "LectureUser",
+                name: "IX_LectureUsers_LectureId",
+                table: "LectureUsers",
                 column: "LectureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LectureUser_UserId",
-                table: "LectureUser",
+                name: "IX_LectureUsers_UserId",
+                table: "LectureUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_LectureId",
-                table: "Review",
+                name: "IX_Reviews_LectureId",
+                table: "Reviews",
                 column: "LectureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_ReviewerId",
-                table: "Review",
+                name: "IX_Reviews_ReviewerId",
+                table: "Reviews",
                 column: "ReviewerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EventUser");
+                name: "EventUsers");
 
             migrationBuilder.DropTable(
-                name: "LectureUser");
+                name: "LectureUsers");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Lectures");
 
             migrationBuilder.DropTable(
-                name: "SimpleUser");
+                name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "SimpleUsers");
         }
     }
 }
