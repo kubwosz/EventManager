@@ -19,5 +19,7 @@ namespace EventManager.Domain.Models
         public virtual ICollection<EventUser> EventUsers { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<Event> Events { get; set; }
     }
 }
