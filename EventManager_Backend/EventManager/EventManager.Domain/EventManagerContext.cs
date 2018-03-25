@@ -15,11 +15,18 @@ namespace EventManager.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SimpleUser>().HasMany(e => e.Events).WithOne(s => s.SimpleUser).OnDelete(DeleteBehavior.SetNull);
         }
+
+        public DbSet<SimpleUser> SimpleUsers { get; set; }
 
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<EventUser> EventUsers { get; set; }
+
         public DbSet<Lecture> Lectures { get; set; }
+
+        public DbSet<LectureUser> LectureUsers { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
     }
 }

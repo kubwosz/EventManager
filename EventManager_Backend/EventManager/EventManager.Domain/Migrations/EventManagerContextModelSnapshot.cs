@@ -59,7 +59,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Lecture", b =>
@@ -101,7 +101,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("LectureUser");
+                    b.ToTable("LectureUsers");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Review", b =>
@@ -125,7 +125,7 @@ namespace EventManager.Domain.Migrations
 
                     b.HasIndex("ReviewerId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.SimpleUser", b =>
@@ -139,15 +139,14 @@ namespace EventManager.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SimpleUser");
+                    b.ToTable("SimpleUsers");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.Event", b =>
                 {
                     b.HasOne("EventManager.Domain.Models.SimpleUser", "SimpleUser")
                         .WithMany("Events")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("EventManager.Domain.Models.EventUser", b =>
