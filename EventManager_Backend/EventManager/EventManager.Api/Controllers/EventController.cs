@@ -48,5 +48,17 @@ namespace EventManager.Api.Controllers
         {
             return Ok(_eventService.GetAll());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteEvent(int id)
+        {
+            if (!_eventService.DeleteEvent(id))
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }

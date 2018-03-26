@@ -109,5 +109,19 @@ namespace EventManager.Domain.Services
 
             return eventDtos;
         }
+
+        public bool DeleteEvent(int id)
+        {
+            var eventDB = _context.Events.FirstOrDefault(x => x.Id == id);
+
+            if (eventDB == null)
+            {
+                return false;
+            }
+
+            _context.Events.Remove(eventDB);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
