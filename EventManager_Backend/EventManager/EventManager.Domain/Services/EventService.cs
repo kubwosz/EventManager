@@ -49,5 +49,38 @@ namespace EventManager.Domain.Services
 
             return eventDto;
         }
+
+        public EventDto UpdateEvent(UpdateEventDto updateEventDto)
+        {
+            var todo = _context.Events.FirstOrDefault(x => x.Id == updateEventDto.Id);
+
+            if(todo == null)
+            {
+                return null;
+            }
+
+            todo.OwnerId = updateEventDto.OwnerId;
+            todo.Name = updateEventDto.Name;
+            todo.StartDate = updateEventDto.StartDate;
+            todo.EndDate = updateEventDto.EndDate;
+            todo.ParticipantNumber = updateEventDto.ParticipantNumber;
+            todo.Description = updateEventDto.Description;
+
+            _context.Events.Update(todo);
+            _context.SaveChanges();
+
+            var eventDto = new EventDto()
+            {
+                Id = todo.Id,
+                OwnerId = todo.OwnerId.Value,
+                Name = todo.Name,
+                StartDate = todo.StartDate,
+                EndDate = todo.EndDate,
+                ParticipantNumber = todo.ParticipantNumber,
+                Description = todo.Description
+            };
+
+            return eventDto;
+        }
     }
 }
