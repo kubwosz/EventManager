@@ -13,8 +13,20 @@ namespace EventManager.Domain
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EventManager;Trusted_Connection=True;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
+
+        public DbSet<SimpleUser> SimpleUsers { get; set; }
+
         public DbSet<Event> Events { get; set; }
 
+        public DbSet<EventUser> EventUsers { get; set; }
+
         public DbSet<Lecture> Lectures { get; set; }
+
+        public DbSet<LectureUser> LectureUsers { get; set; }
+
+        public DbSet<Review> Reviews { get; set; }
     }
 }

@@ -11,7 +11,12 @@ namespace EventManager.Domain.Models
         [Key]
         public int Id { get; set; }
 
-        public string OwnerName { get; set; }
+        //public string OwnerName { get; set; }
+
+        public int? OwnerId { get; set; }
+
+        [ForeignKey("OwnerId")]
+        public virtual SimpleUser SimpleUser { get; set; }
 
         public string Name { get; set; }
 
