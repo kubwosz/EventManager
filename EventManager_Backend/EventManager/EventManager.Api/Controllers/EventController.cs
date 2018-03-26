@@ -34,7 +34,7 @@ namespace EventManager.Api.Controllers
         [Route("UpdateEvent")]
         public IActionResult UpdateEvent([FromBody] UpdateEventDto updateEventDto)
         {
-            if (!ModelState.IsValid)
+            if (updateEventDto.Id!=0)
             {
                 return BadRequest();
             }
