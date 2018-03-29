@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EventManager.Domain.Dtos
 {
-    class CreateReviewDto
+    public class CreateReviewDto
     {
         [Required]
         public int LectureId { get; set; }

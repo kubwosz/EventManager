@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EventManager.Domain.Dtos
 {
-    class ReviewDto
+    public class ReviewDto
     {
         public int Id { get; set; }
 
