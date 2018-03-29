@@ -123,5 +123,54 @@ namespace EventManager.Domain.Services
             _context.SaveChanges();
             return true;
         }
+
+
+
+        public List<EventUserDto> RegistrationForEvent()
+        {
+            var registration = _context.EventUsers.Select(x => x);
+
+            if(registration == null)
+            {
+                return null;
+            }
+
+            List<EventUserDto> eventUsers = new List<EventUserDto>();
+
+            foreach (var item in eventUsers)
+            {
+                eventUsers.Add(new EventUserDto()
+                {
+                    Id = item.Id,
+                    EventId = item.EventId,
+                });
+            }
+
+            return eventUsers;
+        }
+
+
+        public List<LectureUserDto> SignForLecture()
+        {
+            var sign = _context.LectureUsers.Select(x => x);
+
+            if(sign == null)
+            {
+                return null;
+            }
+
+            List<LectureUserDto> lectureUsers = new List<LectureUserDto>();
+
+            foreach (var item in lectureUsers)
+            {
+                lectureUsers.Add(new LectureUserDto()
+                {
+                    Id = item.Id,
+                    LectureId = item.LectureId,
+                });
+            }
+
+            return lectureUsers;
+        }
     }
 }
