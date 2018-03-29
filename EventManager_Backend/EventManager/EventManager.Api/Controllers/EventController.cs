@@ -29,5 +29,17 @@ namespace EventManager.Api.Controllers
 
             return Ok(_eventService.CreateEvent(createEventDto));
         }
+
+        [HttpPut]
+        [Route("UpdateEvent")]
+        public IActionResult UpdateEvent([FromBody] UpdateEventDto updateEventDto)
+        {
+            if (updateEventDto.Id!=0 && !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_eventService.UpdateEvent(updateEventDto));
+        }
     }
 }
