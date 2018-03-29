@@ -49,24 +49,24 @@ namespace EventManager.Domain.Services
 
         public List<LectureDto> GetAll()
         {
-            var lecturesList = _context.Lectures.Select(x => x);
+            var lectures = _context.Lectures.Select(x => x);
 
-            List<LectureDto> lectureDtos = new List<LectureDto>();
+            List<LectureDto> lectureDtosList = new List<LectureDto>();
 
-            foreach (var lecture in lecturesList)
+            foreach (var item in lectures)
             {
-                lectureDtos.Add(new LectureDto()
+                lectureDtosList.Add(new LectureDto()
                 {
-                    Id = lecture.Id,
-                    EventId = lecture.EventId,
-                    Description = lecture.Description,
-                    Name = lecture.Name,
-                    ParticipantNumber = lecture.ParticipantNumber,
-                    StartDate = lecture.StartDate,
-                    EndDate = lecture.EndDate
+                    Id = item.Id,
+                    EventId = item.EventId,
+                    Description = item.Description,
+                    Name = item.Name,
+                    ParticipantNumber = item.ParticipantNumber,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate
                 });
             }
-            return lectureDtos;
+            return lectureDtosList;
         }
     }
 }
