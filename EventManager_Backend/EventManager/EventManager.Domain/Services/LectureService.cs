@@ -21,7 +21,7 @@ namespace EventManager.Domain.Services
             if (!_context.Events.Any(x => x.Id == addLectureDto.EventId))
                 return null;
 
-            var lectureToDb = new Lecture()
+            var lecture = new Lecture()
             {
                 EventId = addLectureDto.EventId,
                 Description = addLectureDto.Description,
@@ -31,18 +31,18 @@ namespace EventManager.Domain.Services
                 EndDate = addLectureDto.EndDate
             };
 
-            _context.Lectures.Add(lectureToDb);
+            _context.Lectures.Add(lecture);
             _context.SaveChanges();
 
             var lectureDto = new LectureDto()
             {
-                Id = lectureToDb.Id,
-                EventId = addLectureDto.EventId,
-                Description = addLectureDto.Description,
-                Name = addLectureDto.Name,
-                ParticipantNumber = addLectureDto.ParticipantNumber,
-                StartDate = addLectureDto.StartDate,
-                EndDate = addLectureDto.EndDate
+                Id = lecture.Id,
+                EventId = lecture.EventId,
+                Description = lecture.Description,
+                Name = lecture.Name,
+                ParticipantNumber = lecture.ParticipantNumber,
+                StartDate = lecture.StartDate,
+                EndDate = lecture.EndDate
             };
 
             return lectureDto;
