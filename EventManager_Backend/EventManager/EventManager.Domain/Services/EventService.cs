@@ -141,8 +141,8 @@ namespace EventManager.Domain.Services
             {
                 eventUsers.Add(new EventUserDto()
                 {
-                    Id = item.Id,
                     EventId = item.EventId,
+                    UserId = item.UserId,
                 });
             }
 
