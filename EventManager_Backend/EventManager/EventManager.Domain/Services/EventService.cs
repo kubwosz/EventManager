@@ -82,5 +82,32 @@ namespace EventManager.Domain.Services
 
             return eventDto;
         }
+
+        public List<EventDto> GetAll()
+        {
+            var result = _context.Events.Select(x => x);
+
+            if (result == null)
+            {
+                return null;
+            }
+
+            List<EventDto> eventDtos = new List<EventDto>();
+
+            foreach(var item in result)
+            {
+                eventDtos.Add(new EventDto()
+                {
+                    Id = item.Id,
+                    OwnerId = item.OwnerId.Value,
+                    Description = item.Description,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    ParticipantNumber = item.ParticipantNumber
+                });
+            }
+
+            return eventDtos;
+        }
     }
 }

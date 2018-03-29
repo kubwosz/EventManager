@@ -41,5 +41,12 @@ namespace EventManager.Api.Controllers
 
             return Ok(_eventService.UpdateEvent(updateEventDto));
         }
+
+        [HttpGet]
+        [Route("Events")]
+        public IActionResult GetAllEvents()
+        {
+            return Ok(_eventService.GetAll());
+        }
     }
 }
