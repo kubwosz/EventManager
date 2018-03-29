@@ -16,16 +16,20 @@ namespace EventManager.Domain.Services
             _context = new EventManagerContext();
         }
 
-        public ReviewDto CreateService(CreateReviewDto addReviewDto)
+        public ReviewDto CreateReview(CreateReviewDto addReviewDto)
         {
-            if (!_context.SimpleUsers.Any(x => x.Id == addReviewDto.ReviewerId))
+            if (!(_context.SimpleUsers.Any(x => x.Id == addReviewDto.ReviewerId) && _context.SimpleUsers.Any(x=> x.Id == addReviewDto.LectureId)))
             {
                 return null;
             }
 
             var review = new Review()
             {
-
+                LectureId = addReviewDto.LectureId,
+                Comment = addReviewDto.Comment,
+                Nickname = addReviewDto.Nickname,
+                Rate  = addReviewDto.Rate,
+                ReviewerId = addReviewDto.ReviewerId
             };
 
             _context.Reviews.Add(review);
@@ -33,6 +37,12 @@ namespace EventManager.Domain.Services
 
             var reviewDto = new ReviewDto()
             {
+                Id = review.Id,
+                LectureId = review.LectureId,
+                ReviewerId = review.ReviewerId,
+                Rate = review.Rate,
+                Nickname = review.Nickname,
+                Comment = review.Comment
             };
 
             return reviewDto;
