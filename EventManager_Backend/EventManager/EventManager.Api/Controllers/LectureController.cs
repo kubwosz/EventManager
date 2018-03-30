@@ -26,6 +26,7 @@ namespace EventManager.Api.Controllers
             {
                 return BadRequest();
             }
+
             return Ok(_lectureService.AddLecture(addLectureDto));
         }
 
