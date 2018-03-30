@@ -29,5 +29,12 @@ namespace EventManager.Api.Controllers
 
             return Ok(_lectureService.AddLecture(addLectureDto));
         }
+
+        [HttpGet]
+        [Route("Lectures")]
+        public IActionResult GetAll()
+        {
+            return Ok(_lectureService.GetAll());
+        }
     }
 }

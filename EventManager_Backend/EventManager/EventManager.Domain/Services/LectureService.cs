@@ -1,4 +1,4 @@
-﻿using EventManager.Domain.Dtos;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -44,8 +44,29 @@ namespace EventManager.Domain.Services
                 StartDate = lecture.StartDate,
                 EndDate = lecture.EndDate
             };
-
             return lectureDto;
+        }
+
+        public List<LectureDto> GetAll()
+        {
+            var lectures = _context.Lectures.Select(x => x);
+
+            List<LectureDto> lectureDtosList = new List<LectureDto>();
+
+            foreach (var item in lectures)
+            {
+                lectureDtosList.Add(new LectureDto()
+                {
+                    Id = item.Id,
+                    EventId = item.EventId,
+                    Description = item.Description,
+                    Name = item.Name,
+                    ParticipantNumber = item.ParticipantNumber,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate
+                });
+            }
+            return lectureDtosList;
         }
     }
 }
