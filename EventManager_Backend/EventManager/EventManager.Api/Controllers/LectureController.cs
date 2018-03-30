@@ -36,5 +36,14 @@ namespace EventManager.Api.Controllers
         {
             return Ok(_lectureService.GetAll());
         }
+
+        [HttpDelete] // czy to jest ok?
+        [Route("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!_lectureService.Delete(id))
+                return BadRequest();
+            return Ok();
+        }
     }
 }
