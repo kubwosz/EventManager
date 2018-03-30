@@ -18,7 +18,7 @@ namespace EventManager.Domain.Services
 
         public EventDto CreateEvent(CreateEventDto addEventDto)
         {
-            if(!_context.SimpleUsers.Any(x=>x.Id == addEventDto.OwnerId))
+            if (!_context.SimpleUsers.Any(x => x.Id == addEventDto.OwnerId))
             {
                 return null;
             }
@@ -54,7 +54,7 @@ namespace EventManager.Domain.Services
         {
             var todo = _context.Events.FirstOrDefault(x => x.Id == updateEventDto.Id);
 
-            if(todo == null)
+            if (todo == null)
             {
                 return null;
             }
@@ -94,7 +94,7 @@ namespace EventManager.Domain.Services
 
             List<EventDto> eventDtos = new List<EventDto>();
 
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 eventDtos.Add(new EventDto()
                 {
@@ -125,52 +125,95 @@ namespace EventManager.Domain.Services
         }
 
 
-
-        public List<EventUserDto> RegistrationForEvent()
+        public bool RegistrationForEvent(SimpleUser simpleUser, EventDto eventDto)
         {
-            var registration = _context.EventUsers.Select(x => x);
 
-            if(registration == null)
+            if (!(_context.SimpleUsers.Any()) || !(_context.Events.Any()))
+            {
+                return false;
+            }
+
+            var userEventDB = new EventUser()
+            {
+                Id = simpleUser.Id,
+                EventId = eventDto.Id,
+
+            };
+
+            _context.EventUsers.Add(userEventDB);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public List<EventUserDto> GetEventUser()
+        {
+            var tmp = _context.EventUsers.Select(x => x);
+
+            if (tmp == null)
             {
                 return null;
             }
 
-            List<EventUserDto> eventUsers = new List<EventUserDto>();
 
-            foreach (var item in eventUsers)
+            List<EventUserDto> eventUserDtos = new List<EventUserDto>();
+
+            foreach (var item in tmp)
             {
-                eventUsers.Add(new EventUserDto()
+                eventUserDtos.Add(new EventUserDto()
                 {
+                    Id = item.Id,
                     EventId = item.EventId,
                     UserId = item.UserId,
                 });
-            }
 
-            return eventUsers;
+            }
+            return eventUserDtos;
         }
 
 
-        public List<LectureUserDto> SignForLecture()
+        public bool SignForLecture(SimpleUser simpleUser, LectureDto lectureDto)
         {
-            var sign = _context.LectureUsers.Select(x => x);
+            if (!(_context.SimpleUsers.Any()) || !(_context.Lectures.Any()))
+            {
+                return false;
+            }
 
-            if(sign == null)
+            var userLectureDB = new LectureUser()
+            {
+                Id = simpleUser.Id,
+                LectureId = lectureDto.Id,
+
+            };
+
+            _context.LectureUsers.Add(userLectureDB);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public List<LectureUserDto> GetLectureUser()
+        {
+            var tmp = _context.LectureUsers.Select(x => x);
+
+            if (tmp == null)
             {
                 return null;
             }
 
-            List<LectureUserDto> lectureUsers = new List<LectureUserDto>();
+            List<LectureUserDto> lectureUserDtos = new List<LectureUserDto>();
 
-            foreach (var item in lectureUsers)
+            foreach (var item in tmp)
             {
-                lectureUsers.Add(new LectureUserDto()
+                lectureUserDtos.Add(new LectureUserDto()
                 {
                     Id = item.Id,
                     LectureId = item.LectureId,
+                    UserId = item.UserId,
+
                 });
             }
-
-            return lectureUsers;
+            return lectureUserDtos;
         }
     }
 }
