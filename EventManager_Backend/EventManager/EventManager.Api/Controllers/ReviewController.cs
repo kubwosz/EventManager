@@ -18,9 +18,8 @@ namespace EventManager.Api.Controllers
             _reviewService = new ReviewService();
         }
 
-        //[HttpGet]
-        //[Route("Reviews")]
-        [HttpGet, Route("Reviews")]
+        [HttpGet]
+        [Route("Reviews")]
         public IActionResult GetAllReviews()
         {
             return Ok(_reviewService.GetAll());
