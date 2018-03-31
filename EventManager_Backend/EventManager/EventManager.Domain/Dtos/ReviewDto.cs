@@ -17,6 +17,5 @@ namespace EventManager.Domain.Dtos
         public string Nickname { get; set; }
 
         public string Comment { get; set; }
-
     }
 }
