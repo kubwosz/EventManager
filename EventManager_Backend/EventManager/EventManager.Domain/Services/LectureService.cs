@@ -68,5 +68,47 @@ namespace EventManager.Domain.Services
             }
             return lectureDtosList;
         }
+
+        public bool Delete(int id)
+        {
+            var result = _context.Lectures.FirstOrDefault(x => x.Id == id);
+
+            if (result == null)
+                return false;
+
+            _context.Lectures.Remove(result);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public LectureDto UpdateLecture(UpdateLectureDto updateLectureDto)
+        {
+            var result = _context.Lectures.FirstOrDefault(x => x.Id == updateLectureDto.Id);
+
+            if (result == null)
+                return null;
+
+            result.Name = updateLectureDto.Name;
+            result.Description = updateLectureDto.Description;
+            result.EventId = updateLectureDto.EventId;
+            result.ParticipantNumber = updateLectureDto.ParticipantNumber;
+            result.StartDate = updateLectureDto.StartDate;
+            result.EndDate = updateLectureDto.EndDate;
+
+            _context.Lectures.Update(result);
+            _context.SaveChanges();
+
+            var lectureDto = new LectureDto()
+            {
+                Name = updateLectureDto.Name,
+                Description = updateLectureDto.Description,
+                EventId = updateLectureDto.EventId,
+                ParticipantNumber = updateLectureDto.ParticipantNumber,
+                StartDate = updateLectureDto.StartDate,
+                EndDate = updateLectureDto.EndDate
+            };
+
+            return lectureDto;
+        }
     }
 }
