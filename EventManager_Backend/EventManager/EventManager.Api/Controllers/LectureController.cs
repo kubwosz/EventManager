@@ -46,16 +46,5 @@ namespace EventManager.Api.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        [Route("UpdateLecture")]
-        public IActionResult UpdateLecture([FromBody] UpdateLectureDto updateLectureDto)
-        {
-            if (updateLectureDto.Id != 0 && !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            return Ok(_lectureService.UpdateLecture(updateLectureDto));
-        }
     }
 }
