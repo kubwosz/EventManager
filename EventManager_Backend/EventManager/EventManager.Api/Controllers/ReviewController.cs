@@ -1,4 +1,4 @@
-﻿using EventManager.Domain.Dtos;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,7 +36,6 @@ namespace EventManager.Api.Controllers
 
             return Ok(_reviewService.CreateReview(createReviewDto));
         }
-
         [HttpPut]
         [Route("UpdateReview")]
         public IActionResult UpdateReview([FromBody] UpdateReviewDto updateReviewDto)
