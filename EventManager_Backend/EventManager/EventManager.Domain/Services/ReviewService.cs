@@ -1,4 +1,4 @@
-﻿using EventManager.Domain.Dtos;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -105,7 +105,7 @@ namespace EventManager.Domain.Services
 
             return reviewDtos;
         }
-
+      
         public bool DeleteReview(int id)
         {
             var review = _context.Reviews.FirstOrDefault(x => x.Id == id);

@@ -47,7 +47,6 @@ namespace EventManager.Api.Controllers
 
             return Ok(_reviewService.UpdateReview(updateReviewDto));
         }
-
         [HttpDelete]
         [Route("DeleteReview/{id}")]
         public IActionResult DeleteReview(int id)
