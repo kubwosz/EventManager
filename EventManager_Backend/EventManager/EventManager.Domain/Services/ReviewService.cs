@@ -48,6 +48,37 @@ namespace EventManager.Domain.Services
             return reviewDto;
         }
 
+        public ReviewDto UpdateReview(UpdateReviewDto updateReviewDto)
+        {
+            var todo = _context.Reviews.FirstOrDefault(x => x.Id == updateReviewDto.Id);
+
+            if (todo == null)
+            {
+                return null;
+            }
+
+            todo.LectureId = updateReviewDto.LectureId;
+            todo.ReviewerId = updateReviewDto.ReviewerId;
+            todo.Rate = updateReviewDto.Rate;
+            todo.Nickname = updateReviewDto.Nickname;
+            todo.Comment = updateReviewDto.Comment;
+
+            _context.Reviews.Update(todo);
+            _context.SaveChanges();
+
+            var reviewDto = new ReviewDto()
+            {
+                Id = todo.Id,
+                LectureId = todo.LectureId,
+                ReviewerId = todo.ReviewerId,
+                Rate = todo.Rate,
+                Nickname = todo.Nickname,
+                Comment = todo.Comment
+            };
+
+            return reviewDto;
+        }
+
         public List<ReviewDto> GetAll()
         {
             var result = _context.Reviews.Select(x => x);
@@ -73,6 +104,20 @@ namespace EventManager.Domain.Services
             }
 
             return reviewDtos;
+        }
+
+        public bool DeleteReview(int id)
+        {
+            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+
+            if(review == null)
+            {
+                return false;
+            }
+
+            _context.Reviews.Remove(review);
+            _context.SaveChanges();
+            return true;
         }
     }
 }
