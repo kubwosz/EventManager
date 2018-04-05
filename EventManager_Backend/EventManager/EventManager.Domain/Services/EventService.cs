@@ -124,7 +124,7 @@ namespace EventManager.Domain.Services
             return true;
         }
 
-        public bool RegistrationForEvent(EventUserDto eventUserDto, EventDto eventDto)
+        public bool SignForEvent(EventUserDto eventUserDto, EventDto eventDto)
         {
 
             if (!(_context.SimpleUsers.Any()) || !(_context.Events.Any()))
@@ -135,7 +135,7 @@ namespace EventManager.Domain.Services
             var userEventDB = new EventUser()
             {
 
-                Id = eventUserDto.Id,
+                UserId = eventUserDto.Id,
                 EventId = eventDto.Id,
 
             };

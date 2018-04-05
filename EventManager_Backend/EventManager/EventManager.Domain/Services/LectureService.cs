@@ -120,7 +120,7 @@ namespace EventManager.Domain.Services
 
             var userLectureDB = new LectureUser()
             {
-                Id = lectureUserDto.Id,
+                UserId = lectureUserDto.Id,
                 LectureId = lectureDto.Id,
 
             };
