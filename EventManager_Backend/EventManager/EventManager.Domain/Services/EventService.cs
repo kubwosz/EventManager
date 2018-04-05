@@ -124,8 +124,7 @@ namespace EventManager.Domain.Services
             return true;
         }
 
-
-        public bool RegistrationForEvent(SimpleUser simpleUser, EventDto eventDto)
+        public bool RegistrationForEvent(EventUserDto eventUserDto, EventDto eventDto)
         {
 
             if (!(_context.SimpleUsers.Any()) || !(_context.Events.Any()))
@@ -135,7 +134,8 @@ namespace EventManager.Domain.Services
 
             var userEventDB = new EventUser()
             {
-                Id = simpleUser.Id,
+
+                Id = eventUserDto.Id,
                 EventId = eventDto.Id,
 
             };
@@ -155,7 +155,6 @@ namespace EventManager.Domain.Services
                 return null;
             }
 
-
             List<EventUserDto> eventUserDtos = new List<EventUserDto>();
 
             foreach (var item in tmp)
@@ -166,54 +165,9 @@ namespace EventManager.Domain.Services
                     EventId = item.EventId,
                     UserId = item.UserId,
                 });
-
             }
             return eventUserDtos;
         }
-
-
-        public bool SignForLecture(SimpleUser simpleUser, LectureDto lectureDto)
-        {
-            if (!(_context.SimpleUsers.Any()) || !(_context.Lectures.Any()))
-            {
-                return false;
-            }
-
-            var userLectureDB = new LectureUser()
-            {
-                Id = simpleUser.Id,
-                LectureId = lectureDto.Id,
-
-            };
-
-            _context.LectureUsers.Add(userLectureDB);
-            _context.SaveChanges();
-
-            return true;
-        }
-
-        public List<LectureUserDto> GetLectureUser()
-        {
-            var tmp = _context.LectureUsers.Select(x => x);
-
-            if (tmp == null)
-            {
-                return null;
-            }
-
-            List<LectureUserDto> lectureUserDtos = new List<LectureUserDto>();
-
-            foreach (var item in tmp)
-            {
-                lectureUserDtos.Add(new LectureUserDto()
-                {
-                    Id = item.Id,
-                    LectureId = item.LectureId,
-                    UserId = item.UserId,
-
-                });
-            }
-            return lectureUserDtos;
-        }
     }
 }
+//
