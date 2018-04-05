@@ -37,6 +37,18 @@ namespace EventManager.Api.Controllers
             return Ok(_lectureService.GetAll());
         }
 
+        [HttpPut]
+        [Route("UpdateLecture")]
+        public IActionResult UpdateLecture([FromBody] UpdateLectureDto updateLectureDto)
+        {
+            if (updateLectureDto.Id != 0 && !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(_lectureService.UpdateLecture(updateLectureDto));
+        }
+
         [HttpDelete] 
         [Route("DeleteLecture/{id}")]
         public IActionResult DeleteLecture(int id)
@@ -45,6 +57,5 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             return Ok();
         }
-
     }
 }
