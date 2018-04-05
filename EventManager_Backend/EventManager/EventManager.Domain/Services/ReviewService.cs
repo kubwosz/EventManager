@@ -68,6 +68,12 @@ namespace EventManager.Domain.Services
 
             var reviewDto = new ReviewDto()
             {
+                Id = updateReviewDto.Id,
+                LectureId = updateReviewDto.LectureId,
+                ReviewerId = updateReviewDto.ReviewerId,
+                Rate = updateReviewDto.Rate,
+                Nickname = updateReviewDto.Nickname,
+                Comment = updateReviewDto.Comment
                 Id = todo.Id,
                 LectureId = todo.LectureId,
                 ReviewerId = todo.ReviewerId,
@@ -105,7 +111,7 @@ namespace EventManager.Domain.Services
 
             return reviewDtos;
         }
-      
+
         public bool DeleteReview(int id)
         {
             var review = _context.Reviews.FirstOrDefault(x => x.Id == id);

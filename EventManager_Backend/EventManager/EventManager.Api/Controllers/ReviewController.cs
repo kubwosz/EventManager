@@ -36,6 +36,7 @@ namespace EventManager.Api.Controllers
 
             return Ok(_reviewService.CreateReview(createReviewDto));
         }
+
         [HttpPut]
         [Route("UpdateReview")]
         public IActionResult UpdateReview([FromBody] UpdateReviewDto updateReviewDto)
@@ -47,6 +48,7 @@ namespace EventManager.Api.Controllers
 
             return Ok(_reviewService.UpdateReview(updateReviewDto));
         }
+
         [HttpDelete]
         [Route("DeleteReview/{id}")]
         public IActionResult DeleteReview(int id)
