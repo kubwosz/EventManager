@@ -6,6 +6,7 @@ namespace EventManager.Domain.Dtos
 {
     public class LectureDto
     {
+
         public LectureDto()
         {
             LectureUsers = new List<LectureUserDto>();
@@ -31,3 +32,4 @@ namespace EventManager.Domain.Dtos
         public List<ReviewDto> Reviews { get; set; }
     }
 }
+

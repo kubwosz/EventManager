@@ -48,5 +48,14 @@ namespace EventManager.Api.Controllers
 
             return Ok(_lectureService.UpdateLecture(updateLectureDto));
         }
+
+        [HttpDelete] 
+        [Route("DeleteLecture/{id}")]
+        public IActionResult DeleteLecture(int id)
+        {
+            if (!_lectureService.Delete(id))
+                return BadRequest();
+            return Ok();
+        }
     }
 }
