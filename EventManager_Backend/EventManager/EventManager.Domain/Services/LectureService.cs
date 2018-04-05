@@ -69,18 +69,6 @@ namespace EventManager.Domain.Services
             return lectureDtosList;
         }
 
-        public bool Delete(int id)
-        {
-            var result = _context.Lectures.FirstOrDefault(x => x.Id == id);
-
-            if (result == null)
-                return false;
-
-            _context.Lectures.Remove(result);
-            _context.SaveChanges();
-            return true;
-        }
-
         public LectureDto UpdateLecture(UpdateLectureDto updateLectureDto)
         {
             var result = _context.Lectures.FirstOrDefault(x => x.Id == updateLectureDto.Id);
