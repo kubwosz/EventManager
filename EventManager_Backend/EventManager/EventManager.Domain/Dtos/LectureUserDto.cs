@@ -1,29 +1,11 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManager.Domain.Dtos
-{
-    public class LectureUserDto
-    {
-        public int Id { get; set; }
-
-        public int LectureId { get; set; }
-
-        public virtual LectureDto LectureDto { get; set; }
-
-        public int UserId { get; set; }
-
-    }
-}
-=======
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventManager.Domain.Dtos
 {
+
     public class LectureUserDto
     {
         public int Id { get; set; }
@@ -35,4 +17,4 @@ namespace EventManager.Domain.Dtos
         public int UserId { get; set; }
     }
 }
->>>>>>> master
+

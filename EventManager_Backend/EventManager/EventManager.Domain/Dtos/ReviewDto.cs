@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-﻿namespace EventManager.Domain.Dtos
-{
-    public class ReviewDto
-    {
-    }
-}
-=======
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,4 +19,3 @@ namespace EventManager.Domain.Dtos
         public string Comment { get; set; }
     }
 }
->>>>>>> master
