@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +17,5 @@ namespace EventManager.Domain.Dtos
         public string Nickname { get; set; }
 
         public string Comment { get; set; }
-
     }
 }

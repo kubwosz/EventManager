@@ -1,4 +1,4 @@
-﻿using EventManager.Domain.Dtos;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -47,6 +47,17 @@ namespace EventManager.Api.Controllers
             }
 
             return Ok(_reviewService.UpdateReview(updateReviewDto));
+        }
+
+        [HttpDelete]
+        [Route("DeleteReview/{id}")]
+        public IActionResult DeleteReview(int id)
+        {
+            if (!_reviewService.DeleteReview(id))
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
     }
 }

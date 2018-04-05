@@ -1,4 +1,4 @@
-﻿using EventManager.Domain.Dtos;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -74,6 +74,12 @@ namespace EventManager.Domain.Services
                 Rate = updateReviewDto.Rate,
                 Nickname = updateReviewDto.Nickname,
                 Comment = updateReviewDto.Comment
+                Id = todo.Id,
+                LectureId = todo.LectureId,
+                ReviewerId = todo.ReviewerId,
+                Rate = todo.Rate,
+                Nickname = todo.Nickname,
+                Comment = todo.Comment
             };
 
             return reviewDto;
@@ -104,6 +110,20 @@ namespace EventManager.Domain.Services
             }
 
             return reviewDtos;
+        }
+
+        public bool DeleteReview(int id)
+        {
+            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+
+            if(review == null)
+            {
+                return false;
+            }
+
+            _context.Reviews.Remove(review);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

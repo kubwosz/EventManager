@@ -4,15 +4,8 @@ using System.Text;
 
 namespace EventManager.Domain.Dtos
 {
-    public class LectureDto
+    public class UpdateLectureDto
     {
-
-        public LectureDto()
-        {
-            LectureUsers = new List<LectureUserDto>();
-            Reviews = new List<ReviewDto>();
-        }
-
         public int Id { get; set; }
 
         public string Description { get; set; }
@@ -32,4 +25,3 @@ namespace EventManager.Domain.Dtos
         public List<ReviewDto> Reviews { get; set; }
     }
 }
-
