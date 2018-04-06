@@ -1,4 +1,5 @@
-﻿using EventManager.Domain.Dtos;
+﻿using AutoMapper;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,9 +14,9 @@ namespace EventManager.Api.Controllers
     {
         private readonly EventService _eventService;
 
-        public EventController()
+        public EventController(IMapper iMapper)
         {
-            _eventService = new EventService();
+            _eventService = new EventService(iMapper);
         }
 
         [HttpPost]

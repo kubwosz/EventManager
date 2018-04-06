@@ -1,3 +1,4 @@
+using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
@@ -10,10 +11,12 @@ namespace EventManager.Domain.Services
     public class LectureService
     {
         private readonly EventManagerContext _context;
+        private readonly IMapper _iMapper;
 
-        public LectureService()
+        public LectureService(IMapper iMapper)
         {
             _context = new EventManagerContext();
+            _iMapper = iMapper;
         }
 
         public LectureDto AddLecture(AddLectureDto addLectureDto)
@@ -21,80 +24,46 @@ namespace EventManager.Domain.Services
             if (!_context.Events.Any(x => x.Id == addLectureDto.EventId))
                 return null;
 
-            var lecture = new Lecture()
-            {
-                EventId = addLectureDto.EventId,
-                Description = addLectureDto.Description,
-                Name = addLectureDto.Name,
-                ParticipantNumber = addLectureDto.ParticipantNumber,
-                StartDate = addLectureDto.StartDate,
-                EndDate = addLectureDto.EndDate
-            };
+            var lecture = _iMapper.Map<Lecture>(addLectureDto);
 
             _context.Lectures.Add(lecture);
             _context.SaveChanges();
 
-            var lectureDto = new LectureDto()
-            {
-                Id = lecture.Id,
-                EventId = lecture.EventId,
-                Description = lecture.Description,
-                Name = lecture.Name,
-                ParticipantNumber = lecture.ParticipantNumber,
-                StartDate = lecture.StartDate,
-                EndDate = lecture.EndDate
-            };
+            var lectureDto = _iMapper.Map<LectureDto>(lecture);
+
             return lectureDto;
         }
 
         public List<LectureDto> GetAll()
         {
-            var lectures = _context.Lectures.Select(x => x);
+            var lectures = _context.Lectures;
 
-            List<LectureDto> lectureDtosList = new List<LectureDto>();
+            if (lectures == null)
+                return null;
 
-            foreach (var item in lectures)
-            {
-                lectureDtosList.Add(new LectureDto()
-                {
-                    Id = item.Id,
-                    EventId = item.EventId,
-                    Description = item.Description,
-                    Name = item.Name,
-                    ParticipantNumber = item.ParticipantNumber,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate
-                });
-            }
-            return lectureDtosList;
+            List<LectureDto> lectureDtoList = _iMapper.Map<List<LectureDto>>(lectures);
+
+            return lectureDtoList;
         }
 
         public LectureDto UpdateLecture(UpdateLectureDto updateLectureDto)
         {
-            var result = _context.Lectures.FirstOrDefault(x => x.Id == updateLectureDto.Id);
+            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == updateLectureDto.Id);
 
-            if (result == null)
+            if (lecture == null)
                 return null;
 
-            result.Name = updateLectureDto.Name;
-            result.Description = updateLectureDto.Description;
-            result.EventId = updateLectureDto.EventId;
-            result.ParticipantNumber = updateLectureDto.ParticipantNumber;
-            result.StartDate = updateLectureDto.StartDate;
-            result.EndDate = updateLectureDto.EndDate;
+            lecture.Name = updateLectureDto.Name;
+            lecture.Description = updateLectureDto.Description;
+            lecture.EventId = updateLectureDto.EventId;
+            lecture.ParticipantNumber = updateLectureDto.ParticipantNumber;
+            lecture.StartDate = updateLectureDto.StartDate;
+            lecture.EndDate = updateLectureDto.EndDate;
 
-            _context.Lectures.Update(result);
+            _context.Lectures.Update(lecture);
             _context.SaveChanges();
 
-            var lectureDto = new LectureDto()
-            {
-                Name = updateLectureDto.Name,
-                Description = updateLectureDto.Description,
-                EventId = updateLectureDto.EventId,
-                ParticipantNumber = updateLectureDto.ParticipantNumber,
-                StartDate = updateLectureDto.StartDate,
-                EndDate = updateLectureDto.EndDate
-            };
+            var lectureDto = _iMapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }

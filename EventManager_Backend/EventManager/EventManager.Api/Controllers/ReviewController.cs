@@ -1,3 +1,4 @@
+using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,9 @@ namespace EventManager.Api.Controllers
     {
         private readonly ReviewService _reviewService;
 
-        public ReviewController()
+        public ReviewController(IMapper iMapper)
         {
-            _reviewService = new ReviewService();
+            _reviewService = new ReviewService(iMapper);
         }
 
         [HttpGet]

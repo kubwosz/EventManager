@@ -1,3 +1,4 @@
+using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
@@ -10,10 +11,12 @@ namespace EventManager.Domain.Services
     public class ReviewService
     {
         private readonly EventManagerContext _context;
+        private readonly IMapper _iMapper;
 
-        public ReviewService()
+        public ReviewService(IMapper iMapper)
         {
             _context = new EventManagerContext();
+            _iMapper = iMapper;
         }
 
         public ReviewDto CreateReview(CreateReviewDto addReviewDto)
@@ -23,87 +26,47 @@ namespace EventManager.Domain.Services
                 return null;
             }
 
-            var review = new Review()
-            {
-                LectureId = addReviewDto.LectureId,
-                Comment = addReviewDto.Comment,
-                Nickname = addReviewDto.Nickname,
-                Rate  = addReviewDto.Rate,
-                ReviewerId = addReviewDto.ReviewerId
-            };
+            var review = _iMapper.Map<Review>(addReviewDto);
 
             _context.Reviews.Add(review);
             _context.SaveChanges();
 
-            var reviewDto = new ReviewDto()
-            {
-                Id = review.Id,
-                LectureId = review.LectureId,
-                ReviewerId = review.ReviewerId,
-                Rate = review.Rate,
-                Nickname = review.Nickname,
-                Comment = review.Comment
-            };
+            var reviewDto = _iMapper.Map<ReviewDto>(review);
 
             return reviewDto;
         }
 
         public ReviewDto UpdateReview(UpdateReviewDto updateReviewDto)
         {
-            var todo = _context.Reviews.FirstOrDefault(x => x.Id == updateReviewDto.Id);
+            var review = _context.Reviews.FirstOrDefault(x => x.Id == updateReviewDto.Id);
 
-            if (todo == null)
-            {
+            if (review == null)
                 return null;
-            }
 
-            todo.LectureId = updateReviewDto.LectureId;
-            todo.ReviewerId = updateReviewDto.ReviewerId;
-            todo.Rate = updateReviewDto.Rate;
-            todo.Nickname = updateReviewDto.Nickname;
-            todo.Comment = updateReviewDto.Comment;
+            review.LectureId = updateReviewDto.LectureId;
+            review.ReviewerId = updateReviewDto.ReviewerId;
+            review.Rate = updateReviewDto.Rate;
+            review.Nickname = updateReviewDto.Nickname;
+            review.Comment = updateReviewDto.Comment;
 
-            _context.Reviews.Update(todo);
+            _context.Reviews.Update(review);
             _context.SaveChanges();
 
-            var reviewDto = new ReviewDto()
-            {
-                Id = todo.Id,
-                LectureId = todo.LectureId,
-                ReviewerId = todo.ReviewerId,
-                Rate = todo.Rate,
-                Nickname = todo.Nickname,
-                Comment = todo.Comment
-            };
+            var reviewDto = _iMapper.Map<ReviewDto>(review);
 
             return reviewDto;
         }
 
         public List<ReviewDto> GetAll()
         {
-            var result = _context.Reviews.Select(x => x);
+            var reviews = _context.Reviews.Select(x => x);
 
-            if (result == null)
-            {
+            if (reviews == null)
                 return null;
-            }
 
-            List<ReviewDto> reviewDtos = new List<ReviewDto>();
+            List<ReviewDto> reviewDtoList = _iMapper.Map<List<ReviewDto>>(reviews);
 
-            foreach (var item in result)
-            {
-                reviewDtos.Add(new ReviewDto()
-                {
-                    Id = item.Id,
-                    LectureId = item.LectureId,
-                    ReviewerId = item.ReviewerId,
-                    Rate = item.Rate,
-                    Nickname = item.Nickname,
-                    Comment = item.Comment
-                });
-            }
-
-            return reviewDtos;
+            return reviewDtoList;
         }
 
         public bool DeleteReview(int id)
