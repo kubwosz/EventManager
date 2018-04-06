@@ -68,12 +68,6 @@ namespace EventManager.Domain.Services
 
             var reviewDto = new ReviewDto()
             {
-                Id = updateReviewDto.Id,
-                LectureId = updateReviewDto.LectureId,
-                ReviewerId = updateReviewDto.ReviewerId,
-                Rate = updateReviewDto.Rate,
-                Nickname = updateReviewDto.Nickname,
-                Comment = updateReviewDto.Comment
                 Id = todo.Id,
                 LectureId = todo.LectureId,
                 ReviewerId = todo.ReviewerId,
