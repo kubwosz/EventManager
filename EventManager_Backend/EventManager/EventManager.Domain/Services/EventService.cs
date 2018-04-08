@@ -38,17 +38,7 @@ namespace EventManager.Domain.Services
 
         public EventDto UpdateEvent(UpdateEventDto updateEventDto)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == updateEventDto.Id);
-
-            if (@event == null)
-                return null;
-
-            @event.OwnerId = updateEventDto.OwnerId;
-            @event.Name = updateEventDto.Name;
-            @event.StartDate = updateEventDto.StartDate;
-            @event.EndDate = updateEventDto.EndDate;
-            @event.ParticipantNumber = updateEventDto.ParticipantNumber;
-            @event.Description = updateEventDto.Description;
+            var @event = _iMapper.Map<Event>(updateEventDto);
 
             _context.Events.Update(@event);
             _context.SaveChanges();

@@ -48,17 +48,7 @@ namespace EventManager.Domain.Services
 
         public LectureDto UpdateLecture(UpdateLectureDto updateLectureDto)
         {
-            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == updateLectureDto.Id);
-
-            if (lecture == null)
-                return null;
-
-            lecture.Name = updateLectureDto.Name;
-            lecture.Description = updateLectureDto.Description;
-            lecture.EventId = updateLectureDto.EventId;
-            lecture.ParticipantNumber = updateLectureDto.ParticipantNumber;
-            lecture.StartDate = updateLectureDto.StartDate;
-            lecture.EndDate = updateLectureDto.EndDate;
+            var lecture = _iMapper.Map<Lecture>(updateLectureDto);
 
             _context.Lectures.Update(lecture);
             _context.SaveChanges();
