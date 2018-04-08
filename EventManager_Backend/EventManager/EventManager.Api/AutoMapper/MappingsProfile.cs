@@ -13,6 +13,7 @@ namespace EventManager.Api.AutoMapper
         public MappingsProfile()
         {
             CreateMap<CreateEventDto, Event>();
+            CreateMap<UpdateEventDto, Event>();
             CreateMap<Event, EventDto>();
             CreateMap<AddLectureDto, Lecture>();
             CreateMap<Lecture, LectureDto>();
