@@ -1,5 +1,6 @@
 using AutoMapper;
 using EventManager.Domain.Dtos;
+using EventManager.Domain.IServices;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,11 +13,11 @@ namespace EventManager.Api.Controllers
     [Route("api/[controller]")]
     public class ReviewController : Controller
     {
-        private readonly ReviewService _reviewService;
+        private readonly IReviewService _reviewService;
 
-        public ReviewController(IMapper iMapper)
+        public ReviewController(IMapper iMapper, IReviewService reviewService)
         {
-            _reviewService = new ReviewService(iMapper);
+            _reviewService = reviewService;
         }
 
         [HttpGet]

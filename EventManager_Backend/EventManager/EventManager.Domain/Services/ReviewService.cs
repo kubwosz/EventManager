@@ -1,5 +1,6 @@
 using AutoMapper;
 using EventManager.Domain.Dtos;
+using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace EventManager.Domain.Services
 {
-    public class ReviewService
+    public class ReviewService : IReviewService
     {
         private readonly EventManagerContext _context;
         private readonly IMapper _iMapper;
