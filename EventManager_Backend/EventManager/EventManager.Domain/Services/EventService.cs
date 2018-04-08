@@ -38,17 +38,16 @@ namespace EventManager.Domain.Services
 
         public EventDto UpdateEvent(UpdateEventDto updateEventDto)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == updateEventDto.Id);
-
-            if (@event == null)
-                return null;
-
-            @event.OwnerId = updateEventDto.OwnerId;
-            @event.Name = updateEventDto.Name;
-            @event.StartDate = updateEventDto.StartDate;
-            @event.EndDate = updateEventDto.EndDate;
-            @event.ParticipantNumber = updateEventDto.ParticipantNumber;
-            @event.Description = updateEventDto.Description;
+            Event @event = new Event
+            {
+                Id = updateEventDto.Id,
+                OwnerId = updateEventDto.OwnerId,
+                Name = updateEventDto.Name,
+                StartDate = updateEventDto.StartDate,
+                EndDate = updateEventDto.EndDate,
+                ParticipantNumber = updateEventDto.ParticipantNumber,
+                Description = updateEventDto.Description
+            };
 
             _context.Events.Update(@event);
             _context.SaveChanges();
