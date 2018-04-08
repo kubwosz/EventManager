@@ -8,13 +8,9 @@ namespace EventManager.Domain
 {
     public class EventManagerContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public EventManagerContext(DbContextOptions<EventManagerContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EventManager;Trusted_Connection=True;");
-        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
         }
 
         public DbSet<SimpleUser> SimpleUsers { get; set; }
