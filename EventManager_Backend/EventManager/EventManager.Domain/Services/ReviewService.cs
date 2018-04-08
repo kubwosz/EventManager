@@ -38,16 +38,7 @@ namespace EventManager.Domain.Services
 
         public ReviewDto UpdateReview(UpdateReviewDto updateReviewDto)
         {
-            var review = _context.Reviews.FirstOrDefault(x => x.Id == updateReviewDto.Id);
-
-            if (review == null)
-                return null;
-
-            review.LectureId = updateReviewDto.LectureId;
-            review.ReviewerId = updateReviewDto.ReviewerId;
-            review.Rate = updateReviewDto.Rate;
-            review.Nickname = updateReviewDto.Nickname;
-            review.Comment = updateReviewDto.Comment;
+            var review = _iMapper.Map<Review>(updateReviewDto);
 
             _context.Reviews.Update(review);
             _context.SaveChanges();
