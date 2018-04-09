@@ -33,7 +33,7 @@ namespace EventManager.Api
             services.AddTransient<IReviewService, ReviewService>();
 
             services.AddDbContext<EventManagerContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EventManagerDBConnectionString")));
+                options.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
