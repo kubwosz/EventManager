@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventManager.Domain.Dtos;
+using EventManager.Domain.IServices;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +13,11 @@ namespace EventManager.Api.Controllers
     [Route("api/[controller]")]
     public class LectureController : Controller
     {
-        private readonly LectureService _lectureService;
+        private readonly ILectureService _lectureService;
 
-        public LectureController(IMapper iMapper)
+        public LectureController(ILectureService lectureService)
         {
-            _lectureService = new LectureService(iMapper);
+            _lectureService = lectureService;
         }
 
         [HttpPost]

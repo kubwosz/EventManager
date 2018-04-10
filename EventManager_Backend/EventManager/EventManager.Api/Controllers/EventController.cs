@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EventManager.Domain.Dtos;
+using EventManager.Domain.IServices;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,11 +13,11 @@ namespace EventManager.Api.Controllers
     [Route("api/[controller]")]
     public class EventController : Controller
     {
-        private readonly EventService _eventService;
+        private readonly IEventService _eventService;
 
-        public EventController(IMapper iMapper)
+        public EventController(IEventService eventService)
         {
-            _eventService = new EventService(iMapper);
+            _eventService = eventService;
         }
 
         [HttpPost]
