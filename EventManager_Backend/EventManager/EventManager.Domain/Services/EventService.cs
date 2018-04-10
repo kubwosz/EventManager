@@ -1,4 +1,5 @@
-﻿using EventManager.Domain.Dtos;
+﻿using AutoMapper;
+using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace EventManager.Domain.Services
     public class EventService
     {
         private readonly EventManagerContext _context;
+        private readonly IMapper _iMapper;
 
-        public EventService()
+        public EventService(IMapper iMapper)
         {
             _context = new EventManagerContext();
+            _iMapper = iMapper;
         }
 
         public EventDto CreateEvent(CreateEventDto addEventDto)
@@ -23,103 +26,50 @@ namespace EventManager.Domain.Services
                 return null;
             }
 
-            var eventDB = new Event()
-            {
-                OwnerId = addEventDto.OwnerId,
-                Description = addEventDto.Description,
-                Name = addEventDto.Name,
-                StartDate = addEventDto.StartDate,
-                EndDate = addEventDto.EndDate,
-                ParticipantNumber = addEventDto.ParticipantNumber
-            };
+            var @event = _iMapper.Map<Event>(addEventDto);
 
-            _context.Events.Add(eventDB);
+            _context.Events.Add(@event);
             _context.SaveChanges();
 
-            var eventDto = new EventDto()
-            {
-                Id = eventDB.Id,
-                OwnerId = eventDB.OwnerId.Value,
-                Name = eventDB.Name,
-                StartDate = eventDB.StartDate,
-                EndDate = eventDB.EndDate,
-                ParticipantNumber = eventDB.ParticipantNumber,
-                Description = eventDB.Description
-            };
+            var eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
         public EventDto UpdateEvent(UpdateEventDto updateEventDto)
         {
-            var todo = _context.Events.FirstOrDefault(x => x.Id == updateEventDto.Id);
+            var @event = _iMapper.Map<Event>(updateEventDto);
 
-            if(todo == null)
-            {
-                return null;
-            }
-
-            todo.OwnerId = updateEventDto.OwnerId;
-            todo.Name = updateEventDto.Name;
-            todo.StartDate = updateEventDto.StartDate;
-            todo.EndDate = updateEventDto.EndDate;
-            todo.ParticipantNumber = updateEventDto.ParticipantNumber;
-            todo.Description = updateEventDto.Description;
-
-            _context.Events.Update(todo);
+            _context.Events.Update(@event);
             _context.SaveChanges();
 
-            var eventDto = new EventDto()
-            {
-                Id = todo.Id,
-                OwnerId = todo.OwnerId.Value,
-                Name = todo.Name,
-                StartDate = todo.StartDate,
-                EndDate = todo.EndDate,
-                ParticipantNumber = todo.ParticipantNumber,
-                Description = todo.Description
-            };
+            var eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
         public List<EventDto> GetAll()
         {
-            var result = _context.Events.Select(x => x);
+            var events = _context.Events;
 
-            if (result == null)
-            {
+            if (events == null)
                 return null;
-            }
 
-            List<EventDto> eventDtos = new List<EventDto>();
+            List<EventDto> eventDtoList = _iMapper.Map<List<EventDto>>(events);
 
-            foreach(var item in result)
-            {
-                eventDtos.Add(new EventDto()
-                {
-                    Id = item.Id,
-                    OwnerId = item.OwnerId.Value,
-                    Description = item.Description,
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    ParticipantNumber = item.ParticipantNumber
-                });
-            }
-
-            return eventDtos;
+            return eventDtoList;
         }
 
         public bool DeleteEvent(int id)
         {
-            var eventDB = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
 
-            if (eventDB == null)
+            if (@event == null)
             {
                 return false;
             }
 
-            _context.Events.Remove(eventDB);
+            _context.Events.Remove(@event);
             _context.SaveChanges();
             return true;
         }
