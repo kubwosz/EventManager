@@ -15,7 +15,7 @@ namespace EventManager.Api.Controllers
     {
         private readonly ILectureService _lectureService;
 
-        public LectureController(IMapper iMapper, ILectureService lectureService)
+        public LectureController(ILectureService lectureService)
         {
             _lectureService = lectureService;
         }

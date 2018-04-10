@@ -15,7 +15,7 @@ namespace EventManager.Api.Controllers
     {
         private readonly IReviewService _reviewService;
 
-        public ReviewController(IMapper iMapper, IReviewService reviewService)
+        public ReviewController(IReviewService reviewService)
         {
             _reviewService = reviewService;
         }

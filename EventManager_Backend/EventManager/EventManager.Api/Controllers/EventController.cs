@@ -15,7 +15,7 @@ namespace EventManager.Api.Controllers
     {
         private readonly IEventService _eventService;
 
-        public EventController(IMapper iMapper, IEventService eventService)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
         }
