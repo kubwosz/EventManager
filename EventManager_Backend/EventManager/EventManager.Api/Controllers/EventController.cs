@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
+using EventManager.Api.ViewModels;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,7 +37,7 @@ namespace EventManager.Api.Controllers
         [Route("")]
         public IActionResult Put([FromBody] EventDto updateEventDto)
         {
-            if (updateEventDto.Id!=0 && !ModelState.IsValid)
+            if (updateEventDto.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
