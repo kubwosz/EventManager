@@ -7,15 +7,10 @@ namespace EventManager.Domain.IServices
 {
     public interface IEventService
     {
-        EventDto CreateEvent(CreateEventDto addEventDto);
-
-
-        EventDto UpdateEvent(UpdateEventDto updateEventDto);
-
-
+        EventDto CreateEvent(EventDto addEventDto);
+        EventDto UpdateEvent(EventDto updateEventDto);
         List<EventDto> GetAll();
-
-
+        EventDto GetOne(int id);
         bool DeleteEvent(int id);
     }
 }

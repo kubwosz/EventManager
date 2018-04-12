@@ -12,16 +12,16 @@ namespace EventManager.Api.AutoMapper
     {
         public MappingsProfile()
         {
-            CreateMap<CreateEventDto, Event>();
-            CreateMap<UpdateEventDto, Event>();
+            CreateMap<EventDto, Event>();
+            CreateMap<EventDto, Event>();
             CreateMap<Event, EventDto>();
 
-            CreateMap<AddLectureDto, Lecture>();
-            CreateMap<UpdateLectureDto, Lecture>();
+            CreateMap<LectureDto, Lecture>();
+            CreateMap<LectureDto, Lecture>();
             CreateMap<Lecture, LectureDto>();
 
-            CreateMap<CreateReviewDto, Review>();
-            CreateMap<UpdateReviewDto, Review>();
+            CreateMap<ReviewDto, Review>();
+            CreateMap<ReviewDto, Review>();
             CreateMap<Review, ReviewDto>();
         }
     }

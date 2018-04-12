@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/review")]
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
@@ -21,15 +21,25 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Reviews")]
-        public IActionResult GetAllReviews()
+        [Route("")]
+        public IActionResult Get()
         {
             return Ok(_reviewService.GetAll());
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            if (_reviewService.GetOne(id) == null)
+                return BadRequest();
+
+            return Ok(_reviewService.GetOne(id));
+        }
+
         [HttpPost]
-        [Route("CreateReview")]
-        public IActionResult CreateReview([FromBody] CreateReviewDto createReviewDto)
+        [Route("")]
+        public IActionResult Post([FromBody] ReviewDto createReviewDto)
         {
             if (!ModelState.IsValid)
             {
@@ -40,8 +50,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateReview")]
-        public IActionResult UpdateReview([FromBody] UpdateReviewDto updateReviewDto)
+        [Route("")]
+        public IActionResult Put([FromBody] ReviewDto updateReviewDto)
         {
             if (updateReviewDto.Id != 0 && !ModelState.IsValid)
             {
@@ -52,8 +62,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteReview/{id}")]
-        public IActionResult DeleteReview(int id)
+        [Route("{id}")]
+        public IActionResult Delete(int id)
         {
             if (!_reviewService.DeleteReview(id))
             {

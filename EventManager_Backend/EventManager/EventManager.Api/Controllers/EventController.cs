@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/event")]
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
@@ -21,8 +21,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPost]
-        [Route("CreateEvent")]
-        public IActionResult CreateEvent([FromBody] CreateEventDto createEventDto)
+        [Route("")]
+        public IActionResult Post([FromBody] EventDto createEventDto)
         {
             if (!ModelState.IsValid)
             {
@@ -33,8 +33,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateEvent")]
-        public IActionResult UpdateEvent([FromBody] UpdateEventDto updateEventDto)
+        [Route("")]
+        public IActionResult Put([FromBody] EventDto updateEventDto)
         {
             if (updateEventDto.Id!=0 && !ModelState.IsValid)
             {
@@ -45,15 +45,25 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Events")]
-        public IActionResult GetAllEvents()
+        [Route("")]
+        public IActionResult Get()
         {
             return Ok(_eventService.GetAll());
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            if (_eventService.GetOne(id) == null)
+                return BadRequest();
+
+            return Ok(_eventService.GetOne(id));
+        }
+
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteEvent(int id)
+        public IActionResult Delete(int id)
         {
             if (!_eventService.DeleteEvent(id))
             {

@@ -7,9 +7,10 @@ namespace EventManager.Domain.IServices
 {
     public interface ILectureService
     {
-        LectureDto AddLecture(AddLectureDto addLectureDto);
+        LectureDto AddLecture(LectureDto addLectureDto);
         List<LectureDto> GetAll();
-        LectureDto UpdateLecture(UpdateLectureDto updateLectureDto);
+        LectureDto UpdateLecture(LectureDto updateLectureDto);
+        LectureDto GetOne(int id);
         bool Delete(int id);
     }
 }

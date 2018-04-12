@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/lecture")]
     public class LectureController : Controller
     {
         private readonly ILectureService _lectureService;
@@ -21,8 +21,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPost]
-        [Route("CreateLecture")]
-        public IActionResult CreateLecture([FromBody] AddLectureDto addLectureDto)
+        [Route("")]
+        public IActionResult Post([FromBody] LectureDto addLectureDto)
         {
             if (!ModelState.IsValid)
             {
@@ -33,15 +33,25 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Lectures")]
-        public IActionResult GetAll()
+        [Route("")]
+        public IActionResult Get()
         {
             return Ok(_lectureService.GetAll());
         }
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            if (_lectureService.GetOne(id) == null)
+                return BadRequest();
+
+            return Ok(_lectureService.GetOne(id));
+        }
+        
 
         [HttpPut]
-        [Route("UpdateLecture")]
-        public IActionResult UpdateLecture([FromBody] UpdateLectureDto updateLectureDto)
+        [Route("")]
+        public IActionResult Put([FromBody] LectureDto updateLectureDto)
         {
             if (updateLectureDto.Id != 0 && !ModelState.IsValid)
             {
@@ -52,8 +62,8 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpDelete] 
-        [Route("DeleteLecture/{id}")]
-        public IActionResult DeleteLecture(int id)
+        [Route("{id}")]
+        public IActionResult Delete(int id)
         {
             if (!_lectureService.Delete(id))
                 return BadRequest();

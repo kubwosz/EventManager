@@ -20,7 +20,7 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public ReviewDto CreateReview(CreateReviewDto addReviewDto)
+        public ReviewDto CreateReview(ReviewDto addReviewDto)
         {
             if (!(_context.SimpleUsers.Any(x => x.Id == addReviewDto.ReviewerId) && _context.Lectures.Any(x=> x.Id == addReviewDto.LectureId)))
             {
@@ -37,7 +37,7 @@ namespace EventManager.Domain.Services
             return reviewDto;
         }
 
-        public ReviewDto UpdateReview(UpdateReviewDto updateReviewDto)
+        public ReviewDto UpdateReview(ReviewDto updateReviewDto)
         {
             var review = _iMapper.Map<Review>(updateReviewDto);
 
@@ -51,7 +51,7 @@ namespace EventManager.Domain.Services
 
         public List<ReviewDto> GetAll()
         {
-            var reviews = _context.Reviews.Select(x => x);
+            var reviews = _context.Reviews;
 
             if (reviews == null)
                 return null;
@@ -59,6 +59,20 @@ namespace EventManager.Domain.Services
             List<ReviewDto> reviewDtoList = _iMapper.Map<List<ReviewDto>>(reviews);
 
             return reviewDtoList;
+        }
+
+        public ReviewDto GetOne(int id)
+        {
+            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+
+            if(review == null)
+            {
+                return null;
+            }
+
+            ReviewDto reviewDto = _iMapper.Map<ReviewDto>(review);
+
+            return reviewDto;
         }
 
         public bool DeleteReview(int id)

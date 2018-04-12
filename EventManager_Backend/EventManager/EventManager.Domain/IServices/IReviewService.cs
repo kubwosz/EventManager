@@ -7,9 +7,10 @@ namespace EventManager.Domain.IServices
 {
     public interface IReviewService
     {
-        ReviewDto CreateReview(CreateReviewDto addReviewDto);
-        ReviewDto UpdateReview(UpdateReviewDto updateReviewDto);
+        ReviewDto CreateReview(ReviewDto addReviewDto);
+        ReviewDto UpdateReview(ReviewDto updateReviewDto);
         List<ReviewDto> GetAll();
+        ReviewDto GetOne(int id);
         bool DeleteReview(int id);
     }
 }

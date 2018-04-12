@@ -20,7 +20,7 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public EventDto CreateEvent(CreateEventDto addEventDto)
+        public EventDto CreateEvent(EventDto addEventDto)
         {
             if(!_context.SimpleUsers.Any(x=>x.Id == addEventDto.OwnerId))
             {
@@ -37,7 +37,7 @@ namespace EventManager.Domain.Services
             return eventDto;
         }
 
-        public EventDto UpdateEvent(UpdateEventDto updateEventDto)
+        public EventDto UpdateEvent(EventDto updateEventDto)
         {
             var @event = _iMapper.Map<Event>(updateEventDto);
 
@@ -49,6 +49,19 @@ namespace EventManager.Domain.Services
             return eventDto;
         }
 
+        public EventDto GetOne(int id)
+        {
+            var evt = _context.Events.FirstOrDefault(x => x.Id == id);
+
+            if (evt == null)
+            {
+                return null;
+            }
+
+            EventDto eventDto = _iMapper.Map<EventDto>(evt);
+
+            return eventDto;
+        }
         public List<EventDto> GetAll()
         {
             var events = _context.Events;
