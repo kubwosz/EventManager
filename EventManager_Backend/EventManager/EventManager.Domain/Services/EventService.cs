@@ -51,14 +51,14 @@ namespace EventManager.Domain.Services
 
         public EventDto GetOne(int id)
         {
-            var evt = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
 
-            if (evt == null)
+            if (@event == null)
             {
                 return null;
             }
 
-            EventDto eventDto = _iMapper.Map<EventDto>(evt);
+            EventDto eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
@@ -84,8 +84,9 @@ namespace EventManager.Domain.Services
             }
 
             _context.Events.Remove(@event);
-            _context.SaveChanges();
-            return true;
+
+            var result = _context.SaveChanges();
+            return result > 0;
         }
     }
 }

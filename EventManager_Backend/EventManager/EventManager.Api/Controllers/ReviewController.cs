@@ -24,17 +24,19 @@ namespace EventManager.Api.Controllers
         [Route("")]
         public IActionResult Get()
         {
-            return Ok(_reviewService.GetAll());
+            var result = _reviewService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            if (_reviewService.GetOne(id) == null)
+            var result = _reviewService.GetOne(id);
+            if (result == null)
                 return BadRequest();
 
-            return Ok(_reviewService.GetOne(id));
+            return Ok(result);
         }
 
         [HttpPost]
@@ -46,29 +48,33 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(_reviewService.CreateReview(createReviewDto));
+            var result = _reviewService.CreateReview(createReviewDto);
+            return Ok(result);
         }
 
         [HttpPut]
         [Route("")]
         public IActionResult Put([FromBody] ReviewDto updateReviewDto)
         {
-            if (updateReviewDto.Id != 0 && !ModelState.IsValid)
+            if (updateReviewDto.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_reviewService.UpdateReview(updateReviewDto));
+            var result = _reviewService.UpdateReview(updateReviewDto);
+            return Ok(result);
         }
 
         [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
-            if (!_reviewService.DeleteReview(id))
+            var result = _reviewService.DeleteReview(id);
+            if (!result)
             {
                 return BadRequest();
             }
+
             return Ok();
         }
     }

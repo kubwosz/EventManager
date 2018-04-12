@@ -21,6 +21,25 @@ namespace EventManager.Api.Controllers
             _eventService = eventService;
         }
 
+        [HttpGet]
+        [Route("")]
+        public IActionResult Get()
+        {
+            var result = _eventService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            if (_eventService.GetOne(id) == null)
+                return BadRequest();
+
+            var result = _eventService.GetOne(id);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("")]
         public IActionResult Post([FromBody] EventDto createEventDto)
@@ -30,7 +49,8 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(_eventService.CreateEvent(createEventDto));
+            var result = _eventService.CreateEvent(createEventDto);
+            return Ok(result);
         }
 
         [HttpPut]
@@ -42,24 +62,9 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(_eventService.UpdateEvent(updateEventDto));
-        }
+            var result = _eventService.UpdateEvent(updateEventDto);
+            return Ok(result);
 
-        [HttpGet]
-        [Route("")]
-        public IActionResult Get()
-        {
-            return Ok(_eventService.GetAll());
-        }
-
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult Get(int id)
-        {
-            if (_eventService.GetOne(id) == null)
-                return BadRequest();
-
-            return Ok(_eventService.GetOne(id));
         }
 
         [HttpDelete]

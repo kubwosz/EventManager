@@ -75,14 +75,15 @@ namespace EventManager.Domain.Services
       
         public bool Delete(int id)
         {
-            var result = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
 
-            if (result == null)
+            if (lecture == null)
                 return false;
 
-            _context.Lectures.Remove(result);
-            _context.SaveChanges();
-            return true;
+            _context.Lectures.Remove(lecture);
+
+            var result = _context.SaveChanges();
+            return result > 0;
         }
     }
 }

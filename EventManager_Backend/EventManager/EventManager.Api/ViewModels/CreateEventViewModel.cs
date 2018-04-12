@@ -8,7 +8,6 @@ namespace EventManager.Api.ViewModels
 {
     public class CreateEventViewModel
     {
-
         [Required]
         public int OwnerId { get; set; }
 

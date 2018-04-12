@@ -85,8 +85,9 @@ namespace EventManager.Domain.Services
             }
 
             _context.Reviews.Remove(review);
-            _context.SaveChanges();
-            return true;
+
+            var result = _context.SaveChanges();
+            return result > 0;
         }
     }
 }

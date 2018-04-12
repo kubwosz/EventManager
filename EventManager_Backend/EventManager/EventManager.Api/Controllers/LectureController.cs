@@ -20,6 +20,25 @@ namespace EventManager.Api.Controllers
             _lectureService = lectureService;
         }
 
+        [HttpGet]
+        [Route("")]
+        public IActionResult Get()
+        {
+            var result = _lectureService.GetAll();
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var result = _lectureService.GetOne(id);
+
+            if (result == null)
+                return BadRequest();
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("")]
         public IActionResult Post([FromBody] LectureDto addLectureDto)
@@ -29,44 +48,32 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            return Ok(_lectureService.AddLecture(addLectureDto));
+            var result = _lectureService.AddLecture(addLectureDto);
+            return Ok(result);
         }
-
-        [HttpGet]
-        [Route("")]
-        public IActionResult Get()
-        {
-            return Ok(_lectureService.GetAll());
-        }
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult Get(int id)
-        {
-            if (_lectureService.GetOne(id) == null)
-                return BadRequest();
-
-            return Ok(_lectureService.GetOne(id));
-        }
-        
 
         [HttpPut]
         [Route("")]
         public IActionResult Put([FromBody] LectureDto updateLectureDto)
         {
-            if (updateLectureDto.Id != 0 && !ModelState.IsValid)
+            if (updateLectureDto.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_lectureService.UpdateLecture(updateLectureDto));
+            var result = _lectureService.UpdateLecture(updateLectureDto);
+            return Ok(result);
         }
 
         [HttpDelete] 
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
-            if (!_lectureService.Delete(id))
+            var result = _lectureService.Delete(id);
+
+            if (!result)
                 return BadRequest();
+
             return Ok();
         }
     }
