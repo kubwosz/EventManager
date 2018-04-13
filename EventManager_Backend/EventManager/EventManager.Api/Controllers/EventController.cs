@@ -15,10 +15,12 @@ namespace EventManager.Api.Controllers
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
+        private readonly IMapper _iMapper;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, IMapper iMapper)
         {
             _eventService = eventService;
+            _iMapper = iMapper;
         }
 
         [HttpGet]
@@ -42,29 +44,34 @@ namespace EventManager.Api.Controllers
 
         [HttpPost]
         [Route("")]
-        public IActionResult Post([FromBody] EventDto createEventDto)
+        public IActionResult Post([FromBody] CreateEventViewModel createEventViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = _eventService.CreateEvent(createEventDto);
-            return Ok(result);
+            var eventDto = _iMapper.Map<EventDto>(createEventViewModel);
+
+            createEventViewModel = _iMapper.Map<CreateEventViewModel>(_eventService.CreateEvent(eventDto));
+
+            return Ok(createEventViewModel);
         }
 
         [HttpPut]
         [Route("")]
-        public IActionResult Put([FromBody] EventDto updateEventDto)
+        public IActionResult Put([FromBody] UpdateEventViewModel updateEventViewModel)
         {
-            if (updateEventDto.Id == 0 || !ModelState.IsValid)
+            if (updateEventViewModel.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = _eventService.UpdateEvent(updateEventDto);
-            return Ok(result);
+            var eventDto = _iMapper.Map<EventDto>(updateEventViewModel);
 
+            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(_eventService.UpdateEvent(eventDto));
+
+            return Ok(updateEventViewModel);
         }
 
         [HttpDelete]

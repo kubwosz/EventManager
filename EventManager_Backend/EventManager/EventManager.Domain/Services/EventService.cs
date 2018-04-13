@@ -2,6 +2,7 @@
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,31 +21,31 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public EventDto CreateEvent(EventDto addEventDto)
+        public EventDto CreateEvent(EventDto eventDto)
         {
-            if(!_context.SimpleUsers.Any(x=>x.Id == addEventDto.OwnerId))
+            if(!_context.SimpleUsers.Any(x=>x.Id == eventDto.OwnerId))
             {
                 return null;
             }
 
-            var @event = _iMapper.Map<Event>(addEventDto);
+            var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
             _context.SaveChanges();
 
-            var eventDto = _iMapper.Map<EventDto>(@event);
+           eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
-        public EventDto UpdateEvent(EventDto updateEventDto)
+        public EventDto UpdateEvent(EventDto eventDto)
         {
-            var @event = _iMapper.Map<Event>(updateEventDto);
+            var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Update(@event);
             _context.SaveChanges();
 
-            var eventDto = _iMapper.Map<EventDto>(@event);
+            eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }

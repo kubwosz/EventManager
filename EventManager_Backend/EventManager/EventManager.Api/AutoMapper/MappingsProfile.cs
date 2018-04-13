@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
+using EventManager.Api.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,18 @@ namespace EventManager.Api.AutoMapper
     {
         public MappingsProfile()
         {
+            CreateMap<CreateEventViewModel, EventDto>();
+            CreateMap<UpdateEventViewModel, EventDto>();
+            CreateMap<EventDto, CreateEventViewModel>();
+            CreateMap<EventDto, UpdateEventViewModel>();
             CreateMap<EventDto, Event>();
-            CreateMap<EventDto, Event>();
-            CreateMap<Event, EventDto>();
 
-            CreateMap<LectureDto, Lecture>();
-            CreateMap<LectureDto, Lecture>();
+            CreateMap<CreateLectureViewModel, LectureDto>();
+            CreateMap<UpdateLectureViewModel, LectureDto>();
             CreateMap<Lecture, LectureDto>();
 
-            CreateMap<ReviewDto, Review>();
-            CreateMap<ReviewDto, Review>();
+            CreateMap<CreateLectureViewModel, ReviewDto>();
+            CreateMap<UpdateLectureViewModel, ReviewDto>();
             CreateMap<Review, ReviewDto>();
         }
     }
