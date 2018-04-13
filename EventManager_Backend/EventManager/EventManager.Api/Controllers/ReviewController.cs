@@ -21,7 +21,6 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public IActionResult Get()
         {
             var result = _reviewService.GetAll();
@@ -40,7 +39,6 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPost]
-        [Route("")]
         public IActionResult Post([FromBody] ReviewDto createReviewDto)
         {
             if (!ModelState.IsValid)
@@ -53,7 +51,6 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPut]
-        [Route("")]
         public IActionResult Put([FromBody] ReviewDto updateReviewDto)
         {
             if (updateReviewDto.Id == 0 || !ModelState.IsValid)

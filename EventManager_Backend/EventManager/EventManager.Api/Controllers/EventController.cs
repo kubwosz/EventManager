@@ -24,7 +24,6 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("")]
         public IActionResult Get()
         {
             var result = _eventService.GetAll();
@@ -43,7 +42,6 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPost]
-        [Route("")]
         public IActionResult Post([FromBody] CreateEventViewModel createEventViewModel)
         {
             if (!ModelState.IsValid)
@@ -52,14 +50,13 @@ namespace EventManager.Api.Controllers
             }
 
             var eventDto = _iMapper.Map<EventDto>(createEventViewModel);
+            var result = _eventService.CreateEvent(eventDto);
 
-            createEventViewModel = _iMapper.Map<CreateEventViewModel>(_eventService.CreateEvent(eventDto));
-
+            createEventViewModel = _iMapper.Map<CreateEventViewModel>(result);
             return Ok(createEventViewModel);
         }
 
         [HttpPut]
-        [Route("")]
         public IActionResult Put([FromBody] UpdateEventViewModel updateEventViewModel)
         {
             if (updateEventViewModel.Id == 0 || !ModelState.IsValid)
@@ -69,7 +66,8 @@ namespace EventManager.Api.Controllers
 
             var eventDto = _iMapper.Map<EventDto>(updateEventViewModel);
 
-            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(_eventService.UpdateEvent(eventDto));
+            var result = _eventService.UpdateEvent(eventDto);
+            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(result);
 
             return Ok(updateEventViewModel);
         }
