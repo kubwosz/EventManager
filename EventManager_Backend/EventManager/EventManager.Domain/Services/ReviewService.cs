@@ -51,7 +51,7 @@ namespace EventManager.Domain.Services
 
         public List<ReviewDto> GetAll()
         {
-            var reviews = _context.Reviews.Select(x => x);
+            var reviews = _context.Reviews;
 
             if (reviews == null)
                 return null;
@@ -63,7 +63,7 @@ namespace EventManager.Domain.Services
 
         public bool DeleteReview(int id)
         {
-            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+            var review = _context.Reviews.SingleOrDefault(x => x.Id == id);
 
             if(review == null)
             {
@@ -71,8 +71,7 @@ namespace EventManager.Domain.Services
             }
 
             _context.Reviews.Remove(review);
-            _context.SaveChanges();
-            return true;
+            return _context.SaveChanges() > 0;
         }
     }
 }

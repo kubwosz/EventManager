@@ -22,7 +22,15 @@ namespace EventManager.Domain.Services
 
         public LectureDto AddLecture(AddLectureDto addLectureDto)
         {
-            if (!_context.Events.Any(x => x.Id == addLectureDto.EventId))
+            var @event = _context.Events.SingleOrDefault(x => x.Id == addLectureDto.EventId);
+
+            if (@event == null)
+                return null;
+            if ( DateTime.Compare(addLectureDto.StartDate, addLectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.StartDate, addLectureDto.StartDate) > 0
+                || DateTime.Compare(@event.EndDate, addLectureDto.StartDate) <= 0
+                || DateTime.Compare(@event.StartDate, addLectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.EndDate, addLectureDto.EndDate) < 0)
                 return null;
 
             var lecture = _iMapper.Map<Lecture>(addLectureDto);
@@ -61,14 +69,13 @@ namespace EventManager.Domain.Services
       
         public bool Delete(int id)
         {
-            var result = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var result = _context.Lectures.SingleOrDefault(x => x.Id == id);
 
             if (result == null)
                 return false;
 
             _context.Lectures.Remove(result);
-            _context.SaveChanges();
-            return true;
+            return _context.SaveChanges() > 0;
         }
     }
 }

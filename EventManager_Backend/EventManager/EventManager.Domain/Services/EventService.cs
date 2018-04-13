@@ -27,6 +27,12 @@ namespace EventManager.Domain.Services
                 return null;
             }
 
+            if(DateTime.Compare(addEventDto.StartDate, DateTime.Now) <= 0
+                || DateTime.Compare(addEventDto.StartDate, addEventDto.EndDate) >= 0)
+            {
+                return null;
+            }
+            
             var @event = _iMapper.Map<Event>(addEventDto);
 
             _context.Events.Add(@event);
@@ -63,7 +69,7 @@ namespace EventManager.Domain.Services
 
         public bool DeleteEvent(int id)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.SingleOrDefault(x => x.Id == id);
 
             if (@event == null)
             {
@@ -71,8 +77,7 @@ namespace EventManager.Domain.Services
             }
 
             _context.Events.Remove(@event);
-            _context.SaveChanges();
-            return true;
+            return _context.SaveChanges() > 0;
         }
     }
 }
