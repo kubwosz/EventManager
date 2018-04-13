@@ -2,10 +2,9 @@ using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace EventManager.Domain.Services
 {

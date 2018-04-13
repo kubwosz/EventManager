@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EventManager.Api.ViewModels;
-using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
-using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManager.Api.Controllers
@@ -28,7 +22,9 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _lectureService.GetAll();
-            return Ok(result);
+            var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
+
+            return Ok(lectureViewModel);
         }
         [HttpGet]
         [Route("{id}")]
@@ -38,6 +34,8 @@ namespace EventManager.Api.Controllers
 
             if (result == null)
                 return BadRequest();
+
+            var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
 
             return Ok(result);
         }

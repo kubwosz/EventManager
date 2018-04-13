@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using EventManager.Api.AutoMapper;
-using EventManager.Domain;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Builder;

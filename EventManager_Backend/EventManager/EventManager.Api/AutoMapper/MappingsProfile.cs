@@ -2,10 +2,6 @@
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
 using EventManager.Api.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventManager.Api.AutoMapper
 {
@@ -18,18 +14,23 @@ namespace EventManager.Api.AutoMapper
             CreateMap<EventDto, CreateEventViewModel>();
             CreateMap<EventDto, UpdateEventViewModel>();
             CreateMap<EventDto, Event>();
+            CreateMap<EventDto, EventViewModel>();
 
             CreateMap<CreateLectureViewModel, LectureDto>();
             CreateMap<UpdateLectureViewModel, LectureDto>();
             CreateMap<LectureDto, CreateLectureViewModel>();
             CreateMap<LectureDto, UpdateLectureViewModel>();
             CreateMap<LectureDto, Lecture>();
+            CreateMap<LectureDto, LectureViewModel>();
+
 
             CreateMap<CreateReviewViewModel, ReviewDto>();
             CreateMap<UpdateReviewViewModel, ReviewDto>();
             CreateMap<ReviewDto, CreateReviewViewModel>();
             CreateMap<ReviewDto, UpdateReviewViewModel>();
             CreateMap<ReviewDto, Review>();
+            CreateMap<ReviewDto, ReviewViewModel>();
+
         }
     }
 }

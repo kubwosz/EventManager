@@ -2,12 +2,7 @@
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
-using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventManager.Api.Controllers
 {
@@ -27,18 +22,23 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _eventService.GetAll();
-            return Ok(result);
+            var eventViewModel = _iMapper.Map<EventViewModel>(result);
+
+            return Ok(eventViewModel);
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            if (_eventService.GetOne(id) == null)
-                return BadRequest();
-
             var result = _eventService.GetOne(id);
-            return Ok(result);
+
+            if (result == null)
+                return BadRequest();
+            
+            var eventViewModel = _iMapper.Map<EventViewModel>(result);
+
+            return Ok(eventViewModel);
         }
 
         [HttpPost]

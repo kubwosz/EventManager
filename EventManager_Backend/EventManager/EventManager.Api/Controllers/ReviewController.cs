@@ -2,12 +2,8 @@ using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
-using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace EventManager.Api.Controllers
 {
@@ -27,6 +23,8 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _reviewService.GetAll();
+            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
+
             return Ok(result);
         }
 
@@ -35,8 +33,11 @@ namespace EventManager.Api.Controllers
         public IActionResult Get(int id)
         {
             var result = _reviewService.GetOne(id);
+
             if (result == null)
                 return BadRequest();
+
+            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
 
             return Ok(result);
         }
