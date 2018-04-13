@@ -20,17 +20,17 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public LectureDto AddLecture(LectureDto addLectureDto)
+        public LectureDto AddLecture(LectureDto lectureDto)
         {
-            if (!_context.Events.Any(x => x.Id == addLectureDto.EventId))
+            if (!_context.Events.Any(x => x.Id == lectureDto.EventId))
                 return null;
 
-            var lecture = _iMapper.Map<Lecture>(addLectureDto);
+            var lecture = _iMapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Add(lecture);
             _context.SaveChanges();
 
-            var lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = _iMapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
@@ -61,14 +61,14 @@ namespace EventManager.Domain.Services
             return lectureDto;
         }
 
-        public LectureDto UpdateLecture(LectureDto updateLectureDto)
+        public LectureDto UpdateLecture(LectureDto lectureDto)
         {
-            var lecture = _iMapper.Map<Lecture>(updateLectureDto);
+            var lecture = _iMapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Update(lecture);
             _context.SaveChanges();
 
-            var lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = _iMapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }

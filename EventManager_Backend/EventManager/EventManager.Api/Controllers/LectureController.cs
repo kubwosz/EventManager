@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EventManager.Api.ViewModels;
 using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
@@ -14,10 +16,12 @@ namespace EventManager.Api.Controllers
     public class LectureController : Controller
     {
         private readonly ILectureService _lectureService;
+        private readonly IMapper _iMapper;
 
-        public LectureController(ILectureService lectureService)
+        public LectureController(ILectureService lectureService, IMapper iMapper)
         {
             _lectureService = lectureService;
+            _iMapper = iMapper;
         }
 
         [HttpGet]
@@ -39,27 +43,35 @@ namespace EventManager.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] LectureDto addLectureDto)
+        public IActionResult Post([FromBody] CreateLectureViewModel createLectureViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = _lectureService.AddLecture(addLectureDto);
-            return Ok(result);
+            var lectureDto = _iMapper.Map<LectureDto>(createLectureViewModel);
+            var result = _lectureService.AddLecture(lectureDto);
+
+            createLectureViewModel = _iMapper.Map<CreateLectureViewModel>(result);
+
+            return Ok(createLectureViewModel);
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] LectureDto updateLectureDto)
+        public IActionResult Put([FromBody] UpdateLectureViewModel updateLectureViewModel)
         {
-            if (updateLectureDto.Id == 0 || !ModelState.IsValid)
+            if (updateLectureViewModel.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var result = _lectureService.UpdateLecture(updateLectureDto);
-            return Ok(result);
+            var lectureDto = _iMapper.Map<LectureDto>(updateLectureViewModel);
+
+            var result = _lectureService.UpdateLecture(lectureDto);
+            updateLectureViewModel = _iMapper.Map<UpdateLectureViewModel>(result);
+
+            return Ok(updateLectureViewModel);
         }
 
         [HttpDelete] 

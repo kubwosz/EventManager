@@ -20,31 +20,31 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public ReviewDto CreateReview(ReviewDto addReviewDto)
+        public ReviewDto CreateReview(ReviewDto reviewDto)
         {
-            if (!(_context.SimpleUsers.Any(x => x.Id == addReviewDto.ReviewerId) && _context.Lectures.Any(x=> x.Id == addReviewDto.LectureId)))
+            if (!(_context.SimpleUsers.Any(x => x.Id == reviewDto.ReviewerId) && _context.Lectures.Any(x=> x.Id == reviewDto.LectureId)))
             {
                 return null;
             }
 
-            var review = _iMapper.Map<Review>(addReviewDto);
+            var review = _iMapper.Map<Review>(reviewDto);
 
             _context.Reviews.Add(review);
             _context.SaveChanges();
 
-            var reviewDto = _iMapper.Map<ReviewDto>(review);
+            reviewDto = _iMapper.Map<ReviewDto>(review);
 
             return reviewDto;
         }
 
-        public ReviewDto UpdateReview(ReviewDto updateReviewDto)
+        public ReviewDto UpdateReview(ReviewDto reviewDto)
         {
-            var review = _iMapper.Map<Review>(updateReviewDto);
+            var review = _iMapper.Map<Review>(reviewDto);
 
             _context.Reviews.Update(review);
             _context.SaveChanges();
 
-            var reviewDto = _iMapper.Map<ReviewDto>(review);
+            reviewDto = _iMapper.Map<ReviewDto>(review);
 
             return reviewDto;
         }
