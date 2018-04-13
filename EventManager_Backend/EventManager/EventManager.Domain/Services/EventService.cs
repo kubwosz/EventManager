@@ -14,9 +14,9 @@ namespace EventManager.Domain.Services
         private readonly EventManagerContext _context;
         private readonly IMapper _iMapper;
 
-        public EventService(IMapper iMapper)
+        public EventService(IMapper iMapper, EventManagerContext context)
         {
-            _context = new EventManagerContext();
+            _context = context;
             _iMapper = iMapper;
         }
 
