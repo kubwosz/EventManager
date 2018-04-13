@@ -21,11 +21,15 @@ namespace EventManager.Api.AutoMapper
 
             CreateMap<CreateLectureViewModel, LectureDto>();
             CreateMap<UpdateLectureViewModel, LectureDto>();
-            CreateMap<Lecture, LectureDto>();
+            CreateMap<LectureDto, CreateLectureViewModel>();
+            CreateMap<LectureDto, UpdateLectureViewModel>();
+            CreateMap<LectureDto, Lecture>();
 
-            CreateMap<CreateLectureViewModel, ReviewDto>();
-            CreateMap<UpdateLectureViewModel, ReviewDto>();
-            CreateMap<Review, ReviewDto>();
+            CreateMap<CreateReviewViewModel, ReviewDto>();
+            CreateMap<UpdateReviewViewModel, ReviewDto>();
+            CreateMap<ReviewDto, CreateReviewViewModel>();
+            CreateMap<ReviewDto, UpdateReviewViewModel>();
+            CreateMap<ReviewDto, Review>();
         }
     }
 }
