@@ -63,14 +63,14 @@ namespace EventManager.Domain.Services
 
         public bool DeleteReview(int id)
         {
-            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+            var review = _context.Reviews.SingleOrDefault(x => x.Id == id);
 
             if(review == null)
             {
                 return false;
             }
 
-            _context.Reviews.Remove(review)
+            _context.Reviews.Remove(review);
             return _context.SaveChanges() > 0;
         }
     }
