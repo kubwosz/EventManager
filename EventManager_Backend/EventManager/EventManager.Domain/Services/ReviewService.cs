@@ -51,7 +51,7 @@ namespace EventManager.Domain.Services
 
         public List<ReviewDto> GetAll()
         {
-            var reviews = _context.Reviews.Select(x => x);
+            var reviews = _context.Reviews;
 
             if (reviews == null)
                 return null;
@@ -70,9 +70,8 @@ namespace EventManager.Domain.Services
                 return false;
             }
 
-            _context.Reviews.Remove(review);
-            _context.SaveChanges();
-            return true;
+            _context.Reviews.Remove(review)
+            return _context.SaveChanges() > 0;
         }
     }
 }
