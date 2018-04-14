@@ -15,6 +15,10 @@ namespace EventManager.Api
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .ConfigureAppConfiguration((hostingContext, config) => {
+                    config.Sources.Clear();
+                    config.AddJsonFile("appsettings.json", optional: true);
+                })
                 .Build();
     }
 }

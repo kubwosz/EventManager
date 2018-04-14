@@ -13,9 +13,9 @@ namespace EventManager.Domain.Services
         private readonly EventManagerContext _context;
         private readonly IMapper _iMapper;
 
-        public ReviewService(IMapper iMapper)
+        public ReviewService(IMapper iMapper, EventManagerContext context)
         {
-            _context = new EventManagerContext();
+            _context = context;
             _iMapper = iMapper;
         }
 
@@ -76,7 +76,7 @@ namespace EventManager.Domain.Services
 
         public bool DeleteReview(int id)
         {
-            var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
+            var review = _context.Reviews.SingleOrDefault(x => x.Id == id);
 
             if(review == null)
             {
@@ -84,8 +84,8 @@ namespace EventManager.Domain.Services
             }
 
             _context.Reviews.Remove(review);
-
             var result = _context.SaveChanges();
+            
             return result > 0;
         }
     }

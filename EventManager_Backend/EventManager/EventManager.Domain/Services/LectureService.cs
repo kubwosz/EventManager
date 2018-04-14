@@ -12,15 +12,23 @@ namespace EventManager.Domain.Services
         private readonly EventManagerContext _context;
         private readonly IMapper _iMapper;
 
-        public LectureService(IMapper iMapper)
+        public LectureService(IMapper iMapper, EventManagerContext context)
         {
-            _context = new EventManagerContext();
+            _context = context;
             _iMapper = iMapper;
         }
 
         public LectureDto AddLecture(LectureDto lectureDto)
         {
-            if (!_context.Events.Any(x => x.Id == lectureDto.EventId))
+            var @event = _context.Events.SingleOrDefault(x => x.Id == lectureDto.EventId);
+
+            if (@event == null)
+                return null;
+            if ( DateTime.Compare(lectureDto.StartDate, lectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.StartDate, lectureDto.StartDate) > 0
+                || DateTime.Compare(@event.EndDate, lectureDto.StartDate) <= 0
+                || DateTime.Compare(@event.StartDate, lectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.EndDate, lectureDto.EndDate) < 0)
                 return null;
 
             var lecture = _iMapper.Map<Lecture>(lectureDto);
@@ -79,8 +87,8 @@ namespace EventManager.Domain.Services
                 return false;
 
             _context.Lectures.Remove(lecture);
-
             var result = _context.SaveChanges();
+            
             return result > 0;
         }
     }

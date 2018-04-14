@@ -13,9 +13,9 @@ namespace EventManager.Domain.Services
         private readonly EventManagerContext _context;
         private readonly IMapper _iMapper;
 
-        public EventService(IMapper iMapper)
+        public EventService(IMapper iMapper, EventManagerContext context)
         {
-            _context = new EventManagerContext();
+            _context = context;
             _iMapper = iMapper;
         }
 
@@ -26,6 +26,12 @@ namespace EventManager.Domain.Services
                 return null;
             }
 
+            if(DateTime.Compare(eventDto.StartDate, DateTime.Now) <= 0
+                || DateTime.Compare(eventDto.StartDate, eventDto.EndDate) >= 0)
+            {
+                return null;
+            }
+            
             var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
@@ -76,7 +82,7 @@ namespace EventManager.Domain.Services
 
         public bool DeleteEvent(int id)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.SingleOrDefault(x => x.Id == id);
 
             if (@event == null)
             {
@@ -84,8 +90,8 @@ namespace EventManager.Domain.Services
             }
 
             _context.Events.Remove(@event);
-
             var result = _context.SaveChanges();
+            
             return result > 0;
         }
     }
