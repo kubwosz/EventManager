@@ -3,6 +3,7 @@ using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 
 namespace EventManager.Api.Controllers
@@ -23,9 +24,9 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _reviewService.GetAll();
-            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
+            var reviewViewModelList = _iMapper.Map<List<ReviewViewModel>>(result);
 
-            return Ok(result);
+            return Ok(reviewViewModelList);
         }
 
         [HttpGet]
@@ -39,7 +40,7 @@ namespace EventManager.Api.Controllers
 
             var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
 
-            return Ok(result);
+            return Ok(reviewViewModel);
         }
 
         [HttpPost]
