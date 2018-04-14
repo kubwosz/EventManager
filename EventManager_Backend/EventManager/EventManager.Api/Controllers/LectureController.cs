@@ -3,6 +3,7 @@ using EventManager.Api.ViewModels;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EventManager.Api.Controllers
 {
@@ -22,10 +23,11 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _lectureService.GetAll();
-            var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
+            var lectureViewModelList = _iMapper.Map<List<LectureViewModel>>(result);
 
-            return Ok(lectureViewModel);
+            return Ok(lectureViewModelList);
         }
+
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
@@ -37,7 +39,7 @@ namespace EventManager.Api.Controllers
 
             var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
 
-            return Ok(result);
+            return Ok(lectureViewModel);
         }
 
         [HttpPost]

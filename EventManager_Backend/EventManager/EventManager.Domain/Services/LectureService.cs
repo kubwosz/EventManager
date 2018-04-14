@@ -4,6 +4,7 @@ using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace EventManager.Domain.Services
 {

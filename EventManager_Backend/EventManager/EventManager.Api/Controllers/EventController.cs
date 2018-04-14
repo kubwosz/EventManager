@@ -3,6 +3,7 @@ using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EventManager.Api.Controllers
 {
@@ -22,9 +23,10 @@ namespace EventManager.Api.Controllers
         public IActionResult Get()
         {
             var result = _eventService.GetAll();
-            var eventViewModel = _iMapper.Map<EventViewModel>(result);
 
-            return Ok(eventViewModel);
+            var eventViewModelList = _iMapper.Map<List<EventViewModel>>(result);
+
+            return Ok(eventViewModelList);
         }
 
         [HttpGet]
