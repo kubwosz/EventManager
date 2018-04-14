@@ -55,6 +55,12 @@ namespace EventManager.Api.Controllers
             var result = _reviewService.CreateReview(reviewDto);
 
             createReviewViewModel = _iMapper.Map<CreateReviewViewModel>(result);
+
+            if(createReviewViewModel == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(createReviewViewModel);
         }
 
@@ -69,7 +75,13 @@ namespace EventManager.Api.Controllers
             var reviewDto = _iMapper.Map<ReviewDto>(updateReviewViewModel);
 
             var result = _reviewService.UpdateReview(reviewDto);
+         
             updateReviewViewModel = _iMapper.Map<UpdateReviewViewModel>(result);
+
+            if(updateReviewViewModel == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(updateReviewViewModel);
         }

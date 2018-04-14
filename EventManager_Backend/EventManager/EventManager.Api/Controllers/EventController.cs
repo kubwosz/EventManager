@@ -55,6 +55,12 @@ namespace EventManager.Api.Controllers
             var result = _eventService.CreateEvent(eventDto);
 
             createEventViewModel = _iMapper.Map<CreateEventViewModel>(result);
+
+            if(createEventViewModel == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(createEventViewModel);
         }
 
@@ -70,6 +76,11 @@ namespace EventManager.Api.Controllers
 
             var result = _eventService.UpdateEvent(eventDto);
             updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(result);
+            
+            if(updateEventViewModel == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(updateEventViewModel);
         }
