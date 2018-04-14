@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EventManager.Api.ViewModels;
 
 namespace EventManager.Api.AutoMapper
 {
@@ -12,17 +9,28 @@ namespace EventManager.Api.AutoMapper
     {
         public MappingsProfile()
         {
-            CreateMap<CreateEventDto, Event>();
-            CreateMap<UpdateEventDto, Event>();
-            CreateMap<Event, EventDto>();
+            CreateMap<CreateEventViewModel, EventDto>();
+            CreateMap<UpdateEventViewModel, EventDto>();
+            CreateMap<EventDto, CreateEventViewModel>();
+            CreateMap<EventDto, UpdateEventViewModel>();
+            CreateMap<EventDto, Event>();
+            CreateMap<EventDto, EventViewModel>();
 
-            CreateMap<AddLectureDto, Lecture>();
-            CreateMap<UpdateLectureDto, Lecture>();
-            CreateMap<Lecture, LectureDto>();
+            CreateMap<CreateLectureViewModel, LectureDto>();
+            CreateMap<UpdateLectureViewModel, LectureDto>();
+            CreateMap<LectureDto, CreateLectureViewModel>();
+            CreateMap<LectureDto, UpdateLectureViewModel>();
+            CreateMap<LectureDto, Lecture>();
+            CreateMap<LectureDto, LectureViewModel>();
 
-            CreateMap<CreateReviewDto, Review>();
-            CreateMap<UpdateReviewDto, Review>();
-            CreateMap<Review, ReviewDto>();
+
+            CreateMap<CreateReviewViewModel, ReviewDto>();
+            CreateMap<UpdateReviewViewModel, ReviewDto>();
+            CreateMap<ReviewDto, CreateReviewViewModel>();
+            CreateMap<ReviewDto, UpdateReviewViewModel>();
+            CreateMap<ReviewDto, Review>();
+            CreateMap<ReviewDto, ReviewViewModel>();
+
         }
     }
 }

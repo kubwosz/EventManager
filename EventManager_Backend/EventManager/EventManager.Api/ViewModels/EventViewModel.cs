@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class EventDto
+    public class EventViewModel
     {
-        public EventDto()
+        public EventViewModel()
         {
-            Lectures = new List<LectureDto>();
-            EventUsers = new List<EventUserDto>();
+            Lectures = new List<LectureViewModel>();
+            EventUsers = new List<EventUserViewModel>();
         }
 
         public int Id { get; set; }
-        
+
         public int OwnerId { get; set; }
 
         public string Name { get; set; }
@@ -25,8 +25,8 @@ namespace EventManager.Domain.Dtos
 
         public string Description { get; set; }
 
-        public List<LectureDto> Lectures { get; set; }
+        public List<LectureViewModel> Lectures { get; set; }
 
-        public List<EventUserDto> EventUsers { get; set; }
+        public List<EventUserViewModel> EventUsers { get; set; }
     }
 }

@@ -1,62 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using EventManager.Api.ViewModels;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
-using EventManager.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/lecture")]
     public class LectureController : Controller
     {
         private readonly ILectureService _lectureService;
+        private readonly IMapper _iMapper;
 
-        public LectureController(ILectureService lectureService)
+        public LectureController(ILectureService lectureService, IMapper iMapper)
         {
             _lectureService = lectureService;
+            _iMapper = iMapper;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var result = _lectureService.GetAll();
+            var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
+
+            return Ok(lectureViewModel);
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var result = _lectureService.GetOne(id);
+
+            if (result == null)
+                return BadRequest();
+
+            var lectureViewModel = _iMapper.Map<LectureViewModel>(result);
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [Route("CreateLecture")]
-        public IActionResult CreateLecture([FromBody] AddLectureDto addLectureDto)
+        public IActionResult Post([FromBody] CreateLectureViewModel createLectureViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_lectureService.AddLecture(addLectureDto));
-        }
+            var lectureDto = _iMapper.Map<LectureDto>(createLectureViewModel);
+            var result = _lectureService.AddLecture(lectureDto);
 
-        [HttpGet]
-        [Route("Lectures")]
-        public IActionResult GetAll()
-        {
-            return Ok(_lectureService.GetAll());
+            createLectureViewModel = _iMapper.Map<CreateLectureViewModel>(result);
+
+            return Ok(createLectureViewModel);
         }
 
         [HttpPut]
-        [Route("UpdateLecture")]
-        public IActionResult UpdateLecture([FromBody] UpdateLectureDto updateLectureDto)
+        public IActionResult Put([FromBody] UpdateLectureViewModel updateLectureViewModel)
         {
-            if (updateLectureDto.Id != 0 && !ModelState.IsValid)
+            if (updateLectureViewModel.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_lectureService.UpdateLecture(updateLectureDto));
+            var lectureDto = _iMapper.Map<LectureDto>(updateLectureViewModel);
+
+            var result = _lectureService.UpdateLecture(lectureDto);
+            updateLectureViewModel = _iMapper.Map<UpdateLectureViewModel>(result);
+
+            return Ok(updateLectureViewModel);
         }
 
         [HttpDelete] 
-        [Route("DeleteLecture/{id}")]
-        public IActionResult DeleteLecture(int id)
+        [Route("{id}")]
+        public IActionResult Delete(int id)
         {
-            if (!_lectureService.Delete(id))
+            var result = _lectureService.Delete(id);
+
+            if (!result)
                 return BadRequest();
+
             return Ok();
         }
     }

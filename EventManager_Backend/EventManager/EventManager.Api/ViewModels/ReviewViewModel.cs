@@ -1,9 +1,11 @@
+﻿using System;
 
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class ReviewDto
+    public class ReviewViewModel
     {
+
         public int Id { get; set; }
 
         public int LectureId { get; set; }

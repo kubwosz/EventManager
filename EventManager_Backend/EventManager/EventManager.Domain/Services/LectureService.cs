@@ -2,10 +2,8 @@ using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventManager.Domain.Services
 {
@@ -20,25 +18,25 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public LectureDto AddLecture(AddLectureDto addLectureDto)
+        public LectureDto AddLecture(LectureDto lectureDto)
         {
-            var @event = _context.Events.SingleOrDefault(x => x.Id == addLectureDto.EventId);
+            var @event = _context.Events.SingleOrDefault(x => x.Id == lectureDto.EventId);
 
             if (@event == null)
                 return null;
-            if ( DateTime.Compare(addLectureDto.StartDate, addLectureDto.EndDate) >= 0
-                || DateTime.Compare(@event.StartDate, addLectureDto.StartDate) > 0
-                || DateTime.Compare(@event.EndDate, addLectureDto.StartDate) <= 0
-                || DateTime.Compare(@event.StartDate, addLectureDto.EndDate) >= 0
-                || DateTime.Compare(@event.EndDate, addLectureDto.EndDate) < 0)
+            if ( DateTime.Compare(lectureDto.StartDate, lectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.StartDate, lectureDto.StartDate) > 0
+                || DateTime.Compare(@event.EndDate, lectureDto.StartDate) <= 0
+                || DateTime.Compare(@event.StartDate, lectureDto.EndDate) >= 0
+                || DateTime.Compare(@event.EndDate, lectureDto.EndDate) < 0)
                 return null;
 
-            var lecture = _iMapper.Map<Lecture>(addLectureDto);
+            var lecture = _iMapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Add(lecture);
             _context.SaveChanges();
 
-            var lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = _iMapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
@@ -55,27 +53,43 @@ namespace EventManager.Domain.Services
             return lectureDtoList;
         }
 
-        public LectureDto UpdateLecture(UpdateLectureDto updateLectureDto)
+        public LectureDto GetOne(int id)
         {
-            var lecture = _iMapper.Map<Lecture>(updateLectureDto);
+            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
+
+            if (lecture == null)
+            {
+                return null;
+            }
+
+            LectureDto lectureDto = _iMapper.Map<LectureDto>(lecture);
+
+            return lectureDto;
+        }
+
+        public LectureDto UpdateLecture(LectureDto lectureDto)
+        {
+            var lecture = _iMapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Update(lecture);
             _context.SaveChanges();
 
-            var lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = _iMapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
       
         public bool Delete(int id)
         {
-            var result = _context.Lectures.SingleOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
 
-            if (result == null)
+            if (lecture == null)
                 return false;
 
-            _context.Lectures.Remove(result);
-            return _context.SaveChanges() > 0;
+            _context.Lectures.Remove(lecture);
+            var result = _context.SaveChanges();
+            
+            return result > 0;
         }
     }
 }

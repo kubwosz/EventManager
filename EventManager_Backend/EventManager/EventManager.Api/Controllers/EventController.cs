@@ -1,59 +1,80 @@
 ﻿using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
-using EventManager.Domain.Services;
+using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/event")]
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
+        private readonly IMapper _iMapper;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, IMapper iMapper)
         {
             _eventService = eventService;
+            _iMapper = iMapper;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var result = _eventService.GetAll();
+            var eventViewModel = _iMapper.Map<EventViewModel>(result);
+
+            return Ok(eventViewModel);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var result = _eventService.GetOne(id);
+
+            if (result == null)
+                return BadRequest();
+            
+            var eventViewModel = _iMapper.Map<EventViewModel>(result);
+
+            return Ok(eventViewModel);
         }
 
         [HttpPost]
-        [Route("CreateEvent")]
-        public IActionResult CreateEvent([FromBody] CreateEventDto createEventDto)
+        public IActionResult Post([FromBody] CreateEventViewModel createEventViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_eventService.CreateEvent(createEventDto));
+            var eventDto = _iMapper.Map<EventDto>(createEventViewModel);
+            var result = _eventService.CreateEvent(eventDto);
+
+            createEventViewModel = _iMapper.Map<CreateEventViewModel>(result);
+            return Ok(createEventViewModel);
         }
 
         [HttpPut]
-        [Route("UpdateEvent")]
-        public IActionResult UpdateEvent([FromBody] UpdateEventDto updateEventDto)
+        public IActionResult Put([FromBody] UpdateEventViewModel updateEventViewModel)
         {
-            if (updateEventDto.Id!=0 && !ModelState.IsValid)
+            if (updateEventViewModel.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_eventService.UpdateEvent(updateEventDto));
-        }
+            var eventDto = _iMapper.Map<EventDto>(updateEventViewModel);
 
-        [HttpGet]
-        [Route("Events")]
-        public IActionResult GetAllEvents()
-        {
-            return Ok(_eventService.GetAll());
+            var result = _eventService.UpdateEvent(eventDto);
+            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(result);
+
+            return Ok(updateEventViewModel);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteEvent(int id)
+        public IActionResult Delete(int id)
         {
             if (!_eventService.DeleteEvent(id))
             {

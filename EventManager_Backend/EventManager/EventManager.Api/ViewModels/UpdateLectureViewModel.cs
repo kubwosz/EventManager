@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace EventManager.Domain.Dtos
+
+namespace EventManager.Api.ViewModels
 {
-    public class AddLectureDto
+    public class UpdateLectureViewModel
     {
-        [Required]
-        public string Name { get; set; }
+        public int Id { get; set; }
 
         public string Description { get; set; }
 
-        [Required]
+        public string Name { get; set; }
+
         public int EventId { get; set; }
 
         public int ParticipantNumber { get; set; }
 
-        [Required]
         public DateTime StartDate { get; set; }
 
-        [Required]
         public DateTime EndDate { get; set; }
+
+        public List<LectureUserViewModel> LectureUsers { get; set; }
+
+        public List<ReviewViewModel> Reviews { get; set; }
     }
 }

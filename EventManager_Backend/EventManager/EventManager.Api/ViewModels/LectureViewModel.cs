@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class UpdateLectureDto
+    public class LectureViewModel
     {
+
+        public LectureViewModel()
+        {
+            LectureUsers = new List<LectureUserViewModel>();
+            Reviews = new List<ReviewViewModel>();
+        }
+
         public int Id { get; set; }
 
         public string Description { get; set; }
@@ -20,8 +26,9 @@ namespace EventManager.Domain.Dtos
 
         public DateTime EndDate { get; set; }
 
-        public List<LectureUserDto> LectureUsers { get; set; }
+        public List<LectureUserViewModel> LectureUsers { get; set; }
 
-        public List<ReviewDto> Reviews { get; set; }
+        public List<ReviewViewModel> Reviews { get; set; }
+
     }
 }

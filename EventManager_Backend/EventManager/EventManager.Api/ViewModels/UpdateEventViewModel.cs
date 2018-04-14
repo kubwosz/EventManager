@@ -1,25 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class CreateEventDto
+    public class UpdateEventViewModel
     {
-        [Required]
+        public int Id { get; set; }
+
         public int OwnerId { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [Required]
         public DateTime StartDate { get; set; }
 
-        [Required]
         public DateTime EndDate { get; set; }
 
-        [Required]
         public int ParticipantNumber { get; set; }
 
         public string Description { get; set; }

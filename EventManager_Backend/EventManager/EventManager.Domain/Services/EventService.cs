@@ -2,10 +2,9 @@
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 
 namespace EventManager.Domain.Services
 {
@@ -20,37 +19,51 @@ namespace EventManager.Domain.Services
             _iMapper = iMapper;
         }
 
-        public EventDto CreateEvent(CreateEventDto addEventDto)
+        public EventDto CreateEvent(EventDto eventDto)
         {
-            if(!_context.SimpleUsers.Any(x=>x.Id == addEventDto.OwnerId))
+            if(!_context.SimpleUsers.Any(x=>x.Id == eventDto.OwnerId))
             {
                 return null;
             }
 
-            if(DateTime.Compare(addEventDto.StartDate, DateTime.Now) <= 0
-                || DateTime.Compare(addEventDto.StartDate, addEventDto.EndDate) >= 0)
+            if(DateTime.Compare(eventDto.StartDate, DateTime.Now) <= 0
+                || DateTime.Compare(eventDto.StartDate, eventDto.EndDate) >= 0)
             {
                 return null;
             }
             
-            var @event = _iMapper.Map<Event>(addEventDto);
+            var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
             _context.SaveChanges();
 
-            var eventDto = _iMapper.Map<EventDto>(@event);
+           eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
-        public EventDto UpdateEvent(UpdateEventDto updateEventDto)
+        public EventDto UpdateEvent(EventDto eventDto)
         {
-            var @event = _iMapper.Map<Event>(updateEventDto);
+            var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Update(@event);
             _context.SaveChanges();
 
-            var eventDto = _iMapper.Map<EventDto>(@event);
+            eventDto = _iMapper.Map<EventDto>(@event);
+
+            return eventDto;
+        }
+
+        public EventDto GetOne(int id)
+        {
+            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
+
+            if (@event == null)
+            {
+                return null;
+            }
+
+            EventDto eventDto = _iMapper.Map<EventDto>(@event);
 
             return eventDto;
         }
@@ -77,7 +90,9 @@ namespace EventManager.Domain.Services
             }
 
             _context.Events.Remove(@event);
-            return _context.SaveChanges() > 0;
+            var result = _context.SaveChanges();
+            
+            return result > 0;
         }
     }
 }

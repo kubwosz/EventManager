@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class CreateReviewDto
+    public class CreateReviewViewModel
     {
         [Required]
         public int LectureId { get; set; }
@@ -21,6 +22,5 @@ namespace EventManager.Domain.Dtos
 
         [Required]
         public int ReviewerId { get; set; }
-
     }
 }

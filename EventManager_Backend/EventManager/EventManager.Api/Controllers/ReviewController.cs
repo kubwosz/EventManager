@@ -1,64 +1,88 @@
 using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
-using EventManager.Domain.Services;
+using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace EventManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/review")]
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
+        private readonly IMapper _iMapper;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, IMapper iMapper)
         {
             _reviewService = reviewService;
+            _iMapper = iMapper;
         }
 
         [HttpGet]
-        [Route("Reviews")]
-        public IActionResult GetAllReviews()
+        public IActionResult Get()
         {
-            return Ok(_reviewService.GetAll());
+            var result = _reviewService.GetAll();
+            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var result = _reviewService.GetOne(id);
+
+            if (result == null)
+                return BadRequest();
+
+            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [Route("CreateReview")]
-        public IActionResult CreateReview([FromBody] CreateReviewDto createReviewDto)
+        public IActionResult Post([FromBody] CreateReviewViewModel createReviewViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_reviewService.CreateReview(createReviewDto));
+            var reviewDto = _iMapper.Map<ReviewDto>(createReviewViewModel);
+            var result = _reviewService.CreateReview(reviewDto);
+
+            createReviewViewModel = _iMapper.Map<CreateReviewViewModel>(result);
+            return Ok(createReviewViewModel);
         }
 
         [HttpPut]
-        [Route("UpdateReview")]
-        public IActionResult UpdateReview([FromBody] UpdateReviewDto updateReviewDto)
+        public IActionResult Put([FromBody] UpdateReviewViewModel updateReviewViewModel)
         {
-            if (updateReviewDto.Id != 0 && !ModelState.IsValid)
+            if (updateReviewViewModel.Id == 0 || !ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            return Ok(_reviewService.UpdateReview(updateReviewDto));
+            var reviewDto = _iMapper.Map<ReviewDto>(updateReviewViewModel);
+
+            var result = _reviewService.UpdateReview(reviewDto);
+            updateReviewViewModel = _iMapper.Map<UpdateReviewViewModel>(result);
+
+            return Ok(updateReviewViewModel);
         }
 
         [HttpDelete]
-        [Route("DeleteReview/{id}")]
-        public IActionResult DeleteReview(int id)
+        [Route("{id}")]
+        public IActionResult Delete(int id)
         {
-            if (!_reviewService.DeleteReview(id))
+            var result = _reviewService.DeleteReview(id);
+            if (!result)
             {
                 return BadRequest();
             }
+
             return Ok();
         }
     }

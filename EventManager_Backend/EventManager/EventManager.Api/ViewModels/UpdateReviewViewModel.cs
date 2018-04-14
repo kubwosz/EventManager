@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 
-namespace EventManager.Domain.Dtos
+namespace EventManager.Api.ViewModels
 {
-    public class UpdateReviewDto
+    public class UpdateReviewViewModel
     {
         public int Id { get; set; }
 
@@ -19,4 +17,3 @@ namespace EventManager.Domain.Dtos
         public int ReviewerId { get; set; }
     }
 }
-
