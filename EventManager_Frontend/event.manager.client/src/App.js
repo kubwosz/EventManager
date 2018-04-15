@@ -2,15 +2,36 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import HomeNavbar from './components/Navbar';
+import Event from './components/Event';
 import {Label, FormControl, Button, ButtonToolbar} from 'react-bootstrap';
+import NewEvent from './components/NewEvent';
+import { BrowserRouter, Route } from 'react-router-dom';
 
+class App extends Component {
+render() {
+  return (
+      <div className="App">
+        <BrowserRouter>
+          <div>
+              <Route path='/new' component={NewEvent}/>
+              <Route exact path='/' component={Event}/>
+          </div>
+        </BrowserRouter>
+      </div>
+  );
+}
+}
+
+
+
+/*
 class App extends Component {
   render() {
     return (
       <div className="App">
        <HomeNavbar/>
        <h1>
-     <Label>Proszę wpisać nazwę:</Label>
+     <Label>Obsługa konferencji</Label>
   </h1>
   <FormControl
             type="text"
@@ -30,9 +51,20 @@ class App extends Component {
   </ButtonToolbar>
 </div>
 
+     <h1>
+     <Label>Dodaj konferencje</Label>
+  </h1>
+
+<textarea class="form-control" rows="1">Nazwa konferencji</textarea>
+
+
+
+ <ButtonToolbar >
+<Button bsSize="large" bsStyle="primary">Dodaj konferencje</Button>
+</ButtonToolbar>
       </div>
     );
   }
 }
-
+*/
 export default App;

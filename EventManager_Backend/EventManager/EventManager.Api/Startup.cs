@@ -25,6 +25,7 @@ namespace EventManager.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
 
             services.AddAutoMapper(x=>x.AddProfile(new MappingsProfile()));
 
@@ -40,6 +41,12 @@ namespace EventManager.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMvc();
+
+            app.UseCors(builder => builder
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowAnyOrigin()
+          );
         }
     }
 }
