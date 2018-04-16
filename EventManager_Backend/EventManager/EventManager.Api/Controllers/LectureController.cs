@@ -55,6 +55,11 @@ namespace EventManager.Api.Controllers
 
             createLectureViewModel = _iMapper.Map<CreateLectureViewModel>(result);
 
+            if(createLectureViewModel == null)
+            {
+                BadRequest(); 
+            }
+
             return Ok(createLectureViewModel);
         }
 
@@ -70,6 +75,11 @@ namespace EventManager.Api.Controllers
 
             var result = _lectureService.UpdateLecture(lectureDto);
             updateLectureViewModel = _iMapper.Map<UpdateLectureViewModel>(result);
+
+            if(updateLectureViewModel == null)
+            {
+                return BadRequest();
+            }
 
             return Ok(updateLectureViewModel);
         }
