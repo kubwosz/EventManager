@@ -15,7 +15,6 @@ namespace EventManager.Api.AutoMapper
             CreateMap<EventDto, UpdateEventViewModel>();
             CreateMap<EventDto, Event>();
             CreateMap<EventDto, EventViewModel>();
-            CreateMap<EventDto, EventViewModel>();
 
             CreateMap<CreateLectureViewModel, LectureDto>();
             CreateMap<UpdateLectureViewModel, LectureDto>();
@@ -30,7 +29,6 @@ namespace EventManager.Api.AutoMapper
             CreateMap<ReviewDto, UpdateReviewViewModel>();
             CreateMap<ReviewDto, Review>();
             CreateMap<ReviewDto, ReviewViewModel>();
-            //CreateMap<ReviewDto, ReviewViewModel>();
         }
     }
 }
