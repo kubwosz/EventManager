@@ -8,36 +8,36 @@ class NewEvent extends React.Component {
     {
         super();
         this.state = {
-            eventName: '',
-            eventStartDate: '',
-            eventEndDate: '',
-            eventParticipantNumber:0,
-            eventDescription: '',
+            name: '',
+            startDate: '',
+            endDate: '',
+            participantNumber:0,
+            description: '',
         };
     }
 
     onChangeName = (event) =>{
-        this.setState({eventName: event.target.value})
+        this.setState({name: event.target.value})
     }
 
     onChangeParticipantNumber = (event) =>{
-        this.setState({eventParticipantNumber: event.target.value})
+        this.setState({participantNumber: event.target.value})
     }
 
     onChangeStartDate = (event) =>{
-        this.setState({eventStartDate: event.target.value})
+        this.setState({startDate: event.target.value})
     }
 
     onChangeEndDate = (event) =>{
-        this.setState({eventEndDate: event.target.value})
+        this.setState({endDate: event.target.value})
     }
 
     onChangeDescription = (event) =>{
-        this.setState({eventDescription: event.target.value})
+        this.setState({description: event.target.value})
     }
 
     addEvent = () => {
-        axios.post('/event', {ownerId: 1, name: this.state.eventName, participantNumber: this.state.eventParticipantNumber, startDate: this.state.eventStartDate, endDate: this.state.eventEndDate })
+        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
             .then(()=>{
             })
             .catch((err)=>{
@@ -50,11 +50,11 @@ class NewEvent extends React.Component {
             <div>
                 <div>
                     <h1>Dodawanie wydarzenia</h1>
-                    <input onChange={this.onChangeName} value={this.state.eventName} placeholder="Podaj nazwę konferencji" className="form-control"/>
+                    <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber} placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeStartDate} value={this.state.eventStartDate} placeholder="Podaj datę startu" className="form-control"/>
-                    <input onChange={this.onChangeEndDate} value={this.state.eventEndDate} placeholder="Podaj endDate" className="form-control"/>
-                    <input onChange={this.onChangeDescription} value={this.state.eventDescription} placeholder="Podaj opis" className="form-control"/>
+                    <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
+                    <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
+                    <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className="container-fluid">

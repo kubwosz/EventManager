@@ -13,7 +13,7 @@ render() {
       <div className="App">
         <BrowserRouter>
           <div>
-              <Route path='/new' component={NewEvent}/>
+              <Route path='/newEvent' component={NewEvent}/>
               <Route exact path='/' component={Event}/>
           </div>
         </BrowserRouter>
