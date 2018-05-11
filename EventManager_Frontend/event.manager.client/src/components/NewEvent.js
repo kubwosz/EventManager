@@ -32,6 +32,10 @@ class NewEvent extends React.Component {
         this.setState({eventEndDate: event.target.value})
     }
 
+    onChangeDescription = (event) =>{
+        this.setState({eventDescription: event.target.value})
+    }
+
     addEvent = () => {
        // axios.post('/event', {ownerId: 1, name: "nazwaKonfyFonrty", participantNumber: 77700, startDate: "2019-03-09T16:05:07", endDate: "2019-03-10T16:05:07", description: "opisevent3FRONTedit", lectures: [],
        //     eventUsers: [] })
@@ -51,12 +55,13 @@ class NewEvent extends React.Component {
         return (
             <div>
                 <div>
-                    <h1>Dodawanie konferencji</h1>
+                    <h1>Dodawanie wydarzenia</h1>
                     <input onChange={this.onChangeName} value={this.state.eventName} placeholder="Podaj nazwę konferencji" className="form-control"/>
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber} placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeStartDate} value={this.state.eventStartDate} placeholder="Podaj startDAtae" className="form-control"/>
+                    <input onChange={this.onChangeStartDate} value={this.state.eventStartDate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.eventEndDate} placeholder="Podaj endDate" className="form-control"/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj konferencje!</button>
+                    <input onChange={this.onChangeEndDate} value={this.state.eventDescription} placeholder="Podaj opis" className="form-control"/>
+                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className="container-fluid">
                 </div>
