@@ -37,19 +37,13 @@ class NewEvent extends React.Component {
     }
 
     addEvent = () => {
-       // axios.post('/event', {ownerId: 1, name: "nazwaKonfyFonrty", participantNumber: 77700, startDate: "2019-03-09T16:05:07", endDate: "2019-03-10T16:05:07", description: "opisevent3FRONTedit", lectures: [],
-       //     eventUsers: [] })
         axios.post('/event', {ownerId: 1, name: this.state.eventName, participantNumber: this.state.eventParticipantNumber, startDate: this.state.eventStartDate, endDate: this.state.eventEndDate })
             .then(()=>{
-                //this.props.history.push('/');
             })
             .catch((err)=>{
                 console.log(err);
             });
     }
-
-
-
 
     render() {
         return (
@@ -60,7 +54,7 @@ class NewEvent extends React.Component {
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber} placeholder="Podaj liczbę uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} value={this.state.eventStartDate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.eventEndDate} placeholder="Podaj endDate" className="form-control"/>
-                    <input onChange={this.onChangeEndDate} value={this.state.eventDescription} placeholder="Podaj opis" className="form-control"/>
+                    <input onChange={this.onChangeDescription} value={this.state.eventDescription} placeholder="Podaj opis" className="form-control"/>
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className="container-fluid">
