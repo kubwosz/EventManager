@@ -12,7 +12,8 @@ class NewLecture extends React.Component {
             endDate: '',
             participantNumber:0,
             description: '',
-            eventId: 0
+            eventId: 0,
+            lectureId: 0,
         };
     }
 
@@ -39,8 +40,12 @@ class NewLecture extends React.Component {
         this.setState({eventId: event.target.value})
     }
 
+    onDelete = () => {
+        this.props.onDelete(this.props.eventId)
+    }
+
     addEvent = () => {
-        axios.post('/lecture', {ownerId: 1, eventId: this.state.eventId, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startdate, endDate: this.state.endDate, description: this.state.description})
+        axios.post('/lecture', {ownerId: 1,lectureId: this.state.lectureId, eventId: this.state.eventId, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startdate, endDate: this.state.endDate, description: this.state.description})
             .then(()=>{
             })
             .catch((err)=>{
@@ -60,6 +65,9 @@ class NewLecture extends React.Component {
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
                     <input onChange={this.onChangeEventId} value={this.state.eventId} placeholder="Podaj id wydarzenia" className="form-control"/>
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wykład!</button>
+                </div>
+                <div className ="row">
+            <button onClick={this.onDelete} className="btn btn-info"> Usuń wykład!</button>
                 </div>
                 <div className="container-fluid">
                 </div>
