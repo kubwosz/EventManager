@@ -3,18 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EventManager.Domain
 {
-    public class EventManagerContext : DbContext
+    public class EventManagerContext : IdentityDbContext<ApplicationUser>
     {
+        public EventManagerContext()
+        {
+            
+        }
+
+        public EventManagerContext(DbContextOptions<EventManagerContext> options)
+            : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EventManager;Trusted_Connection=True;");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
         }
 
         public DbSet<SimpleUser> SimpleUsers { get; set; }
