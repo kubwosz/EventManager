@@ -19,8 +19,6 @@ class Event extends React.Component {
             eventparticipantNumber:0,
             descriptionevent: '',
             newEventName: '',
-
-
         };
     }
 

@@ -23,10 +23,10 @@ namespace EventManager.Domain.Services
 
         public EventDto CreateEvent(EventDto eventDto)
         {
-            if(!_context.SimpleUsers.Any(x=>x.Id == eventDto.OwnerId))
-            {
-                return null;
-            }
+            //if(!_context.SimpleUsers.Any(x=>x.Id == eventDto.OwnerId))
+           // {
+           //     return null;
+           // }
 
             if(DateTime.Compare(eventDto.StartDate, DateTime.Now) <= 0
                 || DateTime.Compare(eventDto.StartDate, eventDto.EndDate) >= 0)
