@@ -14,6 +14,7 @@ class NewEvent extends React.Component {
             participantNumber:0,
             description: '',
             eventId:0,
+            events: []
         };
     }
 
@@ -48,8 +49,17 @@ class NewEvent extends React.Component {
             .catch((err)=>{
                 console.log(err);
             });
-    }
+        }
 
+    deleteEvent = (eventId) => {
+        if (window.confirm('Na pewno chcesz usunąć konferencję?'))
+        axios.delete(`/event/${eventId}`)
+        .then(() => {
+        })
+        .catch(err => {
+            console.log(err)
+        });
+        }
 
     render() {
         return (
@@ -64,7 +74,7 @@ class NewEvent extends React.Component {
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className ="row">
-            <button onClick={this.onDelete} className="btn btn-info"> Usuń konferencję!</button>
+            <button onClick={this.deleteEvent} className="btn btn-info"> Usuń konferencję!</button>
                 </div>
                 <div className="container-fluid">
                 </div>
