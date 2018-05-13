@@ -16,7 +16,7 @@ render() {
           <div>
               <Route path='/newEvent' component={NewEvent}/>
               <Route path='/newLecture' component={NewLecture}/>
-              <Route exact path='/' component={Event}/>
+              <Route exact path='/' component={NewLecture}/>
           </div>
         </BrowserRouter>
       </div>

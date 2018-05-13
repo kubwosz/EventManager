@@ -40,9 +40,16 @@ class NewLecture extends React.Component {
         this.setState({eventId: event.target.value})
     }
 
-    onDelete = () => {
-        this.props.onDelete(this.props.eventId)
-    }
+    deleteLecture = (lectureId) => {
+         if (window.confirm('Na pewno chcesz usunąć wykład?'))
+         axios.delete(`/lecture/${lectureId}`)
+         .then(() => {
+
+         })
+         .catch(err => {
+             console.log(err)
+            });
+        }
 
     addEvent = () => {
         axios.post('/lecture', {ownerId: 1,lectureId: this.state.lectureId, eventId: this.state.eventId, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startdate, endDate: this.state.endDate, description: this.state.description})
@@ -67,7 +74,7 @@ class NewLecture extends React.Component {
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wykład!</button>
                 </div>
                 <div className ="row">
-            <button onClick={this.onDelete} className="btn btn-info"> Usuń wykład!</button>
+            <button onClick={this.deleteLecture} className="btn btn-info"> Usuń wykład!</button>
                 </div>
                 <div className="container-fluid">
                 </div>
