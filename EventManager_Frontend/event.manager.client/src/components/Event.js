@@ -19,8 +19,6 @@ class Event extends React.Component {
             eventparticipantNumber:0,
             descriptionevent: '',
             newEventName: '',
-
-
         };
     }
 
@@ -39,6 +37,8 @@ class Event extends React.Component {
                 descriptionevent: result.data.description,
 
             })
+        }).catch((err) => {
+            console.log(err);
         });
     }
 
