@@ -45,10 +45,6 @@ namespace EventManager.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateLectureViewModel createLectureViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             var lectureDto = _iMapper.Map<LectureDto>(createLectureViewModel);
             var result = _lectureService.AddLecture(lectureDto);

@@ -33,7 +33,7 @@ namespace EventManager.Domain.Services
             {
                 return null;
             }
-            
+             
             var @event = _iMapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);

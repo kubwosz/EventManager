@@ -54,7 +54,7 @@ namespace EventManager.Domain.Services
             return lectureDtoList;
         }
 
-        public LectureDto GetOne(int id)
+        public LectureDto GetOne(int id) //get by id
         {
             var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
 
