@@ -47,7 +47,7 @@ namespace EventManager.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var lectureDto = _iMapper.Map<LectureDto>(createLectureViewModel);

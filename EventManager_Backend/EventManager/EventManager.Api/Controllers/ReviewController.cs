@@ -48,7 +48,7 @@ namespace EventManager.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             var reviewDto = _iMapper.Map<ReviewDto>(createReviewViewModel);
