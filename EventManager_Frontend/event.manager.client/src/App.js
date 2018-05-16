@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import HomeNavbar from './components/Navbar';
-import Event from './components/Event';
+import React from 'react';
+import {render} from 'react-dom';
 import {Label, FormControl, Button, ButtonToolbar} from 'react-bootstrap';
-import NewEvent from './components/NewEvent';
+import HomeNavbar from './components/Navbar';
 import Home from './components/Home';
-import NewLecture from './components/NewLecture';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import NewEvent from './components/NewEvent';
+import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-render() {
-  return (
-            <div>
-<HomeNavbar/>
-    </div>
-  );
-}
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+          <HomeNavbar/>
+          <Router>
+                  <Switch>
+                      <Route exact path="/" component={Home}/>
+                  </Switch>
+          </Router>
+
+
+      </div>
+    );
+  }
 }
 
 export default App;

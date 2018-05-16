@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import {Carousel} from "react-bootstrap";
 import myImage from './tlo.jpg';
 
-class Event extends React.Component {
+class Home extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -42,4 +42,4 @@ class Event extends React.Component {
         );
     }
 }
-export default withRouter(Event)
+export default withRouter(Home)

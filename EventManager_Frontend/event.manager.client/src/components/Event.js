@@ -1,5 +1,4 @@
 import React from 'react';
-import { BASE_URL } from "../constants";
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
