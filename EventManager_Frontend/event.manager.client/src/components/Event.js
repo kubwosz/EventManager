@@ -1,5 +1,4 @@
 import React from 'react';
-import './Event.css';
 import { BASE_URL } from "../constants";
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
