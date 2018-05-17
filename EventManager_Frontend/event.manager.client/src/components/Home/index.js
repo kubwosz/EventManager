@@ -1,7 +1,7 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
 import {Carousel} from "react-bootstrap";
-import myImage from '../tlo.jpg';
+import myImage from '../data/tlo.jpg';
 
 class Home extends React.Component {
     constructor() {
