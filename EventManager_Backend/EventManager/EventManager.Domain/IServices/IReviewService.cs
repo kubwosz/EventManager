@@ -9,7 +9,7 @@ namespace EventManager.Domain.IServices
         ReviewDto CreateReview(ReviewDto addReviewDto);
         ReviewDto UpdateReview(ReviewDto updateReviewDto);
         List<ReviewDto> GetAll();
-        ReviewDto GetOne(int id);
+        ReviewDto GetReviewById(int id);
         bool DeleteReview(int id);
     }
 }
