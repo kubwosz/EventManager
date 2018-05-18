@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
+import addEvent from '../../ApiCalls/Event';
 
 class NewEvent extends React.Component {
     constructor()
@@ -10,7 +11,7 @@ class NewEvent extends React.Component {
             name: '',
             startDate: '',
             endDate: '',
-            participantNumber:0,
+            participantNumber: null,
             description: '',
         };
     }
@@ -34,6 +35,7 @@ class NewEvent extends React.Component {
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
+
 
     addEvent = () => {
         axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })

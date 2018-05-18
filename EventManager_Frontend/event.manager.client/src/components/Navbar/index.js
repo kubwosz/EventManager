@@ -7,17 +7,17 @@ export default class HomeNavbar extends React.Component{
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#brand">React-Bootstrap</a>
+                        <a href="/home">Event manager</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">
-                            Link
+                        <NavItem href="/NewEvent">
+                            Dodaj wydarzenie
                         </NavItem>
-                        <NavItem eventKey={2} href="#">
-                            Link
+                        <NavItem href="/EditEvent">
+                            Edytuj wydarzenie
                         </NavItem>
                         <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
                             <MenuItem eventKey={3.1}>Action</MenuItem>
