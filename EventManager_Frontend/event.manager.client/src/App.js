@@ -7,6 +7,7 @@ import {Label, FormControl, Button, ButtonToolbar} from 'react-bootstrap';
 import NewEvent from './components/NewEvent';
 import NewLecture from './components/NewLecture';
 import NewReview from './components/NewReview';
+import EditLecture from './components/EditLecture';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 class App extends Component {
@@ -18,6 +19,7 @@ render() {
               <Route path='/newEvent' component={NewEvent}/>
               <Route path='/newLecture' component={NewLecture}/>
               <Route path='/newReview' component={NewReview}/>
+              <Route path='/editLecture' component={EditLecture}/>
               <Route exact path='/' component={Event}/>
           </div>
         </BrowserRouter>
