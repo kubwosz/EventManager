@@ -42,7 +42,7 @@ class EditLecture extends React.Component {
     }
 
     editLecture = (e) => {
-        axios.put('/lecture', {ownerId: 1, id: this.state.lectureId, name: this.state.name, participantNumber: this.state.lectureParticipantNumber, startDate: this.state.lectureStartDate, endDate: this.state.lectureEndDate, description: this.state.lectureDescription })
+        axios.put('/lecture', {id: this.state.lectureId, name: this.state.lectureName, participantNumber: this.state.ParticipantNumber, startDate: this.state.lectureStartDate, endDate: this.state.lectureEndDate, description: this.state.lectureDescription })
             .then(()=>{
             })
             .catch((err)=>{
@@ -58,7 +58,7 @@ class EditLecture extends React.Component {
                     <label>Podaj dane do zmiany: </label>
                     <input onChange={this.onChangeId} defaultValue={this.state.lectureId} placeholder="Id" className="form-control"/>                    
                     <input onChange={this.onChangeName} defaultValue={this.state.lectureName} placeholder="Nazwa" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} defaultValue={this.state.lectureParticipantNumber} placeholder="Liczba uczestników" className="form-control"/>
+                    <input onChange={this.onChangeParticipantNumber} defaultValue={this.state.ParticipantNumber} placeholder="Liczba uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} defaultValue={this.state.lectureStartDate} placeholder="Data rozpoczęcia" className="form-control"/>
                     <input onChange={this.onChangeEndDate} defaultValue={this.state.lectureEndDate} placeholder="Data zakończenia" className="form-control" />
                     <input onChange={this.onChangeDescription} defaultValue={this.state.lectureDescription} placeholder="Opis" className="form-control"/>
