@@ -9,10 +9,10 @@ class NewReview extends React.Component {
         super();
         this.state = {
             nickname: '',
-            rate:0,
+            rate:null,
             comment: '',
-            lectureId:0,
-            reviewerId: 0
+            lectureId:null,
+            reviewerId: null
         };
     }
 
@@ -32,9 +32,13 @@ class NewReview extends React.Component {
         this.setState({lectureId: review.target.value})
     }
 
+    onChangeReviewerId = (review) =>{
+        this.setState({reviewerId: review.target.value})
+    }
+
 
     addReview = () => {
-        axios.post('/review', {nickname: this.state.nickname, rate: this.state.rate, comment: this.state.comment, lectureId: this.state.lectureId, reviewerId: this.state.reviewerId})
+        axios.post('/review', {nickname: this.state.nickname, rate: this.state.rate, comment: this.state.comment, lectureId: this.state.lectureId, reviewerId: 1})
             .then(()=>{
             })
             .catch((err)=>{
@@ -51,6 +55,7 @@ class NewReview extends React.Component {
                     <input onChange={this.onChangeRate} value={this.state.rate} placeholder="Podaj ocene w skali 1-10" className="form-control"/>
                     <input onChange={this.onChangeComment} value={this.state.comment} placeholder="Podaj komentarz" className="form-control"/>
                     <input onChange={this.onChangeLectureId} value={this.state.lectureId} placeholder="Podaj id wykladu" className="form-control"/>
+                    <input onChange={this.onChangeReviewerId} value={this.state.reviewerId} placeholder="Podaj id" className="form-control"/>
                     <button onClick={this.addReview} className="btn btn-info">Dodaj opinie!</button>
                 </div>
                 <div className="container-fluid">
