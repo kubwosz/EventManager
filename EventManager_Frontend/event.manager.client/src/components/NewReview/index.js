@@ -38,7 +38,7 @@ class NewReview extends React.Component {
 
 
     addReview = () => {
-        axios.post('/review', {nickname: this.state.nickname, rate: this.state.rate, comment: this.state.comment, lectureId: this.state.lectureId, reviewerId: 1})
+        axios.post('/review', {nickname: this.state.nickname, rate: this.state.rate, comment: this.state.comment, lectureId: this.state.lectureId, reviewerId: this.state.reviewerId})
             .then(()=>{
             })
             .catch((err)=>{
