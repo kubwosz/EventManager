@@ -9,7 +9,7 @@ namespace EventManager.Domain.IServices
         LectureDto AddLecture(LectureDto addLectureDto);
         List<LectureDto> GetAll();
         LectureDto UpdateLecture(LectureDto updateLectureDto);
-        LectureDto GetOne(int id);
+        LectureDto GetLectureById(int id);
         bool Delete(int id);
     }
 }
