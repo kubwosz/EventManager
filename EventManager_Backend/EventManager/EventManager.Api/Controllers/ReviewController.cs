@@ -12,19 +12,17 @@ namespace EventManager.Api.Controllers
     public class ReviewController : Controller
     {
         private readonly IReviewService _reviewService;
-        private readonly IMapper _iMapper;
 
-        public ReviewController(IReviewService reviewService, IMapper iMapper)
+        public ReviewController(IReviewService reviewService)
         {
             _reviewService = reviewService;
-            _iMapper = iMapper;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
             var result = _reviewService.GetAll();
-            var reviewViewModelList = _iMapper.Map<List<ReviewViewModel>>(result);
+            var reviewViewModelList = Mapper.Map<List<ReviewViewModel>>(result);
 
             return Ok(reviewViewModelList);
         }
@@ -33,12 +31,12 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _reviewService.GetOne(id);
+            var result = _reviewService.GetReviewById(id);
 
             if (result == null)
                 return BadRequest();
 
-            var reviewViewModel = _iMapper.Map<ReviewViewModel>(result);
+            var reviewViewModel = Mapper.Map<ReviewViewModel>(result);
 
             return Ok(reviewViewModel);
         }
@@ -51,10 +49,10 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            var reviewDto = _iMapper.Map<ReviewDto>(createReviewViewModel);
+            var reviewDto = Mapper.Map<ReviewDto>(createReviewViewModel);
             var result = _reviewService.CreateReview(reviewDto);
 
-            createReviewViewModel = _iMapper.Map<CreateReviewViewModel>(result);
+            createReviewViewModel = Mapper.Map<CreateReviewViewModel>(result);
 
             if(createReviewViewModel == null)
             {
@@ -72,11 +70,11 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            var reviewDto = _iMapper.Map<ReviewDto>(updateReviewViewModel);
+            var reviewDto = Mapper.Map<ReviewDto>(updateReviewViewModel);
 
             var result = _reviewService.UpdateReview(reviewDto);
          
-            updateReviewViewModel = _iMapper.Map<UpdateReviewViewModel>(result);
+            updateReviewViewModel = Mapper.Map<UpdateReviewViewModel>(result);
 
             if(updateReviewViewModel == null)
             {

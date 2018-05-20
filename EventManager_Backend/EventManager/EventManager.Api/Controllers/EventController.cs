@@ -4,6 +4,7 @@ using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System;
 
 namespace EventManager.Api.Controllers
 {
@@ -11,12 +12,10 @@ namespace EventManager.Api.Controllers
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
-        private readonly IMapper _iMapper;
 
-        public EventController(IEventService eventService, IMapper iMapper)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
-            _iMapper = iMapper;
         }
 
         [HttpGet]
@@ -24,7 +23,7 @@ namespace EventManager.Api.Controllers
         {
             var result = _eventService.GetAll();
 
-            var eventViewModelList = _iMapper.Map<List<EventViewModel>>(result);
+            var eventViewModelList = Mapper.Map<List<EventViewModel>>(result);
 
             return Ok(eventViewModelList);
         }
@@ -33,12 +32,12 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _eventService.GetOne(id);
+            var result = _eventService.GetEventById(id);
 
             if (result == null)
                 return BadRequest();
             
-            var eventViewModel = _iMapper.Map<EventViewModel>(result);
+            var eventViewModel = Mapper.Map<EventViewModel>(result);
 
             return Ok(eventViewModel);
         }
@@ -51,10 +50,16 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            var eventDto = _iMapper.Map<EventDto>(createEventViewModel);
+            if ( (createEventViewModel.StartDate.Ticks < DateTime.Now.Ticks)
+                || (createEventViewModel.StartDate.Ticks > createEventViewModel.EndDate.Ticks))
+            {
+                return BadRequest();
+            }
+
+            var eventDto = Mapper.Map<EventDto>(createEventViewModel);
             var result = _eventService.CreateEvent(eventDto);
 
-            createEventViewModel = _iMapper.Map<CreateEventViewModel>(result);
+            createEventViewModel = Mapper.Map<CreateEventViewModel>(result);
 
             if(createEventViewModel == null)
             {
@@ -72,12 +77,18 @@ namespace EventManager.Api.Controllers
                 return BadRequest();
             }
 
-            var eventDto = _iMapper.Map<EventDto>(updateEventViewModel);
+            var eventDto = Mapper.Map<EventDto>(updateEventViewModel);
 
             var result = _eventService.UpdateEvent(eventDto);
-            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(result);
+            updateEventViewModel = Mapper.Map<UpdateEventViewModel>(result);
             
             if(updateEventViewModel == null)
+            {
+                return BadRequest();
+            }
+
+            if ((updateEventViewModel.StartDate.Ticks < DateTime.Now.Ticks)
+             || (updateEventViewModel.StartDate.Ticks > updateEventViewModel.EndDate.Ticks))
             {
                 return BadRequest();
             }
