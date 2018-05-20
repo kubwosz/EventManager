@@ -9,7 +9,7 @@ namespace EventManager.Domain.IServices
         EventDto CreateEvent(EventDto addEventDto);
         EventDto UpdateEvent(EventDto updateEventDto);
         List<EventDto> GetAll();
-        EventDto GetOne(int id);
+        EventDto GetEventById(int id);
         bool DeleteEvent(int id);
     }
 }

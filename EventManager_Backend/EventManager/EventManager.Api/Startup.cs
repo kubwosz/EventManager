@@ -27,7 +27,11 @@ namespace EventManager.Api
             services.AddMvc();
             services.AddCors();
 
-            services.AddAutoMapper(x=>x.AddProfile(new MappingsProfile()));
+            services.AddAutoMapper(x => {
+                x.AddProfile(new LectureProfile());
+                x.AddProfile(new EventProfile());
+                x.AddProfile(new ReviewProfile());
+                });
 
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<ILectureService, LectureService>();
