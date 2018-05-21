@@ -17,6 +17,8 @@ class ShowEvents extends React.Component {
     componentDidMount() {
         this.getAllEvents('/event');
         console.log('too');
+
+      //  console.log(this.state.event);
     }
 
     getAllEvents(path) {
