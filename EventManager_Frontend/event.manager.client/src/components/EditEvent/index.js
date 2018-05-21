@@ -71,12 +71,6 @@ class EditEvent extends React.Component {
                 <option key={option.id} value={option.name} data-key={option.id}>{option.name}</option>
             ));
         }
-        else
-        {
-            return (
-                <option>" "</option>
-            );
-        }
     }
 
     render() {
