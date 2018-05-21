@@ -1,6 +1,5 @@
 import React from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import addEvent from '../../ApiCalls/Event';
 
 class NewEvent extends React.Component {
@@ -37,15 +36,6 @@ class NewEvent extends React.Component {
     }
 
 
-    addEvent = () => {
-        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
-            .then(()=>{
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
-    }
-
     render() {
         return (
             <div>
@@ -56,7 +46,7 @@ class NewEvent extends React.Component {
                     <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
+                    <button onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className="container-fluid">
                 </div>

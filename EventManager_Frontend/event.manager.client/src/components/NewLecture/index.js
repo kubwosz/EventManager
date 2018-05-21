@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import addLecture from '../../ApiCalls/Lecture';
 
 class NewLecture extends React.Component {
     constructor()
@@ -39,14 +39,7 @@ class NewLecture extends React.Component {
         this.setState({eventId: event.target.value})
     }
 
-    addEvent = () => {
-        axios.post('/lecture', {ownerId: 1, eventId: this.state.eventId, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startdate, endDate: this.state.endDate, description: this.state.description})
-            .then(()=>{
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
-    }
+
 
     render() {
         return (
@@ -59,7 +52,7 @@ class NewLecture extends React.Component {
                     <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
                     <input onChange={this.onChangeEventId} value={this.state.eventId} placeholder="Podaj id wydarzenia" className="form-control"/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wykład!</button>
+                    <button onClick={() => addLecture(this.state)} className="btn btn-info">Dodaj wykład!</button>
                 </div>
                 <div className="container-fluid">
                 </div>
