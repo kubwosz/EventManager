@@ -60,7 +60,7 @@ namespace EventManager.Api.Controllers
 
             if(createLectureViewModel == null)
             {
-                BadRequest(); 
+               return BadRequest(); 
             }
 
             return Ok(createLectureViewModel);
