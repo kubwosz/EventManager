@@ -7,7 +7,7 @@ import ShowEvents from './components/ShowEvents/index';
 import NewReview from './components/NewReview/index';
 import EditEvent from './components/EditEvent/index';
 import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
-
+import EditEvent from './components/EditEvent';
 class App extends React.Component {
   render() {
     return (
@@ -18,10 +18,9 @@ class App extends React.Component {
                       <Route exact path="/" component={Home}/>
                       <Route exact path="/home" component={Home}/>
                       <Route exact path="/NewEvent" component={NewEvent}/>
-                      <Route exact path="/NewLecture" component={NewLecture}/>
-                      <Route exact path="/NewReview" component={NewReview}/>
+                      <Route exact path="/NewLecture/:id" component={NewLecture}/>
                       <Route exact path="/ShowEvents" component={ShowEvents}/>
-                      <Route exact path="/EditEvent" component={EditEvent}/>                      
+                      <Route exact path="/EditEvent/:id" component={EditEvent}/>
                   </Switch>
           </Router>
 
