@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 
+
 class EditEvent extends React.Component {
     constructor(){
         super();
@@ -19,6 +20,11 @@ class EditEvent extends React.Component {
         this.getEvent();
     }
 
+    onChangeID = (event) =>{
+        console.log(event.target);
+        this.setState({eventID: event.target.options[event.target.selectedIndex].getAttribute('data-key')})
+    }
+    
     onChangeName = (event) =>{
         this.setState({eventName: event.target.value})
     }
@@ -60,6 +66,7 @@ class EditEvent extends React.Component {
                     eventParticipantNumber: response.data.participantNumber,
                     eventDescription: response.data.description,
                 });
+
             })
             .catch(function (error) {
                 console.log(error);

@@ -1,9 +1,11 @@
 import React from 'react';
-import HomeNavbar from './components/Navbar/';
-import NewLecture from './components/NewLecture/';
-import Home from './components/Home/';
-import NewEvent from './components/NewEvent/';
-import ShowEvents from './components/ShowEvents/';
+import HomeNavbar from './components/Navbar/index';
+import NewLecture from './components/NewLecture/index';
+import Home from './components/Home/index';
+import NewEvent from './components/NewEvent/index';
+import ShowEvents from './components/ShowEvents/index';
+import NewReview from './components/NewReview/index';
+import EditEvent from './components/EditEvent/index';
 import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import EditEvent from './components/EditEvent';
 class App extends React.Component {
@@ -21,6 +23,7 @@ class App extends React.Component {
                       <Route exact path="/EditEvent/:id" component={EditEvent}/>
                   </Switch>
           </Router>
+
       </div>
     );
   }
