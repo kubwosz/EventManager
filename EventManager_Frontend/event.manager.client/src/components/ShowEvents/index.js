@@ -3,7 +3,7 @@ import axios from 'axios';
 import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash';
-import {Link} from 'react-router-dom'
+//import {getAllEvents} from '../../ApiCalls/Event';
 
 class ShowEvents extends React.Component {
     constructor()
@@ -15,13 +15,10 @@ class ShowEvents extends React.Component {
     }
 
     componentDidMount() {
-        this.getAllEvents('/event');
-        console.log('too');
-
-      //  console.log(this.state.event);
+            this.getAllEvents();
     }
 
-    getAllEvents(path) {
+    getAllEvents() {
         axios.get('/event')
             .then((response) => {
                 console.log(response);
@@ -39,7 +36,7 @@ class ShowEvents extends React.Component {
     renderItem(event, index) {
         console.log('renderitem:');
         return (
-                    <ListGroupItem key={index} header={event.name}>{event.description}</ListGroupItem>
+            <ListGroupItem key={index} header={event.name}>{event.description}</ListGroupItem>
         )
     }
 
