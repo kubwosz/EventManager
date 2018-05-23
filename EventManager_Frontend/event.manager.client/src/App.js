@@ -1,12 +1,12 @@
 import React from 'react';
-import HomeNavbar from './components/Navbar/index';
-import NewLecture from './components/NewLecture/index';
-import Home from './components/Home/index';
-import NewEvent from './components/NewEvent/index';
-import ShowEvents from './components/ShowEvents/index';
-import NewReview from './components/NewReview/index';
-import EditEvent from './components/EditEvent/index';
-import EditLecture from './components/EditLecture/index';
+import HomeNavbar from './components/navbar/index';
+import NewLecture from './components/newLecture/index';
+import Home from './components/home/index';
+import NewEvent from './components/newEvent/index';
+import ShowEvents from './components/showEvents/index';
+import NewReview from './components/newReview/index';
+import EditEvent from './components/editEvent/index';
+import EditLecture from './components/editLecture/index';
 import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 class App extends React.Component {
   render() {
