@@ -20,11 +20,11 @@ class EditLecture extends React.Component {
 
     
     onChangeName = (event) =>{
-        this.setState({LectureName: event.target.value})
+        this.setState({lectureName: event.target.value})
     }
 
     onChangeParticipantNumber = (event) =>{
-        this.setState({LectureParticipantNumber: event.target.value})
+        this.setState({lectureParticipantNumber: event.target.value})
     }
 
     onChangeStartDate = (event) =>{
