@@ -1,13 +1,15 @@
 import React from 'react';
-import HomeNavbar from './components/Navbar/index';
-import NewLecture from './components/NewLecture/index';
-import Home from './components/Home/index';
-import NewEvent from './components/NewEvent/index';
-import ShowEvents from './components/ShowEvents/index';
-import NewReview from './components/NewReview/index';
-import EditEvent from './components/EditEvent/index';
+import HomeNavbar from './components/navbar';
+import NewLecture from './components/newLecture';
+import Home from './components/home';
+import NewEvent from './components/newEvent';
+import ShowEvents from './components/listEvents';
+import ShowEvent from './components/showEvent';
+import NewReview from './components/newReview';
 import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
-import EditEvent from './components/EditEvent';
+import EditEvent from './components/editEvent';
+
+
 class App extends React.Component {
   render() {
     return (
@@ -20,7 +22,9 @@ class App extends React.Component {
                       <Route exact path="/NewEvent" component={NewEvent}/>
                       <Route exact path="/NewLecture/:id" component={NewLecture}/>
                       <Route exact path="/ShowEvents" component={ShowEvents}/>
+                      <Route exact path="/ShowEvent/:id" component={ShowEvent}/>
                       <Route exact path="/EditEvent/:id" component={EditEvent}/>
+                      <Route exact path="/*" component={NewReview}/>
                   </Switch>
           </Router>
 
