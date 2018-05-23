@@ -57,11 +57,17 @@ namespace EventManager.Api.Controllers
             }
 
             var eventDto = Mapper.Map<EventDto>(createEventViewModel);
-            var result = _eventService.CreateEvent(eventDto);
+            var simpleUserDto = Mapper.Map<SimpleUserDto>(createEventViewModel);
 
-            createEventViewModel = Mapper.Map<CreateEventViewModel>(result);
+            var simpleUserDtoService = _eventService.CreateSimpleUser(simpleUserDto);
+            eventDto.OwnerId = simpleUserDtoService.Id;
+            var eventDtoService = _eventService.CreateEvent(eventDto);
+            
 
-            if(createEventViewModel == null)
+            createEventViewModel = Mapper.Map<CreateEventViewModel>(eventDtoService);
+            createEventViewModel = Mapper.Map<CreateEventViewModel>(simpleUserDtoService);
+
+            if (createEventViewModel == null)
             {
                 return BadRequest();
             }

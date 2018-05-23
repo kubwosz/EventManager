@@ -13,6 +13,8 @@ class NewEvent extends React.Component {
             endDate: '',
             participantNumber: null,
             description: '',
+            userName: '',
+            userSurname: ''
         };
     }
 
@@ -20,10 +22,16 @@ class NewEvent extends React.Component {
         this.setState({name: event.target.value})
     }
 
+    onChangeUserName = (event) =>{
+        this.setState({userName: event.target.value})
+    }
+
+    onChangeUserSurname = (event) =>{
+        this.setState({userSurname: event.target.value})
+    }
     onChangeParticipantNumber = (event) =>{
         this.setState({participantNumber: event.target.value})
     }
-
     onChangeStartDate = (event) =>{
         this.setState({startDate: event.target.value})
     }
@@ -38,7 +46,7 @@ class NewEvent extends React.Component {
 
 
     addEvent = () => {
-        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
+        axios.post('/event', {firstName: this.state.userName, surname: this.state.userSurname, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
             .then(()=>{
                 window.confirm('Wydarzenie zostało utworzone poprawnie!');
             })
@@ -53,6 +61,8 @@ class NewEvent extends React.Component {
                 <div>
                     <h1>Dodawanie wydarzenia:</h1>
                     <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
+                    <input onChange={this.onChangeUserName} value={this.state.userName } placeholder="Podaj swoje imię" className="form-control"/>
+                    <input onChange={this.onChangeUserSurname} value={this.state.userSurname } placeholder="Podaj swoje nazwisko" className="form-control"/>
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
