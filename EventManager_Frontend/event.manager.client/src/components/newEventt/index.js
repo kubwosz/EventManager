@@ -51,7 +51,7 @@ class NewEvent extends React.Component {
         return (
             <div>
                 <div>
-                    <h1>Dodawanie wydarzenia</h1>
+                    <h1>Dodawanie wydarzenia:</h1>
                     <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
