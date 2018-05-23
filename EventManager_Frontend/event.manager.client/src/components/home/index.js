@@ -1,6 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
-import ShowEvents from '../ShowEvents';
+import ShowEvents from '../showEvents';
 
 
 class Home extends React.Component {
