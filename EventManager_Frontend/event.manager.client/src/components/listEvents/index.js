@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {ListGroup,ListGroupItem} from 'react-bootstrap';
+import {ListGroupItem} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash';
 import crossImage from '../data/cross.png';
@@ -8,7 +8,7 @@ import pencilImage from '../data/pencil.png';
 import addImage from '../data/add.png';
 import {Image,Col,Row,Grid} from 'react-bootstrap';
 
-class ShowEvents extends React.Component {
+class ListEvents extends React.Component {
     constructor()
     {
         super();
@@ -108,4 +108,4 @@ class ShowEvents extends React.Component {
     }
 }
 
-export default withRouter(ShowEvents);
+export default withRouter(ListEvents);

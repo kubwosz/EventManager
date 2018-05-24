@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
-import {Label,Col,Row,Grid} from 'react-bootstrap';
+import {Label} from 'react-bootstrap';
 
 const path = '/event/';
 
