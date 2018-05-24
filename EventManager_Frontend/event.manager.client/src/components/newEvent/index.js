@@ -1,11 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
-//import addEvent from '../../ApiCalls/Event';
+import { withRouter } from 'react-router-dom';
+import DatePicker from 'react-bootstrap-date-picker';
+//import 'create-react-class';
+import addEvent from '../../apiCalls/eventApiCall';
+//DatePicker = require("react-bootstrap-date-picker");
 
 class NewEvent extends React.Component {
     constructor()
     {
+        let value = new Date().toISOString();
         super();
         this.state = {
             name: '',
@@ -13,7 +17,22 @@ class NewEvent extends React.Component {
             endDate: '',
             participantNumber: null,
             description: '',
+            value: value
         };
+    }
+
+    componentDidUpdate = () =>{
+        // Access ISO String and formatted values from the DOM.
+        var hiddenInputElement = document.getElementById("example-datepicker");
+        console.log(hiddenInputElement.value); // ISO String, ex: "2016-11-19T12:00:00.000Z"
+        console.log(hiddenInputElement.getAttribute('data-formattedvalue')) // Formatted String, ex: "11/19/2016"
+    }
+
+    handleChange = (value, formattedValue) => {
+        this.setState({
+            value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z"
+            formattedValue: formattedValue // Formatted String, ex: "11/19/2016"
+        });
     }
 
     onChangeName = (event) =>{
@@ -56,6 +75,7 @@ class NewEvent extends React.Component {
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
+                    <DatePicker id="example-datepicker" value={this.state.startDate} onChange={this.handleChange} />
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
