@@ -10,11 +10,18 @@ class NewLecture extends React.Component {
             name: '',
             startdate: '',
             endDate: '',
-            participantNumber:0,
+            participantNumber:null,
             description: '',
-            eventId: 0
+            eventId: null
         };
     }
+
+    componentDidMount() {
+                this.setState({
+                    eventId: this.props.match.params.id,
+                });
+    }
+
 
     onChangeName = (event) =>{
         this.setState({name: event.target.value})
@@ -39,19 +46,17 @@ class NewLecture extends React.Component {
         this.setState({eventId: event.target.value})
     }
 
-
-
     render() {
         return (
             <div>
                 <div>
                     <h1>Dodawanie wykładu</h1>
                     <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę wykładu" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber} placeholder="Podaj liczbę uczestników" className="form-control"/>
+                    <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber===null ? "" : this.state.participantNumber} placeholder="Podaj liczbę uczestników" className="form-control"/>
                     <input onChange={this.onChangeStartDate} value={this.state.startdate} placeholder="Podaj datę startu" className="form-control"/>
                     <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-                    <input onChange={this.onChangeEventId} value={this.state.eventId} placeholder="Podaj id wydarzenia" className="form-control"/>
+                    <input onChange={this.onChangeEventId} value={this.state.eventId===null ? "" : this.state.eventId} placeholder="Podaj id wydarzenia" className="form-control"/>
                     <button onClick={() => addLecture(this.state)} className="btn btn-info">Dodaj wykład!</button>
                 </div>
                 <div className="container-fluid">

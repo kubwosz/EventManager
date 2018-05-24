@@ -35,7 +35,6 @@ class NewEvent extends React.Component {
         this.setState({description: event.target.value})
     }
 
-
     render() {
         return (
             <div>
