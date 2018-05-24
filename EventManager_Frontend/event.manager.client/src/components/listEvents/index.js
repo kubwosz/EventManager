@@ -8,6 +8,7 @@ import pencilImage from '../data/pencil.png';
 import addImage from '../data/add.png';
 import {Image,Col,Row,Grid} from 'react-bootstrap';
 
+
 class ListEvents extends React.Component {
     constructor()
     {
@@ -18,10 +19,7 @@ class ListEvents extends React.Component {
     }
 
     componentDidMount() {
-        this.getAllEvents('/event');
-        console.log('too');
-
-      //  console.log(this.state.event);
+            this.getAllEvents();
     }
 
     getAllEvents() {
