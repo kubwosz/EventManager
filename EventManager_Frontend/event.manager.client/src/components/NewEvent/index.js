@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {addEvent} from '../../ApiCalls/Event';
+import {addEvent} from '../../apiCalls/eventApiCall';
 
 class NewEvent extends React.Component {
     constructor()

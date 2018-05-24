@@ -1,5 +1,5 @@
 import axios from "axios/index";
-import ShowEvents from "../components/NewEvent";
+import ShowEvents from "../components/newEvent";
 
 export function addEvent(state){
     axios.post('/event', {ownerId: 1, name: state.name, participantNumber: state.participantNumber, startDate: state.startDate, endDate: state.endDate, description: state.description })

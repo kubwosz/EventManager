@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import addLecture from '../../ApiCalls/Lecture';
+import addLecture from '../../apiCalls/lectureApiCall';
 
 class NewLecture extends React.Component {
     constructor()

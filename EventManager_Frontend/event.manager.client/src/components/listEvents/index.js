@@ -3,9 +3,8 @@ import axios from 'axios';
 import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash';
-//import {getAllEvents} from '../../ApiCalls/Event';
 
-class ShowEvents extends React.Component {
+class ListEvents extends React.Component {
     constructor()
     {
         super();
@@ -53,4 +52,4 @@ class ShowEvents extends React.Component {
     }
 }
 
-export default withRouter(ShowEvents);
+export default withRouter(ListEvents);
