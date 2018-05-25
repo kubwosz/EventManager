@@ -32,7 +32,6 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-
             var @event = _eventService.GetEventById(id);
 
             if (@event == null)
@@ -51,6 +50,9 @@ namespace EventManager.Api.Controllers
             {
                 return BadRequest();
             }
+
+            var eventDto = Mapper.Map<EventDto>(createEventViewModel);
+            var createdEvent = _eventService.CreateEvent(eventDto);
 
             createEventViewModel = Mapper.Map<CreateEventViewModel>(createdEvent);
 
