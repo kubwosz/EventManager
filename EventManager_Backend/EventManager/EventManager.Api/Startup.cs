@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AutoMapper;
 using EventManager.Api.AutoMapper;
 using EventManager.Domain.IServices;

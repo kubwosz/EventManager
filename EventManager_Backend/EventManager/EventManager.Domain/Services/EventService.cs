@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
