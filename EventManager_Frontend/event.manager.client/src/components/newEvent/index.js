@@ -32,30 +32,6 @@ class NewEvent extends React.Component {
         this.setState({participantNumber: event.target.value})
     }
 
-    onChangeStartDate = (event) =>{
-        this.setState({startDate: event.target.value})
-    }
-
-    onChangeEndDate = (event) =>{
-        this.setState({endDate: event.target.value})
-    }
-
-    onChangeDate = (startDate, endDate) =>{
-       // let startFormat = moment((this.state.startDate).datepicker("getDate")).format("YYYY-MM-DD");
-        let startFormat = moment(startDate).format("YYYY-MM-DD").toString();
-       // let endFormat = moment((this.state.endDate).datepicker("getDate")).format("YYYY-MM-DD");
-        let endFormat = moment(endDate).format("YYYY-MM-DD").toString();
-
-        console.log(startFormat + " " + endFormat);
-        if(moment(startFormat).isValid()){
-            this.setState({startDate: startFormat + "T"});
-        }
-
-        if( moment(endFormat).isValid()){
-            this.setState({endDate: endFormat+"T"});
-        }
-    }
-
     onChangeStartTime = (event) =>{
         this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
     }
