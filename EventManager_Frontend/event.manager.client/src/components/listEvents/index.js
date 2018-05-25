@@ -68,6 +68,7 @@ class ListEvents extends React.Component {
                             src={crossImage}
                             height={25}
                             width={25}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
                             data-tip="usuń wydarzenie"
                         />
                         <ReactTooltip effect="solid" type="info" />
@@ -76,7 +77,7 @@ class ListEvents extends React.Component {
                             src={pencilImage}
                             height={25}
                             width={25}
-                            style={{ marginLeft: '20px'}}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
                             data-tip="edytuj wydarzenie"
                         />
                         <Image
@@ -84,7 +85,7 @@ class ListEvents extends React.Component {
                             src={addImage}
                             height={25}
                             width={25}
-                            style={{ marginLeft: '20px'}}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
                             data-tip="zapisz się na wydarzenie"
                         />
                     </Col>
