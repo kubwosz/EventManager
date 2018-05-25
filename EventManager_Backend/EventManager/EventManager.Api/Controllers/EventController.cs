@@ -21,9 +21,9 @@ namespace EventManager.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _eventService.GetAll();
+            var events = _eventService.GetAll();
 
-            var eventViewModelList = Mapper.Map<List<EventViewModel>>(result);
+            var eventViewModelList = Mapper.Map<List<EventViewModel>>(events);
 
             return Ok(eventViewModelList);
         }
@@ -32,36 +32,29 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _eventService.GetEventById(id);
 
-            if (result == null)
+            var @event = _eventService.GetEventById(id);
+
+            if (@event == null)
                 return BadRequest();
-            
-            var eventViewModel = Mapper.Map<EventViewModel>(result);
 
-            return Ok(eventViewModel);
+            var mappedEvents = Mapper.Map<EventViewModel>(@event);
+
+            return Ok(mappedEvents);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] CreateEventViewModel createEventViewModel)
         {
-            if (!ModelState.IsValid)
+            if ((createEventViewModel.StartDate < DateTime.Now)
+                || (createEventViewModel.StartDate > createEventViewModel.EndDate))
             {
                 return BadRequest();
             }
 
-            if ( (createEventViewModel.StartDate.Ticks < DateTime.Now.Ticks)
-                || (createEventViewModel.StartDate.Ticks > createEventViewModel.EndDate.Ticks))
-            {
-                return BadRequest();
-            }
+            createEventViewModel = Mapper.Map<CreateEventViewModel>(createdEvent);
 
-            var eventDto = Mapper.Map<EventDto>(createEventViewModel);
-            var result = _eventService.CreateEvent(eventDto);
-
-            createEventViewModel = Mapper.Map<CreateEventViewModel>(result);
-
-            if(createEventViewModel == null)
+            if (createEventViewModel == null)
             {
                 return BadRequest();
             }
@@ -72,23 +65,18 @@ namespace EventManager.Api.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] UpdateEventViewModel updateEventViewModel)
         {
-            if (updateEventViewModel.Id == 0 || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var eventDto = Mapper.Map<EventDto>(updateEventViewModel);
 
-            var result = _eventService.UpdateEvent(eventDto);
-            updateEventViewModel = Mapper.Map<UpdateEventViewModel>(result);
-            
-            if(updateEventViewModel == null)
+            var updatedEvent = _eventService.UpdateEvent(eventDto);
+            updateEventViewModel = Mapper.Map<UpdateEventViewModel>(updatedEvent);
+
+            if (updateEventViewModel == null)
             {
                 return BadRequest();
             }
 
-            if ((updateEventViewModel.StartDate.Ticks < DateTime.Now.Ticks)
-             || (updateEventViewModel.StartDate.Ticks > updateEventViewModel.EndDate.Ticks))
+            if ((updateEventViewModel.StartDate < DateTime.Now)
+             || (updateEventViewModel.StartDate > updateEventViewModel.EndDate))
             {
                 return BadRequest();
             }
