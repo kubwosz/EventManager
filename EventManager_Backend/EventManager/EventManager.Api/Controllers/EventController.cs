@@ -4,6 +4,7 @@ using EventManager.Domain.IServices;
 using EventManager.Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System;
 
 namespace EventManager.Api.Controllers
 {
@@ -11,20 +12,18 @@ namespace EventManager.Api.Controllers
     public class EventController : Controller
     {
         private readonly IEventService _eventService;
-        private readonly IMapper _iMapper;
 
-        public EventController(IEventService eventService, IMapper iMapper)
+        public EventController(IEventService eventService)
         {
             _eventService = eventService;
-            _iMapper = iMapper;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _eventService.GetAll();
+            var events = _eventService.GetAll();
 
-            var eventViewModelList = _iMapper.Map<List<EventViewModel>>(result);
+            var eventViewModelList = Mapper.Map<List<EventViewModel>>(events);
 
             return Ok(eventViewModelList);
         }
@@ -33,30 +32,31 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _eventService.GetOne(id);
+            var result = _eventService.GetEventById(id);
 
             if (result == null)
                 return BadRequest();
-            
-            var eventViewModel = _iMapper.Map<EventViewModel>(result);
 
-            return Ok(eventViewModel);
+            var mappedEvents = Mapper.Map<EventViewModel>(result);
+
+            return Ok(mappedEvents);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] CreateEventViewModel createEventViewModel)
         {
-            if (!ModelState.IsValid)
+            if ((createEventViewModel.StartDate < DateTime.Now)
+                || (createEventViewModel.StartDate > createEventViewModel.EndDate))
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
-            var eventDto = _iMapper.Map<EventDto>(createEventViewModel);
-            var result = _eventService.CreateEvent(eventDto);
+            var eventDto = Mapper.Map<EventDto>(createEventViewModel);
+            var createdEvent = _eventService.CreateEvent(eventDto);
 
-            createEventViewModel = _iMapper.Map<CreateEventViewModel>(result);
+            createEventViewModel = Mapper.Map<CreateEventViewModel>(createdEvent);
 
-            if(createEventViewModel == null)
+            if (createEventViewModel == null)
             {
                 return BadRequest();
             }
@@ -67,17 +67,18 @@ namespace EventManager.Api.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] UpdateEventViewModel updateEventViewModel)
         {
-            if (updateEventViewModel.Id == 0 || !ModelState.IsValid)
+            var eventDto = Mapper.Map<EventDto>(updateEventViewModel);
+
+            var updatedEvent = _eventService.UpdateEvent(eventDto);
+            updateEventViewModel = Mapper.Map<UpdateEventViewModel>(updatedEvent);
+
+            if (updateEventViewModel == null)
             {
                 return BadRequest();
             }
 
-            var eventDto = _iMapper.Map<EventDto>(updateEventViewModel);
-
-            var result = _eventService.UpdateEvent(eventDto);
-            updateEventViewModel = _iMapper.Map<UpdateEventViewModel>(result);
-            
-            if(updateEventViewModel == null)
+            if ((updateEventViewModel.StartDate < DateTime.Now)
+             || (updateEventViewModel.StartDate > updateEventViewModel.EndDate))
             {
                 return BadRequest();
             }

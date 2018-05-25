@@ -1,12 +1,18 @@
 ﻿using EventManager.Api.ViewModels;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventManager.Api.Validators
 {
-    public class CreateEventValidator : AbstractValidator<CreateEventViewModel>
+    public class UpdateEventValidator : AbstractValidator<UpdateEventViewModel>
     {
-        public CreateEventValidator()
+        public UpdateEventValidator()
         {
+            RuleFor(@event => @event.Id)
+                .NotEmpty();
             RuleFor(@event => @event.OwnerId)
                 .NotEmpty();
             RuleFor(@event => @event.Name)

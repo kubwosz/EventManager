@@ -13,12 +13,10 @@ namespace EventManager.Domain.Services
     public class EventService : IEventService
     {
         private readonly EventManagerContext _context;
-        private readonly IMapper _iMapper;
 
-        public EventService(IMapper iMapper, EventManagerContext context)
+        public EventService(EventManagerContext context)
         {
             _context = context;
-            _iMapper = iMapper;
         }
 
         public EventDto CreateEvent(EventDto eventDto)
@@ -27,45 +25,39 @@ namespace EventManager.Domain.Services
             {
                 return null;
             }
-
-            if(DateTime.Compare(eventDto.StartDate, DateTime.Now) <= 0
-                || DateTime.Compare(eventDto.StartDate, eventDto.EndDate) >= 0)
-            {
-                return null;
-            }
              
-            var @event = _iMapper.Map<Event>(eventDto);
+            var @event = Mapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
             _context.SaveChanges();
 
-           eventDto = _iMapper.Map<EventDto>(@event);
+           eventDto = Mapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
         public EventDto UpdateEvent(EventDto eventDto)
         {
-            var @event = _iMapper.Map<Event>(eventDto);
+            var @event = Mapper.Map<Event>(eventDto);
 
             _context.Events.Update(@event);
             _context.SaveChanges();
 
-            eventDto = _iMapper.Map<EventDto>(@event);
+            eventDto = Mapper.Map<EventDto>(@event);
 
             return eventDto;
         }
 
-        public EventDto GetOne(int id)
+        public EventDto GetEventById(int id)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.SingleOrDefault(x => x.Id == id);
 
             if (@event == null)
             {
                 return null;
             }
 
-            EventDto eventDto = _iMapper.Map<EventDto>(@event);
+            EventDto eventDto = Mapper.Map<EventDto>(@event);
 
             return eventDto;
         }
@@ -77,7 +69,7 @@ namespace EventManager.Domain.Services
             if (events == null)
                 return null;
 
-            List<EventDto> eventDtoList = _iMapper.Map<List<EventDto>>(events);
+            List<EventDto> eventDtoList = Mapper.Map<List<EventDto>>(events);
 
             return eventDtoList;
         }

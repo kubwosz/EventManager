@@ -4,19 +4,16 @@ using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace EventManager.Domain.Services
 {
     public class LectureService : ILectureService
     {
         private readonly EventManagerContext _context;
-        private readonly IMapper _iMapper;
 
-        public LectureService(IMapper iMapper, EventManagerContext context)
+        public LectureService(EventManagerContext context)
         {
             _context = context;
-            _iMapper = iMapper;
         }
 
         public LectureDto AddLecture(LectureDto lectureDto)
@@ -25,19 +22,19 @@ namespace EventManager.Domain.Services
 
             if (@event == null)
                 return null;
-            if ( DateTime.Compare(lectureDto.StartDate, lectureDto.EndDate) >= 0
-                || DateTime.Compare(@event.StartDate, lectureDto.StartDate) > 0
-                || DateTime.Compare(@event.EndDate, lectureDto.StartDate) <= 0
-                || DateTime.Compare(@event.StartDate, lectureDto.EndDate) >= 0
-                || DateTime.Compare(@event.EndDate, lectureDto.EndDate) < 0)
+            if ( (lectureDto.StartDate >= lectureDto.EndDate)
+                || (@event.StartDate > lectureDto.StartDate)
+                || (@event.EndDate <= lectureDto.StartDate) 
+                || (@event.StartDate >= lectureDto.EndDate) 
+                || (@event.EndDate < lectureDto.EndDate))
                 return null;
 
-            var lecture = _iMapper.Map<Lecture>(lectureDto);
+            var lecture = Mapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Add(lecture);
             _context.SaveChanges();
 
-            lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = Mapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
@@ -49,40 +46,40 @@ namespace EventManager.Domain.Services
             if (lectures == null)
                 return null;
 
-            List<LectureDto> lectureDtoList = _iMapper.Map<List<LectureDto>>(lectures);
+            List<LectureDto> lectureDtoList = Mapper.Map<List<LectureDto>>(lectures);
 
             return lectureDtoList;
         }
 
-        public LectureDto GetOne(int id) //get by id
+        public LectureDto GetLectureById(int id) 
         {
-            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.SingleOrDefault(x => x.Id == id);
 
             if (lecture == null)
             {
                 return null;
             }
 
-            LectureDto lectureDto = _iMapper.Map<LectureDto>(lecture);
+            LectureDto lectureDto = Mapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
 
         public LectureDto UpdateLecture(LectureDto lectureDto)
         {
-            var lecture = _iMapper.Map<Lecture>(lectureDto);
+            var lecture = Mapper.Map<Lecture>(lectureDto);
 
             _context.Lectures.Update(lecture);
             _context.SaveChanges();
 
-            lectureDto = _iMapper.Map<LectureDto>(lecture);
+            lectureDto = Mapper.Map<LectureDto>(lecture);
 
             return lectureDto;
         }
       
         public bool Delete(int id)
         {
-            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.SingleOrDefault(x => x.Id == id);
 
             if (lecture == null)
                 return false;

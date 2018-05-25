@@ -36,7 +36,11 @@ namespace EventManager.Api
 
             services.AddCors();
 
-            services.AddAutoMapper(x=>x.AddProfile(new MappingsProfile()));
+            services.AddAutoMapper(x => {
+                x.AddProfile(new LectureProfile());
+                x.AddProfile(new EventProfile());
+                x.AddProfile(new ReviewProfile());
+            });
 
             services.AddTransient<IEventService, EventService>();
             services.AddTransient<ILectureService, LectureService>();
@@ -44,6 +48,7 @@ namespace EventManager.Api
 
             services.AddDbContext<EventManagerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +60,7 @@ namespace EventManager.Api
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowAnyOrigin()
-          );
+                );
         }
 
         public class ModelStateValidationFilter : Attribute, IActionFilter
