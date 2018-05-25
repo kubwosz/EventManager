@@ -32,12 +32,12 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _eventService.GetEventById(id);
+            var @event = _eventService.GetEventById(id);
 
-            if (result == null)
+            if (@event == null)
                 return BadRequest();
 
-            var mappedEvents = Mapper.Map<EventViewModel>(result);
+            var mappedEvents = Mapper.Map<EventViewModel>(@event);
 
             return Ok(mappedEvents);
         }
