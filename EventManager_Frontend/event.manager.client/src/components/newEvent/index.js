@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
+import { TimePicker } from 'antd';
+import 'antd/dist/antd.css';
 
 class NewEvent extends React.Component {
     constructor()
@@ -13,6 +15,8 @@ class NewEvent extends React.Component {
             name: '',
             startDate: '',
             endDate: '',
+            startTime: '',
+            endTime: '',
             participantNumber: null,
             description: '',
             focusedInput: null
@@ -36,13 +40,44 @@ class NewEvent extends React.Component {
         this.setState({endDate: event.target.value})
     }
 
+    onChangeDate = (startDate, endDate) =>{
+       // let startFormat = moment((this.state.startDate).datepicker("getDate")).format("YYYY-MM-DD");
+        let startFormat = moment(startDate).format("YYYY-MM-DD").toString();
+       // let endFormat = moment((this.state.endDate).datepicker("getDate")).format("YYYY-MM-DD");
+        let endFormat = moment(endDate).format("YYYY-MM-DD").toString();
+
+        console.log(startFormat + " " + endFormat);
+        if(moment(startFormat).isValid()){
+            this.setState({startDate: startFormat + "T"});
+        }
+
+        if( moment(endFormat).isValid()){
+            this.setState({endDate: endFormat+"T"});
+        }
+    }
+
+    onChangeStartTime = (event) =>{
+        this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
+    }
+
+    onChangeEndTime = (event) =>{
+        this.setState({endTime: moment(event).format("HH:mm:ss").toString()});
+    }
+
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
 
 
     addEvent = () => {
-        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
+        if( this.state.startTime==="" || this.state.startDate==="" || this.state.endTime===""|| this.state.endDate===""){
+            window.confirm("Należy wypełnić wszystkie pola!");
+        }
+
+        let startTmp = (moment(this.state.startDate).format("YYYY-MM-DD").toString() + "T" + this.state.startTime);
+        let endTmp =  (moment(this.state.endDate).format("YYYY-MM-DD").toString() + "T" + this.state.endTime);
+
+        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: startTmp, endDate: endTmp, description: this.state.description })
             .then(()=>{
                 window.confirm('Wydarzenie zostało utworzone poprawnie!');
             })
@@ -58,24 +93,18 @@ class NewEvent extends React.Component {
                     <h1>Dodawanie wydarzenia:</h1>
                     <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
                     <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeStartDate} value={moment(this.state.startDate).format("YYYY-MM-DD")} placeholder="Podaj datę startu" className="form-control"/>
-                    <input onChange={this.onChangeEndDate} value={moment(this.state.endDate).format("YYYY-MM-DD")} placeholder="Podaj endDate" className="form-control"/>
                     <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-
                     <DateRangePicker
-                        startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-                        endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-                        onDatesChange={({ startDate, endDate }) => this.setState(
-                            {
-                                startDate,
-                                endDate
-                            }
-                            )}
-                        focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
+                        focusedInput={this.state.focusedInput}
+                        onFocusChange={focusedInput => this.setState({ focusedInput })}
                     />
 <br/>
-
+                    <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
+                    <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
+                    <br/>
                     <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                 </div>
                 <div className="container-fluid">
