@@ -6,6 +6,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import { TimePicker } from 'antd';
 import 'antd/dist/antd.css';
+import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
 
 class NewEvent extends React.Component {
     constructor()
@@ -65,26 +66,67 @@ class NewEvent extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <h1>Dodawanie wydarzenia:</h1>
-                    <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-                    <DateRangePicker
-                        startDate={this.state.startDate}
-                        endDate={this.state.endDate}
-                        onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
-                        focusedInput={this.state.focusedInput}
-                        onFocusChange={focusedInput => this.setState({ focusedInput })}
-                    />
-<br/>
-                    <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
-                    <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
-                    <br/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
-                </div>
-                <div className="container-fluid">
-                </div>
+                <Form horizontal>
+                    <FormGroup>
+                        <Col sm={2}> </Col>
+                        <Col sm={9}>
+                            <PageHeader > Dodawanie wydarzenia:</PageHeader>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeName} defaultValue={this.state.name} placeholder={this.state.name}/>
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeParticipantNumber}
+                                         defaultValue={this.state.participantNumber === null ? "" : this.state.participantNumber}
+                                         placeholder={this.state.participantNumber}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Opis </Col>
+                        <Col sm={9}>
+                            <FormControl componentClass="textarea"
+                                         placeholder={this.state.description}
+                                         onBlur={this.onChangeDescription}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
+                        <Col sm={9}>
+                            <DateRangePicker
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
+                                focusedInput={this.state.focusedInput}
+                                onFocusChange={focusedInput => this.setState({ focusedInput })}
+                            />
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={2}></Col>
+                        <Col sm={4}>
+                            <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
+                        </Col>
+                        <Col sm={1}></Col>
+                    </FormGroup>
+                </Form>
             </div>
         );
     }
