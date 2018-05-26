@@ -12,6 +12,7 @@
     "react-bootstrap": "^0.32.1",
     "react-dates": "^16.7.0",
     "react-dom": "^16.4.0",
+    "react-numeric-input": "^2.2.3",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {

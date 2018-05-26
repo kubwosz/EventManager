@@ -7,6 +7,7 @@ import moment from 'moment';
 import { TimePicker } from 'antd';
 import 'antd/dist/antd.css';
 import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import NumericInput from 'react-numeric-input';
 
 class NewEvent extends React.Component {
     constructor()
@@ -26,12 +27,21 @@ class NewEvent extends React.Component {
 
 
     onChangeName = (event) =>{
-        this.setState({name: event.target.value})
+        this.setState({name: event.target.value});
+        console.log(this.state.name);
     }
 
     onChangeParticipantNumber = (event) =>{
         this.setState({participantNumber: event.target.value})
     }
+
+    // onChangeNumber = (e) => {
+    //     const re = /^[0-9\b]+$/;
+    //     if (e.target.value === '' || re.test(e.target.value)) {
+    //         this.setState({participantNumber: e.target.value})
+    //     }
+    //     console.log(this.state.participantNumber);
+    // }
 
     onChangeStartTime = (event) =>{
         this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
@@ -77,14 +87,18 @@ class NewEvent extends React.Component {
                     <FormGroup>
                         <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeName} defaultValue={this.state.name} placeholder={this.state.name}/>
+                            <FormControl onBlur={this.onChangeName}  placeholder={this.state.name}/>
                         </Col>
 
-                        <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeParticipantNumber}
-                                         defaultValue={this.state.participantNumber === null ? "" : this.state.participantNumber}
-                                         placeholder={this.state.participantNumber}
+                            <NumericInput
+                                className="form-control"
+                                value={ this.state.participantNumber }
+                                min={ 0 }
+                                max={ 100000 }
+                                step={ 1 }
+                                onBlur={this.onChangeParticipantNumber}
                             />
                         </Col>
 
@@ -98,12 +112,12 @@ class NewEvent extends React.Component {
 
                         <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
                         <Col sm={9}>
-                                <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                                <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('08:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
                         </Col>
 
                         <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
                         <Col sm={9}>
-                                <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                                <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('08:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
                         </Col>
 
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
@@ -122,7 +136,7 @@ class NewEvent extends React.Component {
                     <FormGroup>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
+                            <button type="button" onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
                         </Col>
                         <Col sm={1}></Col>
                     </FormGroup>
