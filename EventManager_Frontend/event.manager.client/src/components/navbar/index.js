@@ -1,6 +1,7 @@
 import React from 'react';
+import { Navbar, Nav, NavItem} from 'react-bootstrap';
 import { Navbar, Nav, NavItem, MenuItem, NavDropdown } from 'react-bootstrap';
-import './style.css';
+
 
 export default class HomeNavbar extends React.Component{
     render(){
