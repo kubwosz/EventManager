@@ -21,8 +21,8 @@ namespace EventManager.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _reviewService.GetAll();
-            var reviewViewModelList = Mapper.Map<List<ReviewViewModel>>(result);
+            var reviews = _reviewService.GetAll();
+            var reviewViewModelList = Mapper.Map<List<ReviewViewModel>>(reviews);
 
             return Ok(reviewViewModelList);
         }
@@ -31,12 +31,12 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _reviewService.GetReviewById(id);
+            var reviewDto = _reviewService.GetReviewById(id);
 
-            if (result == null)
+            if (reviewDto == null)
                 return BadRequest();
 
-            var reviewViewModel = Mapper.Map<ReviewViewModel>(result);
+            var reviewViewModel = Mapper.Map<ReviewViewModel>(reviewDto);
 
             return Ok(reviewViewModel);
         }
@@ -44,17 +44,12 @@ namespace EventManager.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateReviewViewModel createReviewViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var reviewDto = Mapper.Map<ReviewDto>(createReviewViewModel);
-            var result = _reviewService.CreateReview(reviewDto);
+            var createdReview = _reviewService.CreateReview(reviewDto);
 
-            createReviewViewModel = Mapper.Map<CreateReviewViewModel>(result);
+            createReviewViewModel = Mapper.Map<CreateReviewViewModel>(createdReview);
 
-            if(createReviewViewModel == null)
+            if (createReviewViewModel == null)
             {
                 return BadRequest();
             }
@@ -65,18 +60,18 @@ namespace EventManager.Api.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] UpdateReviewViewModel updateReviewViewModel)
         {
-            if (updateReviewViewModel.Id == 0 || !ModelState.IsValid)
+            if (updateReviewViewModel.Id == 0)
             {
                 return BadRequest();
             }
 
             var reviewDto = Mapper.Map<ReviewDto>(updateReviewViewModel);
 
-            var result = _reviewService.UpdateReview(reviewDto);
-         
-            updateReviewViewModel = Mapper.Map<UpdateReviewViewModel>(result);
+            var updatedReview = _reviewService.UpdateReview(reviewDto);
 
-            if(updateReviewViewModel == null)
+            updateReviewViewModel = Mapper.Map<UpdateReviewViewModel>(updatedReview);
+
+            if (updateReviewViewModel == null)
             {
                 return BadRequest();
             }

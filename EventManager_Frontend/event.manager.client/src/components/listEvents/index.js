@@ -7,6 +7,7 @@ import crossImage from '../data/cross.png';
 import pencilImage from '../data/pencil.png';
 import addImage from '../data/add.png';
 import {Image,Col,Row,Grid} from 'react-bootstrap';
+import ReactTooltip from 'react-tooltip';
 
 class ListEvents extends React.Component {
     constructor()
@@ -18,10 +19,7 @@ class ListEvents extends React.Component {
     }
 
     componentDidMount() {
-        this.getAllEvents('/event');
-        console.log('too');
-
-      //  console.log(this.state.event);
+            this.getAllEvents();
     }
 
     getAllEvents() {
@@ -62,6 +60,7 @@ class ListEvents extends React.Component {
                         <ListGroupItem header={event.name} href={"/ShowEvent/" + event.id}>
                             {event.description}
                             </ListGroupItem>
+
                     </Col>
                     <Col sm={12} md={2} style={{padding: "20px"}}>
                         <Image
@@ -69,21 +68,25 @@ class ListEvents extends React.Component {
                             src={crossImage}
                             height={25}
                             width={25}
-                           // style={styleImg.image}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
+                            data-tip="usuń wydarzenie"
                         />
+                        <ReactTooltip effect="solid" type="info" />
                         <Image
                             onClick = {() => {this.props.history.push("/EditEvent/" + event.id)}}
                             src={pencilImage}
                             height={25}
                             width={25}
-                            style={{ marginLeft: '20px'}}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
+                            data-tip="edytuj wydarzenie"
                         />
                         <Image
                             onClick = {() => {}}
                             src={addImage}
                             height={25}
                             width={25}
-                            style={{ marginLeft: '20px'}}
+                            style={{ marginLeft: '20px', cursor: 'pointer'}}
+                            data-tip="zapisz się na wydarzenie"
                         />
                     </Col>
                     <Col sm={12} md={2}>

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
@@ -25,7 +25,7 @@ namespace EventManager.Domain.Services
             {
                 return null;
             }
-            
+             
             var @event = Mapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
@@ -50,7 +50,7 @@ namespace EventManager.Domain.Services
 
         public EventDto GetEventById(int id)
         {
-            var @event = _context.Events.FirstOrDefault(x => x.Id == id);
+            var @event = _context.Events.SingleOrDefault(x => x.Id == id);
 
             if (@event == null)
             {

@@ -8,6 +8,8 @@ import { TimePicker } from 'antd';
 import 'antd/dist/antd.css';
 import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
 import NumericInput from 'react-numeric-input';
+import {addEvent} from '../../apiCalls/eventApiCall';
+
 
 class NewEvent extends React.Component {
     constructor()
@@ -53,24 +55,6 @@ class NewEvent extends React.Component {
 
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
-    }
-
-
-    addEvent = () => {
-        if( this.state.startTime==="" || this.state.startDate==="" || this.state.endTime===""|| this.state.endDate===""){
-            window.confirm("Należy wypełnić wszystkie pola!");
-        }
-
-        let startTmp = (moment(this.state.startDate).format("YYYY-MM-DD").toString() + "T" + this.state.startTime);
-        let endTmp =  (moment(this.state.endDate).format("YYYY-MM-DD").toString() + "T" + this.state.endTime);
-
-        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: startTmp, endDate: endTmp, description: this.state.description })
-            .then(()=>{
-                window.confirm('Wydarzenie zostało utworzone poprawnie!');
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
     }
 
     render() {
@@ -138,7 +122,7 @@ class NewEvent extends React.Component {
                     <FormGroup>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <button type="button" onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
+                            <button type="button" onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie!</button>
                         </Col>
                         <Col sm={1}></Col>
                     </FormGroup>

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using EventManager.Api.ViewModels;
 using EventManager.Domain.Dtos;
 using EventManager.Domain.IServices;
@@ -20,8 +20,8 @@ namespace EventManager.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _lectureService.GetAll();
-            var lectureViewModelList = Mapper.Map<List<LectureViewModel>>(result);
+            var lectures = _lectureService.GetAll();
+            var lectureViewModelList = Mapper.Map<List<LectureViewModel>>(lectures);
 
             return Ok(lectureViewModelList);
         }
@@ -30,12 +30,12 @@ namespace EventManager.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var result = _lectureService.GetLectureById(id);
+            var lecture = _lectureService.GetLectureById(id);
 
-            if (result == null)
+            if (lecture == null)
                 return BadRequest();
 
-            var lectureViewModel = Mapper.Map<LectureViewModel>(result);
+            var lectureViewModel = Mapper.Map<LectureViewModel>(lecture);
 
             return Ok(lectureViewModel);
         }
@@ -43,24 +43,19 @@ namespace EventManager.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateLectureViewModel createLectureViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            if (createLectureViewModel.StartDate.Ticks > createLectureViewModel.EndDate.Ticks )
+            if (createLectureViewModel.StartDate > createLectureViewModel.EndDate)
             {
                 BadRequest();
             }
 
             var lectureDto = Mapper.Map<LectureDto>(createLectureViewModel);
-            var result = _lectureService.AddLecture(lectureDto);
+            var createdLecture = _lectureService.AddLecture(lectureDto);
 
-            createLectureViewModel = Mapper.Map<CreateLectureViewModel>(result);
+            createLectureViewModel = Mapper.Map<CreateLectureViewModel>(createdLecture);
 
-            if(createLectureViewModel == null)
+            if (createLectureViewModel == null)
             {
-                BadRequest(); 
+                return BadRequest();
             }
 
             return Ok(createLectureViewModel);
@@ -69,22 +64,17 @@ namespace EventManager.Api.Controllers
         [HttpPut]
         public IActionResult Put([FromBody] UpdateLectureViewModel updateLectureViewModel)
         {
-            if (updateLectureViewModel.Id == 0 || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             var lectureDto = Mapper.Map<LectureDto>(updateLectureViewModel);
 
-            var result = _lectureService.UpdateLecture(lectureDto);
-            updateLectureViewModel = Mapper.Map<UpdateLectureViewModel>(result);
+            var updatedLecture = _lectureService.UpdateLecture(lectureDto);
+            updateLectureViewModel = Mapper.Map<UpdateLectureViewModel>(updatedLecture);
 
-            if(updateLectureViewModel == null)
+            if (updateLectureViewModel == null)
             {
                 return BadRequest();
             }
 
-            if (updateLectureViewModel.StartDate.Ticks > updateLectureViewModel.EndDate.Ticks)
+            if (updateLectureViewModel.StartDate > updateLectureViewModel.EndDate)
             {
                 BadRequest();
             }
@@ -92,7 +82,7 @@ namespace EventManager.Api.Controllers
             return Ok(updateLectureViewModel);
         }
 
-        [HttpDelete] 
+        [HttpDelete]
         [Route("{id}")]
         public IActionResult Delete(int id)
         {
