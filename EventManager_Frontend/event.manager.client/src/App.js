@@ -25,6 +25,7 @@ class App extends React.Component {
                       <Route exact path="/ShowEvents" component={ShowEvents}/>
                       <Route exact path="/ShowEvent/:id" component={ShowEvent}/>
                       <Route exact path="/EditEvent/:id" component={EditEvent}/>
+                      <Route exact path="/newReview/:id" component={NewReview}/>
                       <Route exact path="/*" component={PageNotFound}/>
                   </Switch>
           </Router>

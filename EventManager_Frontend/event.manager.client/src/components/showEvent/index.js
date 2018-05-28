@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import {withRouter, Link} from 'react-router-dom'
 import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader, Badge, Row
-, Grid, Table} from 'react-bootstrap';
+, Grid, Table, Button} from 'react-bootstrap';
 
 const pathEvent = '/event/';
 const pathLecture = '/lecture/';
@@ -54,15 +55,27 @@ class ShowEvent extends React.Component {
         this.getAllLectures();                
         if(this.state.lectures !== 0) {
             return this.state.lectures.map( (option) => (
-                <tr key={option.id}> <td>{option.name}</td> <td>{option.description}</td> <td>{option.startDate}</td> </tr>
+                <tr key={option.id}> <td>{option.name}</td> <td>{option.description}</td> <td>{this.parseDate(option.startDate)}</td> 
+                   <td width="10%"> <Link to={"/NewReview/" + option.id} style={{color: 'black'}}>
+                     <Button className="btn btn-primary center-block" > Zapisz </Button>
+                        </Link></td>
+                   <td width="10%"> <Button className="btn btn-primary center-block" > Oceń </Button>  </td>
+                   </tr>
             ));
         }
         else
         {
             return (
-                <option>" "</option>
+                <tr>" "</tr>
             );
         }
+    }
+
+    parseDate(date)
+    {
+        return (
+            moment(date).format("DD.MM.YYYY") + "  " + moment(date).format("HH:mm")
+        )
     }
 
     render() {
@@ -84,12 +97,12 @@ class ShowEvent extends React.Component {
 
                     <Row>                    
                     <Col componentClass={ControlLabel} sm={5}> Data rozpoczęcia </Col>
-                    <Col componentClass={Badge} sm={5}>{this.state.event.startDate} </Col>
+                    <Col componentClass={Badge} sm={5}>{this.parseDate(this.state.event.startDate)} </Col>
                     </Row>
 
                     <Row>
                     <Col componentClass={ControlLabel} sm={5}> Data zakończenia </Col>
-                    <Col componentClass={Badge} sm={5}>{this.state.event.endDate} </Col>
+                    <Col componentClass={Badge} sm={5}>{this.parseDate(this.state.event.endDate)} </Col>
                     </Row>
 
                     <Row>
@@ -101,7 +114,7 @@ class ShowEvent extends React.Component {
                     <br></br>
                     <Col sm={5}>
                     <Link to={"/NewLecture/" + this.state.eventID} style={{color: 'black'}}>
-                    <button type="button" className="btn btn-primary"> Dodaj wykład do wydarzenia </button>
+                    <Button className="btn btn-primary"> Dodaj wykład do wydarzenia </Button>
                     </Link>
                     </Col>
                     </Row>
@@ -110,9 +123,10 @@ class ShowEvent extends React.Component {
                 <Table>
                     <thead>
                         <tr>
-                        <th>Nazwa</th>
-                        <th>Opis</th>
-                        <th>Data rozpoczęcia</th>
+                        <th width="30%">Nazwa</th>
+                        <th width="40%">Opis</th>
+                        <th width="30%">Data rozpoczęcia</th>
+                        <th width="10%"></th>
                         </tr>
                     </thead>
                     <tbody>
