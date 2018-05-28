@@ -1,9 +1,17 @@
 import axios from "axios/index";
-import ShowEvents from "../components/newEvent";
+import moment from 'moment';
 
 export function addEvent(state){
-    axios.post('/event', {ownerId: 1, name: state.name, participantNumber: state.participantNumber, startDate: state.startDate, endDate: state.endDate, description: state.description })
+    if( state.startTime==="" || state.startDate==="" || state.endTime===""|| state.endDate===""){
+        window.confirm("Należy wypełnić wszystkie pola!");
+    }
+
+    let startTmp = (moment(state.startDate).format("YYYY-MM-DD").toString() + "T" + state.startTime);
+    let endTmp =  (moment(state.endDate).format("YYYY-MM-DD").toString() + "T" + state.endTime);
+
+    axios.post('/event', {ownerId: 1, name: state.name, participantNumber: state.participantNumber, startDate:startTmp, endDate: endTmp, description: state.description })
         .then(()=>{
+            window.confirm('Wydarzenie zostało utworzone poprawnie!');
         })
         .catch((err)=>{
             console.log(err);
