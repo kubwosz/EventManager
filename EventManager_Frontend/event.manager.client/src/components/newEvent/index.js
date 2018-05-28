@@ -112,12 +112,12 @@ class NewEvent extends React.Component {
 
                         <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
                         <Col sm={9}>
-                                <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('08:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                                <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('00:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
                         </Col>
 
                         <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
                         <Col sm={9}>
-                                <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('08:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
+                                <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('00:00', "HH:mm")} format={"HH:mm"} minuteStep={5} />
                         </Col>
 
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
@@ -125,6 +125,8 @@ class NewEvent extends React.Component {
                             <DateRangePicker
                                 startDate={this.state.startDate}
                                 endDate={this.state.endDate}
+                                endDatePlaceholderText={"Start"}
+                                startDatePlaceholderText={"Koniec"}
                                 onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
                                 focusedInput={this.state.focusedInput}
                                 onFocusChange={focusedInput => this.setState({ focusedInput })}
