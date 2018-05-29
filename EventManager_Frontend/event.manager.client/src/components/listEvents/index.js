@@ -39,7 +39,7 @@ class ListEvents extends React.Component {
     }
 
     deleteEvent = (eventId) => {
-        if (window.confirm('Na pewno chcesz usunąć konferencję?'))
+        if (window.confirm('Na pewno chcesz usunąć wydarzenie?'))
             axios.delete(`/event/${eventId}`)
                 .then(() => {
                     console.log("usunieto");
@@ -50,12 +50,16 @@ class ListEvents extends React.Component {
                 });
     }
 
+    signUpForEvent = () => {
+        window.confirm('Zostałeś zapisany na wydarzenie!');
+    }
+
 
     renderItem(event, index) {
         console.log('renderitem:');
         return (
-            <div className={style}>
-                <Row key={index} className="show-grid" style={{border: "2px ridge #000000", background: "#FFFFFF",padding: "10px"}}>
+            <div className={style} key={index} >
+                <Row className="show-grid" style={{border: "2px ridge #000000", background: "#FFFFFF",padding: "10px"}}>
                     <div style={{height:"50px"}}>
                     <Col sm={6} md={4}>
                         <ListGroupItem header={event.name} href={"/ShowEvent/" + event.id}>
@@ -82,7 +86,7 @@ class ListEvents extends React.Component {
                             data-tip="edytuj wydarzenie"
                         />
                         <Image
-                            onClick = {() => {}}
+                            onClick = {this.signUpForEvent}
                             src={addImage}
                             height={25}
                             width={25}

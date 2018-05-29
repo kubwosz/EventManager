@@ -1,7 +1,7 @@
 import axios from "axios/index";
 import moment from 'moment';
 
-export function addEvent(state){
+export function addEvent(state, props){
     if( state.startTime==="" || state.startDate==="" || state.endTime===""|| state.endDate===""){
         window.confirm("Należy wypełnić wszystkie pola!");
     }
@@ -11,25 +11,10 @@ export function addEvent(state){
 
     axios.post('/event', {firstName: state.userName, surname: state.userSurname, name: state.name, participantNumber: state.participantNumber, startDate:startTmp, endDate: endTmp, description: state.description })
         .then(()=>{
+            props.history.push("/ShowEvents");
             window.confirm('Wydarzenie zostało utworzone poprawnie!');
         })
         .catch((err)=>{
             console.log(err);
         });
 }
-
-// export async function getAllEvents() {
-//     let res = null;
-//     axios.get('/event')
-//         .then((response) => {
-//             console.log(response);
-//             res = response;
-//         })
-//         .catch(function (error) {
-//             console.log("err2");
-//             console.log(error);
-//             res = null;
-//         });
-//
-//     return res;
-// }
