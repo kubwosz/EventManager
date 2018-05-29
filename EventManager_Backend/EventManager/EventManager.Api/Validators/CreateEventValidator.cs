@@ -7,7 +7,9 @@ namespace EventManager.Api.Validators
     {
         public CreateEventValidator()
         {
-            RuleFor(@event => @event.OwnerId)
+            RuleFor(@event => @event.FirstName)
+                .NotEmpty();
+            RuleFor(@event => @event.Surname)
                 .NotEmpty();
             RuleFor(@event => @event.Name)
                 .NotNull()

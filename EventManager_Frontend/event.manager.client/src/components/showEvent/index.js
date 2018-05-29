@@ -4,6 +4,7 @@ import moment from 'moment';
 import {withRouter, Link} from 'react-router-dom'
 import {ControlLabel, Col, PageHeader, Badge, Row, Grid, Table, Button} from 'react-bootstrap';
 
+
 const pathEvent = '/event/';
 const pathLecture = '/lecture/';
 

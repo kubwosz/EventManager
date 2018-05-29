@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {ListGroup,ListGroupItem} from 'react-bootstrap';
+import {ListGroupItem} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import _ from 'lodash';
 import crossImage from '../data/cross.png';
