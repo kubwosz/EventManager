@@ -1,8 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-
+import {Link} from 'react-router-dom';
+import moment from 'moment';
+import { TimePicker } from 'antd';
+import {Row ,Button, Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import 'antd/dist/antd.css';
 
 class EditEvent extends React.Component {
     constructor(){
@@ -12,10 +17,13 @@ class EditEvent extends React.Component {
             eventName: '',
             eventStartDate: '',
             eventEndDate: '',
+            eventStartTime: '',
+            eventEndTime: '',
             eventParticipantNumber: null,
             eventDescription: ''
         };
     }
+
     componentDidMount() {
         this.getEvent();
     }
@@ -26,23 +34,30 @@ class EditEvent extends React.Component {
     }
     
     onChangeName = (event) =>{
-        this.setState({eventName: event.target.value})
+        if(event.target.value !== "")
+            this.setState({eventName: event.target.value});
     }
 
     onChangeParticipantNumber = (event) =>{
-        this.setState({eventParticipantNumber: event.target.value})
+        if(event.target.value !== "")
+            this.setState({eventParticipantNumber: event.target.value});
     }
 
     onChangeStartDate = (event) =>{
-        this.setState({eventStartDate: event.target.value})
+        window.confirm('onChangeStartDate');            
+        var startDay = moment(event.target.startDate).format("YYYY-MM-DD").toString();
+        this.setState({eventStartDate: startDay + "T" + moment(this.state.eventStartDate).format("HH:MM")}); 
     }
 
     onChangeEndDate = (event) =>{
-        this.setState({eventEndDate: event.target.value})
-    }
+        window.confirm('onChangeEndTime');
+        var endDay = moment(event.target.endDate).format("YYYY-MM-DD").toString();
+        this.setState({eventEndDate: endDay + "T" + moment(this.state.eventEndDate).format("HH:MM")});    
+    } 
 
     onChangeDescription = (event) =>{
-        this.setState({eventDescription: event.target.value})
+        if(event.target.value !== "")
+            this.setState({eventDescription: event.target.value})
     }
 
     editEvent = () => {
@@ -53,6 +68,18 @@ class EditEvent extends React.Component {
             .catch((err)=>{
                 console.log(err);
             });
+    }
+
+    onChangeStartTime = (event) =>{   
+        var startTime = moment(event).format("HH:mm:ss").toString();
+        this.setState({eventStartDate: moment(this.state.eventStartDate).format("YYYY-MM-DD").toString() 
+                        + "T" + startTime});
+    }
+
+    onChangeEndTime = (event) =>{      
+        var endTime = moment(event).format("HH:mm:ss").toString();
+        this.setState({eventEndDate: moment(this.state.eventEndDate).format("YYYY-MM-DD").toString() 
+                        + "T" + endTime});
     }
 
     getEvent() {
@@ -66,7 +93,6 @@ class EditEvent extends React.Component {
                     eventParticipantNumber: response.data.participantNumber,
                     eventDescription: response.data.description,
                 });
-
             })
             .catch(function (error) {
                 console.log(error);
@@ -75,20 +101,91 @@ class EditEvent extends React.Component {
 
     render() {
         return(
-            <div>
-                <h1> Edytuj wydarzenie</h1>
-                <div className="container">
-                    <input onChange={this.onChangeName} value={this.state.eventName} placeholder="Nazwa" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} value={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber } placeholder="Liczba uczestników" className="form-control"/>
-                    <input onChange={this.onChangeStartDate} value={this.state.eventStartDate} placeholder="Data rozpoczęcia" className="form-control"/>
-                    <input onChange={this.onChangeEndDate} value={this.state.eventEndDate} placeholder="Data zakończenia" className="form-control" />
-                    <input onChange={this.onChangeDescription} value={this.state.eventDescription} placeholder="Opis" className="form-control"/>
-                    <button onClick={this.editEvent}>Edytuj</button>
-                </div>
-                <div className="container">
-                    <Link to={"/NewLecture/" + this.state.eventID} style={{color: 'black'}} ><button >Dodaj wykład w ramach tego wydarzenia</button></Link>
-                </div>
-            </div>
+
+            this.state.eventStartDate && 
+            <Form horizontal>
+
+                <Row>
+                 <Col sm={2}> </Col>
+                 <Col sm={9}> 
+                 <PageHeader > Edytuj wydarzenie</PageHeader> 
+                 </Col>
+                </Row>
+
+                <Row>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeName}
+                             defaultValue={this.state.eventName} placeholder={this.state.eventName}/>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col sm={9}>
+                        <FormControl onBlur={this.onChangeParticipantNumber} 
+                        defaultValue={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber}
+                         placeholder={this.state.eventParticipantNumber} />
+                    </Col>
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Opis </Col>
+                        <Col sm={9}>
+                            <FormControl componentClass="textarea"
+                                defaultValue={this.state.eventDescription}
+                                placeholder={this.state.eventDescription}
+                                onBlur={this.onChangeDescription}
+                            />
+                        </Col> 
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
+                        <Col sm={9}>
+                            <TimePicker onChange={this.onChangeStartTime}
+                            placeholder={moment(this.state.eventStartDate).format("HH:mm").toString()} 
+                            format={"HH:mm"} 
+                            minuteStep={5} />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
+                        <Col sm={9}>
+                            <TimePicker onChange={this.onChangeEndTime} 
+                            format={"HH:mm"} 
+                            placeholder={moment(this.state.eventEndDate).format("HH:mm").toString()}
+                            minuteStep={5} />
+                        </Col> 
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
+                        <Col sm={9}>
+                            <DateRangePicker
+                                displayFormat="YYYY-MM-DD"
+                                startDate={moment(this.state.eventStartDate)}
+                                endDate={moment(this.state.eventEndDate)}
+                                onDatesChange={({startDate, endDate}) => 
+                                this.setState({eventStartDate: startDate, eventEndDate: endDate})}
+                                focusedInput={this.state.focusedInput}
+                                onFocusChange={focusedInput => this.setState({focusedInput})}
+                            />
+                        </Col>
+                    </Row>
+                </Row>
+
+                <Row>
+                    <br></br>
+                    <Col sm={2}></Col>
+                    <Button onClick={this.editEvent} className="btn btn-primary">Zapisz</Button>
+                    <Link to={"/NewLecture/" + this.state.eventID}>
+                        <Button className="btn btn-primary"> Dodaj wykład do wydarzenia </Button>
+                    </Link>
+                </Row>
+            </Form>
         );
     }
 }
