@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import {Button} from 'react-bootstrap';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import { TimePicker } from 'antd';
@@ -82,7 +83,7 @@ class NewEvent extends React.Component {
                     <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
                     <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
                     <br/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
+                    <Button onClick={this.addEvent} className="btn btn-info center-block">Dodaj wydarzenie!</Button>
                 </div>
                 <div className="container-fluid">
                 </div>

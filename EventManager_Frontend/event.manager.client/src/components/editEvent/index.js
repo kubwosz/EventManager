@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import { TimePicker } from 'antd';
-import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import {Row ,Button, Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import 'antd/dist/antd.css';
@@ -101,29 +101,37 @@ class EditEvent extends React.Component {
 
     render() {
         return(
+
+            this.state.eventStartDate && 
             <Form horizontal>
 
-                <FormGroup>
-                <Col sm={2}> </Col>
-                <Col sm={9}> 
-                <PageHeader > Edytuj wydarzenie</PageHeader> 
-                </Col>
-                </FormGroup>
+                <Row>
+                 <Col sm={2}> </Col>
+                 <Col sm={9}> 
+                 <PageHeader > Edytuj wydarzenie</PageHeader> 
+                 </Col>
+                </Row>
 
-                <FormGroup>
-                <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
-                <Col sm={9}>
-                <FormControl onBlur={this.onChangeName} defaultValue={this.state.eventName} placeholder={this.state.eventName}/>
-                </Col>
+                <Row>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeName}
+                             defaultValue={this.state.eventName} placeholder={this.state.eventName}/>
+                        </Col>
+                    </Row>
 
-                <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
-                <Col sm={9}>
-                <FormControl onBlur={this.onChangeParticipantNumber} 
-                defaultValue={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber}
-                placeholder={this.state.eventParticipantNumber} />
-                </Col>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col sm={9}>
+                        <FormControl onBlur={this.onChangeParticipantNumber} 
+                        defaultValue={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber}
+                         placeholder={this.state.eventParticipantNumber} />
+                    </Col>
+                    </Row>
 
-                <Col componentClass={ControlLabel} sm={2}> Opis </Col>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Opis </Col>
                         <Col sm={9}>
                             <FormControl componentClass="textarea"
                                 defaultValue={this.state.eventDescription}
@@ -131,46 +139,52 @@ class EditEvent extends React.Component {
                                 onBlur={this.onChangeDescription}
                             />
                         </Col> 
+                    </Row>
 
-               <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
                         <Col sm={9}>
                             <TimePicker onChange={this.onChangeStartTime}
                             placeholder={moment(this.state.eventStartDate).format("HH:mm").toString()} 
                             format={"HH:mm"} 
                             minuteStep={5} />
                         </Col>
-                <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
+                    </Row>
+
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
                         <Col sm={9}>
                             <TimePicker onChange={this.onChangeEndTime} 
                             format={"HH:mm"} 
                             placeholder={moment(this.state.eventEndDate).format("HH:mm").toString()}
                             minuteStep={5} />
                         </Col> 
+                    </Row>
 
-                <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
                                 displayFormat="YYYY-MM-DD"
                                 startDate={moment(this.state.eventStartDate)}
                                 endDate={moment(this.state.eventEndDate)}
-                                onDatesChange={({startDate, endDate}) => this.setState({startDate, endDate})}
+                                onDatesChange={({startDate, endDate}) => 
+                                this.setState({eventStartDate: startDate, eventEndDate: endDate})}
                                 focusedInput={this.state.focusedInput}
                                 onFocusChange={focusedInput => this.setState({focusedInput})}
                             />
                         </Col>
-                </FormGroup>
+                    </Row>
+                </Row>
 
-
-                <FormGroup>
-                    <Col sm={2}></Col>                    
-                    <Col sm={4}>
-                    <button type="button" onClick={this.editEvent} className="btn btn-primary">Edytuj</button>
-                    <Link to={"/NewLecture/" + this.state.eventID} style={{color: 'black'}}>
-                    <button type="button" className="btn btn-primary"> Dodaj wykład do wydarzenia </button>
+                <Row>
+                    <br></br>
+                    <Col sm={2}></Col>
+                    <Button onClick={this.editEvent} className="btn btn-primary">Zapisz</Button>
+                    <Link to={"/NewLecture/" + this.state.eventID}>
+                        <Button className="btn btn-primary"> Dodaj wykład do wydarzenia </Button>
                     </Link>
-                    </Col>
-                    <Col sm={1}></Col>                    
-                </FormGroup>
+                </Row>
             </Form>
         );
     }
