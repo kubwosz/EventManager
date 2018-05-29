@@ -105,7 +105,7 @@ class NewEvent extends React.Component {
                         <Col sm={9}>
                             <FormControl componentClass="textarea"
                                          onBlur={this.onChangeDescription}
-                                         placeholder="Podaj opis"
+                                       // placeholder="Podaj opis"
                             />
                         </Col>
                     </Row>
@@ -128,7 +128,9 @@ class NewEvent extends React.Component {
                                 startDateId = "1"
                                 endDateId = "1"
                                 startDate={this.state.startDate}
+                                startDateId="your_unique_start_date_id"
                                 endDate={this.state.endDate}
+                                endDateId="your_unique_end_date_id"
                                 endDatePlaceholderText={"Start"}
                                 startDatePlaceholderText={"Koniec"}
                                 onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
@@ -142,7 +144,7 @@ class NewEvent extends React.Component {
                         <br></br>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <Button onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie</Button>
+                            <Button onClick={() => addEvent(this.state, this.props)} className="btn btn-info">Dodaj wydarzenie</Button>
                         </Col>
                         <Col sm={1}></Col>
                     </Row>

@@ -117,7 +117,7 @@ class ShowEvent extends React.Component {
                     <Row>
                     <br></br>
                     <Col sm={5}>
-                    <Link to={"/NewLecture/" + this.state.eventID} style={{color: 'black'}}>
+                    <Link to={"/NewLecture/" + this.props.match.params.id} style={{color: 'black'}}>
                     <Button className="btn btn-primary"> Dodaj wykład do wydarzenia </Button>
                     </Link>
                     </Col>

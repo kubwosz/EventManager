@@ -5,6 +5,7 @@ import { DateRangePicker} from 'react-dates';
 import NumericInput from 'react-numeric-input';
 import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
 import { TimePicker } from 'antd';
+import moment from "moment/moment";
 
 class NewLecture extends React.Component {
     constructor()
@@ -12,8 +13,10 @@ class NewLecture extends React.Component {
         super();
         this.state = {
             name: '',
-            startdate: undefined,
+            startDate: undefined,
             endDate: undefined,
+            startTime: '',
+            endTime: '',
             participantNumber:null,
             description: '',
             eventId: null
@@ -34,20 +37,18 @@ class NewLecture extends React.Component {
         this.setState({participantNumber: event.target.value})
     }
 
-    onChangeStartDate = (event) =>{
-        this.setState({startDate: event.target.value})
+    onChangeStartTime = (event) =>{
+        this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
     }
 
-    onChangeEndDate = (event) =>{
-        this.setState({endDate: event.target.value})
+    onChangeEndTime = (event) =>{
+        this.setState({endTime: moment(event).format("HH:mm:ss").toString()});
     }
 
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
-    onChangeEventId = (event) =>{
-        this.setState({eventId: event.target.value})
-    }
+
 
     render() {
         return (
@@ -76,7 +77,7 @@ class NewLecture extends React.Component {
                     <Col componentClass={ControlLabel} sm={2}> Opis </Col>
                     <Col sm={9}>
                         <FormControl componentClass="textarea" onBlur={this.onChangeDescription}
-                                    value={this.state.description} placeholder="Podaj opis"/>
+                                     placeholder="Podaj opis"/>
                     </Col>
                 </Row>
                 <Row>
@@ -98,7 +99,9 @@ class NewLecture extends React.Component {
                                 startDateId = "1"
                                 endDateId = "1"
                                 startDate={this.state.startDate}
+                                startDateId="your_unique_start_date_id"
                                 endDate={this.state.endDate}
+                                endDateId="your_unique_end_date_id"
                                 endDatePlaceholderText={"Start"}
                                 startDatePlaceholderText={"Koniec"}
                                 onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
@@ -112,7 +115,7 @@ class NewLecture extends React.Component {
                     <Col sm={2}></Col>
                     <Col sm={4}>
                     <Link to={"/showEvent/" + this.state.eventId}>
-                    <Button onClick={() => addLecture(this.state)} className="btn btn-info">Dodaj wykład</Button>
+                    <Button onClick={() => addLecture(this.state,this.props)} className="btn btnprimary">Dodaj wykład</Button>
                     </Link>
                     </Col>
                     <Col sm={1}></Col>

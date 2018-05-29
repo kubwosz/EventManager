@@ -39,7 +39,7 @@ class ListEvents extends React.Component {
     }
 
     deleteEvent = (eventId) => {
-        if (window.confirm('Na pewno chcesz usunąć konferencję?'))
+        if (window.confirm('Na pewno chcesz usunąć wydarzenie?'))
             axios.delete(`/event/${eventId}`)
                 .then(() => {
                     console.log("usunieto");
@@ -48,6 +48,10 @@ class ListEvents extends React.Component {
                     console.log("errDelete");
                     console.log(err);
                 });
+    }
+
+    signUpForEvent = () => {
+        window.confirm('Zostałeś zapisany na wydarzenie!');
     }
 
 
@@ -81,7 +85,7 @@ class ListEvents extends React.Component {
                             data-tip="edytuj wydarzenie"
                         />
                         <Image
-                            onClick = {() => {}}
+                            onClick = {this.signUpForEvent}
                             src={addImage}
                             height={25}
                             width={25}
