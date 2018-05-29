@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import addLecture from '../../apiCalls/lectureApiCall';
 import { DateRangePicker} from 'react-dates';
 import NumericInput from 'react-numeric-input';
-import {Row ,Button, Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
 import { TimePicker } from 'antd';
 
 class NewLecture extends React.Component {
@@ -96,8 +96,6 @@ class NewLecture extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
-                                endDateId = "1"
-                                startDateId ="1"
                                 startDate={this.state.startDate}
                                 endDate={this.state.endDate}
                                 endDatePlaceholderText={"Start"}

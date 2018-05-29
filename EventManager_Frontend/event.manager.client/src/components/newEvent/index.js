@@ -1,9 +1,8 @@
 import "react-dates/initialize";
 import React from 'react';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader, Row} from 'react-bootstrap';
+import { DateRangePicker } from 'react-dates';
+import {Form, FormControl, ControlLabel, Col, PageHeader, Row} from 'react-bootstrap';
 import NumericInput from 'react-numeric-input';
 import {Button} from 'react-bootstrap';
 import 'react-dates/lib/css/_datepicker.css';
@@ -142,7 +141,7 @@ class NewEvent extends React.Component {
                         <br></br>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <button type="button" onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie</button>
+                            <Button onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie</Button>
                         </Col>
                         <Col sm={1}></Col>
                     </Row>

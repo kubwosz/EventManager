@@ -4,8 +4,8 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 import { TimePicker } from 'antd';
-import {Row ,Button, Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import 'antd/dist/antd.css';
 
@@ -165,6 +165,8 @@ class EditEvent extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
+                                startDateId = "1"
+                                endDateId = "1"
                                 displayFormat="YYYY-MM-DD"
                                 startDate={moment(this.state.eventStartDate)}
                                 endDate={moment(this.state.eventEndDate)}
