@@ -1,7 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom'
-//import addEvent from '../../ApiCalls/Event';
+import { withRouter } from 'react-router-dom';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment';
+import { TimePicker } from 'antd';
+import 'antd/dist/antd.css';
+import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import NumericInput from 'react-numeric-input';
+import {addEvent} from '../../apiCalls/eventApiCall';
+
 
 class NewEvent extends React.Component {
     constructor()
@@ -11,15 +19,20 @@ class NewEvent extends React.Component {
             name: '',
             startDate: '',
             endDate: '',
+            startTime: '',
+            endTime: '',
             participantNumber: null,
             description: '',
             userName: '',
             userSurname: ''
+            focusedInput: null
         };
     }
 
+
     onChangeName = (event) =>{
-        this.setState({name: event.target.value})
+        this.setState({name: event.target.value});
+        console.log(this.state.name);
     }
 
     onChangeUserName = (event) =>{
@@ -32,45 +45,99 @@ class NewEvent extends React.Component {
     onChangeParticipantNumber = (event) =>{
         this.setState({participantNumber: event.target.value})
     }
-    onChangeStartDate = (event) =>{
-        this.setState({startDate: event.target.value})
+
+    onChangeStartTime = (event) =>{
+        this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
     }
 
-    onChangeEndDate = (event) =>{
-        this.setState({endDate: event.target.value})
+    onChangeEndTime = (event) =>{
+        this.setState({endTime: moment(event).format("HH:mm:ss").toString()});
     }
 
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
-
-
-    addEvent = () => {
-        axios.post('/event', {firstName: this.state.userName, surname: this.state.userSurname, name: this.state.name, participantNumber: this.state.participantNumber, startDate: this.state.startDate, endDate: this.state.endDate, description: this.state.description })
-            .then(()=>{
-                window.confirm('Wydarzenie zostało utworzone poprawnie!');
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
-    }
-
+    
     render() {
         return (
             <div>
-                <div>
-                    <h1>Dodawanie wydarzenia:</h1>
-                    <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
-                    <input onChange={this.onChangeUserName} value={this.state.userName } placeholder="Podaj swoje imię" className="form-control"/>
-                    <input onChange={this.onChangeUserSurname} value={this.state.userSurname } placeholder="Podaj swoje nazwisko" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeStartDate} value={this.state.startDate} placeholder="Podaj datę startu" className="form-control"/>
-                    <input onChange={this.onChangeEndDate} value={this.state.endDate} placeholder="Podaj endDate" className="form-control"/>
-                    <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-                    <button onClick={this.addEvent} className="btn btn-info">Dodaj wydarzenie!</button>
-                </div>
-                <div className="container-fluid">
-                </div>
+                <Form horizontal>
+                    <FormGroup>
+                        <Col sm={2}> </Col>
+                        <Col sm={9}>
+                            <PageHeader > Dodawanie wydarzenia:</PageHeader>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeName}  placeholder={this.state.name}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Imię </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.name}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.name}/>
+                        </Col>
+
+                        <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col sm={9}>
+                            <NumericInput
+                                className="form-control"
+                                value={ this.state.participantNumber }
+                                min={ 0 }
+                                max={ 100000 }
+                                step={ 1 }
+                                onBlur={this.onChangeParticipantNumber}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Opis </Col>
+                        <Col sm={9}>
+                            <FormControl componentClass="textarea"
+                                         placeholder={this.state.description}
+                                         onBlur={this.onChangeDescription}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeStartTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeEndTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
+                        <Col sm={9}>
+                            <DateRangePicker
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                endDatePlaceholderText={"Start"}
+                                startDatePlaceholderText={"Koniec"}
+                                onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
+                                focusedInput={this.state.focusedInput}
+                                onFocusChange={focusedInput => this.setState({ focusedInput })}
+                            />
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={2}></Col>
+                        <Col sm={4}>
+                            <button type="button" onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie!</button>
+                        </Col>
+                        <Col sm={1}></Col>
+                    </FormGroup>
+                </Form>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
-import ShowEvents from '../listEvents';
-
+import ListEvents from '../listEvents';
 
 class Home extends React.Component {
     constructor() {
@@ -15,7 +14,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
-               <ShowEvents/>
+               <ListEvents/>
             </div>
         );
     }

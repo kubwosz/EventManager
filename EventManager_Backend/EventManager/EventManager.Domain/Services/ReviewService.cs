@@ -20,7 +20,7 @@ namespace EventManager.Domain.Services
 
         public ReviewDto CreateReview(ReviewDto reviewDto)
         {
-            if (!(_context.SimpleUsers.Any(x => x.Id == reviewDto.ReviewerId) && _context.Lectures.Any(x=> x.Id == reviewDto.LectureId)))
+            if (!(_context.SimpleUsers.Any(x => x.Id == reviewDto.ReviewerId) && _context.Lectures.Any(x => x.Id == reviewDto.LectureId)))
             {
                 return null;
             }
@@ -63,7 +63,7 @@ namespace EventManager.Domain.Services
         {
             var review = _context.Reviews.FirstOrDefault(x => x.Id == id);
 
-            if(review == null)
+            if (review == null)
             {
                 return null;
             }
@@ -77,14 +77,14 @@ namespace EventManager.Domain.Services
         {
             var review = _context.Reviews.SingleOrDefault(x => x.Id == id);
 
-            if(review == null)
+            if (review == null)
             {
                 return false;
             }
 
             _context.Reviews.Remove(review);
             var result = _context.SaveChanges();
-            
+
             return result > 0;
         }
     }
