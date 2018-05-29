@@ -57,9 +57,9 @@ class ShowEvent extends React.Component {
             return this.state.lectures.map( (option) => (
                 <tr key={option.id}> <td>{option.name}</td> <td>{option.description}</td> <td>{this.parseDate(option.startDate)}</td> 
                    <td width="10%"> <Link to={"/NewReview/" + option.id} style={{color: 'black'}}>
-                     <Button className="btn btn-primary center-block" > Zapisz </Button>
+                     <Button className="btn btn-primary center-block" > Oceń </Button>
                         </Link></td>
-                   <td width="10%"> <Button className="btn btn-primary center-block" > Oceń </Button>  </td>
+                   <td width="10%"> <Button className="btn btn-primary center-block" > Zapisz </Button>  </td>
                    </tr>
             ));
         }
