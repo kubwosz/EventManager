@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.5.3",
+    "antd": "^3.5.4",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "lodash": "^4.17.10",
@@ -26,5 +26,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:59674/api"
+  "proxy": "http://localhost:59731/api"
 }

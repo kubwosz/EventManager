@@ -6,6 +6,7 @@ import NewEvent from './components/newEvent';
 import ListEvents from './components/listEvents';
 import ShowEvent from './components/showEvent';
 import PageNotFound from './components/pageNotFound';
+import NewReview from './components/newReview';
 import {BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import EditEvent from './components/editEvent';
 import 'react-dates/initialize';
