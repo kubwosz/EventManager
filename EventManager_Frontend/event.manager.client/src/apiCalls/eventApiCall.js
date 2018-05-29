@@ -9,7 +9,7 @@ export function addEvent(state){
     let startTmp = (moment(state.startDate).format("YYYY-MM-DD").toString() + "T" + state.startTime);
     let endTmp =  (moment(state.endDate).format("YYYY-MM-DD").toString() + "T" + state.endTime);
 
-    axios.post('/event', {ownerId: 1, name: state.name, participantNumber: state.participantNumber, startDate:startTmp, endDate: endTmp, description: state.description })
+    axios.post('/event', {firstName: state.userName, surname: state.userSurname, name: state.name, participantNumber: state.participantNumber, startDate:startTmp, endDate: endTmp, description: state.description })
         .then(()=>{
             window.confirm('Wydarzenie zostało utworzone poprawnie!');
         })

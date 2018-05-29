@@ -24,7 +24,7 @@ class NewEvent extends React.Component {
             participantNumber: null,
             description: '',
             userName: '',
-            userSurname: ''
+            userSurname: '',
             focusedInput: null
         };
     }
@@ -77,12 +77,12 @@ class NewEvent extends React.Component {
           
           <Col componentClass={ControlLabel} sm={2}> Imię </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.name}/>
+                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.userName}/>
                         </Col>
           
           <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.name}/>
+                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.userSurname}/>
                         </Col>
 
                         <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
