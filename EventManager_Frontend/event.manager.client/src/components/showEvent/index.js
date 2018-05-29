@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import {ListGroup,ListGroupItem} from 'react-bootstrap';
 import {withRouter, Link} from 'react-router-dom'
-import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader, Badge, Row
-, Grid, Table, Button} from 'react-bootstrap';
+import {ControlLabel, Col, PageHeader, Badge, Row, Grid, Table, Button} from 'react-bootstrap';
 
 const pathEvent = '/event/';
 const pathLecture = '/lecture/';
@@ -26,7 +24,7 @@ class ShowEvent extends React.Component {
     getEvent() {
         axios.get(pathEvent + this.props.match.params.id)
             .then((response) => {
-                console.log(response);
+                console.log(response.data)
                 this.setState({
                     event: response.data
                 });
@@ -37,10 +35,9 @@ class ShowEvent extends React.Component {
             });
     }
 
-    getAllLectures() {
+    getLectures() {
         axios.get(pathLecture)
             .then((response) => {
-                console.log(response);
                 this.setState({
                     lectures: response.data,
                     total: response.data.length
@@ -51,16 +48,22 @@ class ShowEvent extends React.Component {
             });
     }
 
+    addUser() {
+        window.confirm("Zapisano na wydarzenie!");
+    }
+
     renderTable() {
-        this.getAllLectures();                
-        if(this.state.lectures !== 0) {
+        this.getLectures();                
+        if(this.state.event.lectures !== 0) {
             return this.state.lectures.map( (option) => (
-                <tr key={option.id}> <td>{option.name}</td> <td>{option.description}</td> <td>{this.parseDate(option.startDate)}</td> 
-                   <td width="10%"> <Link to={"/NewReview/" + option.id} style={{color: 'black'}}>
-                     <Button className="btn btn-primary center-block" > Oceń </Button>
+                <tr key={option.id}>
+                    <td>{option.name}</td><td>{option.description}</td>
+                    <td>{this.parseDate(option.startDate)}</td> 
+                    <td width="10%"><Link to={"/NewReview/" + option.id} style={{color: 'black'}}>
+                     <Button className="btn btn-primary center-block" >Oceń</Button>
                         </Link></td>
-                   <td width="10%"> <Button className="btn btn-primary center-block" > Zapisz </Button>  </td>
-                   </tr>
+                   <td width="10%"><Button onClick={this.addUser} className="btn btn-primary center-block" >Dołącz</Button></td>
+                </tr>
             ));
         }
         else

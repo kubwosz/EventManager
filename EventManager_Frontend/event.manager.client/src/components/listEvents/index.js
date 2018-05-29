@@ -8,6 +8,7 @@ import pencilImage from '../data/pencil.png';
 import addImage from '../data/add.png';
 import {Image,Col,Row,Grid} from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
+import {style} from './style.css';
 
 class ListEvents extends React.Component {
     constructor()
@@ -53,7 +54,7 @@ class ListEvents extends React.Component {
     renderItem(event, index) {
         console.log('renderitem:');
         return (
-            <div>
+            <div className={style}>
                 <Row key={index} className="show-grid" style={{border: "2px ridge #000000", background: "#FFFFFF",padding: "10px"}}>
                     <div style={{height:"50px"}}>
                     <Col sm={6} md={4}>
