@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
-import addEvent from '../../apiCalls/reviewApiCall';
 
 class NewReview extends React.Component {
     constructor()
@@ -47,6 +46,7 @@ class NewReview extends React.Component {
     }
 
     render() {
+        console.log(this.props.match.params.id);
         return (
             <div>
                 <div>

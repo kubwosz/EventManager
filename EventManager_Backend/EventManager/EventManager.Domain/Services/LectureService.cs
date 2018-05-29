@@ -4,7 +4,6 @@ using EventManager.Domain.IServices;
 using EventManager.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace EventManager.Domain.Services
 {
@@ -23,10 +22,11 @@ namespace EventManager.Domain.Services
 
             if (@event == null)
                 return null;
-            if ( (@event.StartDate.Ticks > lectureDto.StartDate.Ticks) 
-                ||(@event.EndDate.Ticks < lectureDto.StartDate.Ticks) 
-                || (@event.StartDate.Ticks > lectureDto.EndDate.Ticks) 
-                || (@event.EndDate.Ticks < lectureDto.EndDate.Ticks))
+            if ( (lectureDto.StartDate >= lectureDto.EndDate)
+                || (@event.StartDate > lectureDto.StartDate)
+                || (@event.EndDate <= lectureDto.StartDate) 
+                || (@event.StartDate >= lectureDto.EndDate) 
+                || (@event.EndDate < lectureDto.EndDate))
                 return null;
 
             var lecture = Mapper.Map<Lecture>(lectureDto);
@@ -51,24 +51,16 @@ namespace EventManager.Domain.Services
             return lectureDtoList;
         }
 
-        public LectureDto GetLectureById(int id)
+        public LectureDto GetLectureById(int id) 
         {
-            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.SingleOrDefault(x => x.Id == id);
 
             if (lecture == null)
             {
                 return null;
             }
 
-            var @event = _context.Events.SingleOrDefault(x => x.Id == lecture.EventId);
-
             LectureDto lectureDto = Mapper.Map<LectureDto>(lecture);
-
-            if ((@event.StartDate.Ticks <= lecture.StartDate.Ticks)
-                || (@event.EndDate.Ticks >= lecture.StartDate.Ticks)
-                || (@event.StartDate.Ticks < lecture.EndDate.Ticks)
-                || (@event.EndDate.Ticks >= lecture.EndDate.Ticks))
-                return null;
 
             return lectureDto;
         }
@@ -87,7 +79,7 @@ namespace EventManager.Domain.Services
       
         public bool Delete(int id)
         {
-            var lecture = _context.Lectures.FirstOrDefault(x => x.Id == id);
+            var lecture = _context.Lectures.SingleOrDefault(x => x.Id == id);
 
             if (lecture == null)
                 return false;

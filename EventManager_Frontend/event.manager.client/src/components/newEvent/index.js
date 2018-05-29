@@ -9,6 +9,7 @@ import moment from 'moment';
 import { TimePicker } from 'antd';
 import 'antd/dist/antd.css';
 
+
 class NewEvent extends React.Component {
     constructor()
     {
@@ -27,9 +28,17 @@ class NewEvent extends React.Component {
 
 
     onChangeName = (event) =>{
-        this.setState({name: event.target.value})
+        this.setState({name: event.target.value});
+        console.log(this.state.name);
     }
 
+    onChangeUserName = (event) =>{
+        this.setState({userName: event.target.value})
+    }
+
+    onChangeUserSurname = (event) =>{
+        this.setState({userSurname: event.target.value})
+    }
     onChangeParticipantNumber = (event) =>{
         this.setState({participantNumber: event.target.value})
     }
@@ -45,48 +54,87 @@ class NewEvent extends React.Component {
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
-
-
-    addEvent = () => {
-        if( this.state.startTime==="" || this.state.startDate==="" || this.state.endTime===""|| this.state.endDate===""){
-            window.confirm("Należy wypełnić wszystkie pola!");
-        }
-
-        let startTmp = (moment(this.state.startDate).format("YYYY-MM-DD").toString() + "T" + this.state.startTime);
-        let endTmp =  (moment(this.state.endDate).format("YYYY-MM-DD").toString() + "T" + this.state.endTime);
-
-        axios.post('/event', {ownerId: 1, name: this.state.name, participantNumber: this.state.participantNumber, startDate: startTmp, endDate: endTmp, description: this.state.description })
-            .then(()=>{
-                window.confirm('Wydarzenie zostało utworzone poprawnie!');
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
-    }
-
+    
     render() {
         return (
             <div>
-                <div>
-                    <h1>Dodawanie wydarzenia:</h1>
-                    <input onChange={this.onChangeName} value={this.state.name} placeholder="Podaj nazwę konferencji" className="form-control"/>
-                    <input onChange={this.onChangeParticipantNumber} value={this.state.participantNumber === null ? "" : this.state.participantNumber } placeholder="Podaj liczbę uczestników" className="form-control"/>
-                    <input onChange={this.onChangeDescription} value={this.state.description} placeholder="Podaj opis" className="form-control"/>
-                    <DateRangePicker
-                        startDate={this.state.startDate}
-                        endDate={this.state.endDate}
-                        onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
-                        focusedInput={this.state.focusedInput}
-                        onFocusChange={focusedInput => this.setState({ focusedInput })}
-                    />
-<br/>
-                    <TimePicker onChange={this.onChangeStartTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
-                    <TimePicker onChange={this.onChangeEndTime} defaultValue={moment('12:08', "HH:mm")} format={"HH:mm"} />
-                    <br/>
-                    <Button onClick={this.addEvent} className="btn btn-info center-block">Dodaj wydarzenie!</Button>
-                </div>
-                <div className="container-fluid">
-                </div>
+                <Form horizontal>
+                    <FormGroup>
+                        <Col sm={2}> </Col>
+                        <Col sm={9}>
+                            <PageHeader > Dodawanie wydarzenia:</PageHeader>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeName}  placeholder={this.state.name}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Imię </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.userName}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.userSurname}/>
+                        </Col>
+
+                        <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
+                        <Col sm={9}>
+                            <NumericInput
+                                className="form-control"
+                                value={ this.state.participantNumber }
+                                min={ 0 }
+                                max={ 100000 }
+                                step={ 1 }
+                                onBlur={this.onChangeParticipantNumber}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Opis </Col>
+                        <Col sm={9}>
+                            <FormControl componentClass="textarea"
+                                         placeholder={this.state.description}
+                                         onBlur={this.onChangeDescription}
+                            />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeStartTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
+                        <Col sm={9}>
+                                <TimePicker onChange={this.onChangeEndTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
+                        </Col>
+
+                        <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
+                        <Col sm={9}>
+                            <DateRangePicker
+                                startDate={this.state.startDate}
+                                endDate={this.state.endDate}
+                                endDatePlaceholderText={"Start"}
+                                startDatePlaceholderText={"Koniec"}
+                                onDatesChange={({ startDate, endDate }) => this.setState({startDate, endDate})}
+                                focusedInput={this.state.focusedInput}
+                                onFocusChange={focusedInput => this.setState({ focusedInput })}
+                            />
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={2}></Col>
+                        <Col sm={4}>
+                            <button type="button" onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie!</button>
+                        </Col>
+                        <Col sm={1}></Col>
+                    </FormGroup>
+                </Form>
             </div>
         );
     }
