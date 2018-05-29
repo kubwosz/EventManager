@@ -104,7 +104,6 @@ class NewEvent extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Opis </Col>
                         <Col sm={9}>
                             <FormControl componentClass="textarea"
-                                         placeholder={this.state.description}
                                          onBlur={this.onChangeDescription}
                                        // placeholder="Podaj opis"
                             />
@@ -126,6 +125,8 @@ class NewEvent extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
+                                startDateId = "1"
+                                endDateId = "1"
                                 startDate={this.state.startDate}
                                 startDateId="your_unique_start_date_id"
                                 endDate={this.state.endDate}

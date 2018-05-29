@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import addLecture from '../../apiCalls/lectureApiCall';
 import { DateRangePicker} from 'react-dates';
 import NumericInput from 'react-numeric-input';
@@ -28,7 +28,6 @@ class NewLecture extends React.Component {
                     eventId: this.props.match.params.id,
                 });
     }
-
 
     onChangeName = (event) =>{
         this.setState({name: event.target.value})
@@ -97,6 +96,8 @@ class NewLecture extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
+                                startDateId = "1"
+                                endDateId = "1"
                                 startDate={this.state.startDate}
                                 startDateId="your_unique_start_date_id"
                                 endDate={this.state.endDate}
@@ -113,7 +114,9 @@ class NewLecture extends React.Component {
                     <br></br>
                     <Col sm={2}></Col>
                     <Col sm={4}>
-                    <Button className="btn btn-primary" onClick={() => addLecture(this.state,this.props)}>Dodaj wykład</Button>
+                    <Link to={"/showEvent/" + this.state.eventId}>
+                    <Button onClick={() => addLecture(this.state,this.props)} className="btn btnprimary">Dodaj wykład</Button>
+                    </Link>
                     </Col>
                     <Col sm={1}></Col>
                 </Row>
