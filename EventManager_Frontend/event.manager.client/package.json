@@ -26,5 +26,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:61685/api"
+  "proxy": "http://localhost:59674/api"
 }
