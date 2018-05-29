@@ -3,11 +3,14 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import NumericInput from 'react-numeric-input';
 import {Button} from 'react-bootstrap';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
 import { TimePicker } from 'antd';
 import 'antd/dist/antd.css';
+import {addEvent} from '../../apiCalls/eventApiCall';
 
 
 class NewEvent extends React.Component {
