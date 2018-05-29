@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import addLecture from '../../apiCalls/lectureApiCall';
 import { DateRangePicker} from 'react-dates';
 import NumericInput from 'react-numeric-input';
@@ -12,8 +12,8 @@ class NewLecture extends React.Component {
         super();
         this.state = {
             name: '',
-            startdate: '',
-            endDate: '',
+            startdate: undefined,
+            endDate: undefined,
             participantNumber:null,
             description: '',
             eventId: null
@@ -26,7 +26,6 @@ class NewLecture extends React.Component {
                 });
     }
 
-
     onChangeName = (event) =>{
         this.setState({name: event.target.value})
     }
@@ -36,7 +35,7 @@ class NewLecture extends React.Component {
     }
 
     onChangeStartDate = (event) =>{
-        this.setState({startdate: event.target.value})
+        this.setState({startDate: event.target.value})
     }
 
     onChangeEndDate = (event) =>{
@@ -96,6 +95,8 @@ class NewLecture extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
+                                startDateId = "1"
+                                endDateId = "1"
                                 startDate={this.state.startDate}
                                 endDate={this.state.endDate}
                                 endDatePlaceholderText={"Start"}
@@ -110,7 +111,9 @@ class NewLecture extends React.Component {
                     <br></br>
                     <Col sm={2}></Col>
                     <Col sm={4}>
-                    <Button className="btn btn-primary" onClick={() => addLecture(this.state)} className="btn btn-info">Dodaj wykład</Button>
+                    <Link to={"/showEvent/" + this.state.eventId}>
+                    <Button onClick={() => addLecture(this.state)} className="btn btn-info">Dodaj wykład</Button>
+                    </Link>
                     </Col>
                     <Col sm={1}></Col>
                 </Row>
