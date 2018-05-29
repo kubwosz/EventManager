@@ -4,7 +4,10 @@ namespace EventManager.Api.ViewModels
 {
     public class CreateEventViewModel
     {
-        public int OwnerId { get; set; }
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string Surname { get; set; }
 
         public string Name { get; set; }
 

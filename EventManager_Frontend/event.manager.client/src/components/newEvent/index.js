@@ -23,6 +23,8 @@ class NewEvent extends React.Component {
             endTime: '',
             participantNumber: null,
             description: '',
+            userName: '',
+            userSurname: ''
             focusedInput: null
         };
     }
@@ -33,17 +35,16 @@ class NewEvent extends React.Component {
         console.log(this.state.name);
     }
 
+    onChangeUserName = (event) =>{
+        this.setState({userName: event.target.value})
+    }
+
+    onChangeUserSurname = (event) =>{
+        this.setState({userSurname: event.target.value})
+    }
     onChangeParticipantNumber = (event) =>{
         this.setState({participantNumber: event.target.value})
     }
-
-    // onChangeNumber = (e) => {
-    //     const re = /^[0-9\b]+$/;
-    //     if (e.target.value === '' || re.test(e.target.value)) {
-    //         this.setState({participantNumber: e.target.value})
-    //     }
-    //     console.log(this.state.participantNumber);
-    // }
 
     onChangeStartTime = (event) =>{
         this.setState({startTime: moment(event).format("HH:mm:ss").toString()});
@@ -56,7 +57,7 @@ class NewEvent extends React.Component {
     onChangeDescription = (event) =>{
         this.setState({description: event.target.value})
     }
-
+    
     render() {
         return (
             <div>
@@ -72,6 +73,16 @@ class NewEvent extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
                         <Col sm={9}>
                             <FormControl onBlur={this.onChangeName}  placeholder={this.state.name}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Imię </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.name}/>
+                        </Col>
+          
+          <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
+                        <Col sm={9}>
+                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.name}/>
                         </Col>
 
                         <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
