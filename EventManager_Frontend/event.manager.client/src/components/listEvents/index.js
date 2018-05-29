@@ -52,9 +52,8 @@ class ListEvents extends React.Component {
 
 
     renderItem(event, index) {
-        console.log('renderitem:');
         return (
-            <div className={style}>
+            <Row className={style} key={index}>
                 <Row key={index} className="show-grid" style={{border: "2px ridge #000000", background: "#FFFFFF",padding: "10px"}}>
                     <div style={{height:"50px"}}>
                     <Col sm={6} md={4}>
@@ -95,7 +94,7 @@ class ListEvents extends React.Component {
                     </Col>
                     </div>
                 </Row>
-            </div>
+            </Row>
         )
     }
 
@@ -103,11 +102,10 @@ class ListEvents extends React.Component {
         const events = _.map(this.state.events, (event, k) => {
             return this.renderItem(event, k);
         });
-
         return (
         <Grid>
-        {events}
-    </Grid>
+         {events}
+        </Grid>
         );
     }
 }

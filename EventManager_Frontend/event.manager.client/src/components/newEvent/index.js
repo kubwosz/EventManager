@@ -1,9 +1,8 @@
 import "react-dates/initialize";
 import React from 'react';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import {Form, FormGroup, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import { DateRangePicker } from 'react-dates';
+import {Form, FormControl, ControlLabel, Col, PageHeader, Row} from 'react-bootstrap';
 import NumericInput from 'react-numeric-input';
 import {Button} from 'react-bootstrap';
 import 'react-dates/lib/css/_datepicker.css';
@@ -19,8 +18,8 @@ class NewEvent extends React.Component {
         super();
         this.state = {
             name: '',
-            startDate: '',
-            endDate: '',
+            startDate: undefined,
+            endDate: undefined,
             startTime: '',
             endTime: '',
             participantNumber: null,
@@ -60,31 +59,34 @@ class NewEvent extends React.Component {
     
     render() {
         return (
-            <div>
+            <Row>
                 <Form horizontal>
-                    <FormGroup>
+                    <Row>
                         <Col sm={2}> </Col>
                         <Col sm={9}>
-                            <PageHeader > Dodawanie wydarzenia:</PageHeader>
+                            <PageHeader > Dodawanie wydarzenia </PageHeader>
                         </Col>
-                    </FormGroup>
+                    </Row>
 
-                    <FormGroup>
+                    <Row>
                         <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeName}  placeholder={this.state.name}/>
+                            <FormControl onBlur={this.onChangeName}  placeholder="Podaj nazwę wydarzenia"/>
                         </Col>
-          
-          <Col componentClass={ControlLabel} sm={2}> Imię </Col>
+                    </Row>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Imię </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeUserName}  placeholder={this.state.userName}/>
+                            <FormControl onBlur={this.onChangeUserName}  placeholder="Podaj imię"/>
                         </Col>
-          
-          <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
+                    </Row>
+                    <Row>
+                        <Col componentClass={ControlLabel} sm={2}> Nazwisko </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeUserSurname}  placeholder={this.state.userSurname}/>
+                            <FormControl onBlur={this.onChangeUserSurname}  placeholder="Podaj nazwisko"/>
                         </Col>
-
+                    </Row>
+                    <Row>
                         <Col  componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
                         <Col sm={9}>
                             <NumericInput
@@ -94,30 +96,37 @@ class NewEvent extends React.Component {
                                 max={ 100000 }
                                 step={ 1 }
                                 onBlur={this.onChangeParticipantNumber}
+                                placeholder="Podaj liczbę uczestników"
                             />
                         </Col>
-
+                    </Row>
+                    <Row>
                         <Col componentClass={ControlLabel} sm={2}> Opis </Col>
                         <Col sm={9}>
                             <FormControl componentClass="textarea"
-                                         placeholder={this.state.description}
                                          onBlur={this.onChangeDescription}
+                                         placeholder="Podaj opis"
                             />
                         </Col>
-
+                    </Row>
+                    <Row>
                         <Col componentClass={ControlLabel} sm={2}> Czas rozpoczęcia  </Col>
                         <Col sm={9}>
                                 <TimePicker onChange={this.onChangeStartTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
                         </Col>
-
+                    </Row>
+                    <Row>                    
                         <Col componentClass={ControlLabel} sm={2}> Czas zakończenia </Col>
                         <Col sm={9}>
                                 <TimePicker onChange={this.onChangeEndTime} placeholder={"HH:MM"} format={"HH:mm"} minuteStep={5} />
                         </Col>
-
+                    </Row>
+                    <Row>
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
+                                startDateId = "1"
+                                endDateId = "1"
                                 startDate={this.state.startDate}
                                 endDate={this.state.endDate}
                                 endDatePlaceholderText={"Start"}
@@ -127,18 +136,18 @@ class NewEvent extends React.Component {
                                 onFocusChange={focusedInput => this.setState({ focusedInput })}
                             />
                         </Col>
+                    </Row>
 
-                    </FormGroup>
-
-                    <FormGroup>
+                    <Row>
+                        <br></br>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <button type="button" onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie!</button>
+                            <Button onClick={() => addEvent(this.state)} className="btn btn-info">Dodaj wydarzenie</Button>
                         </Col>
                         <Col sm={1}></Col>
-                    </FormGroup>
+                    </Row>
                 </Form>
-            </div>
+            </Row>
         );
     }
 }
