@@ -39,16 +39,27 @@ class ShowEvent extends React.Component {
 
     renderTable() {               
         if(this.state.event.lectures !== 0 && this.state.event.lectures !== undefined) {
-            return this.state.event.lectures.map( (option) => (
-                <tr key={option.id}>
-                    <td>{option.name}</td><td>{option.description}</td>
-                    <td>{this.parseDate(option.startDate)}</td> 
-                    <td width="10%"><Link to={"/NewReview/" + option.id}>
-                     <Button className="btn btn-primary center-block" >Oceń</Button>
+            if(this.state.event.lectures.length !== 0) {
+                return this.state.event.lectures.map((option) => (
+                    <tr key={option.id}>
+                        <td>{option.name}</td>
+                        <td>{option.description}</td>
+                        <td>{this.parseDate(option.startDate)}</td>
+                        <td width="10%"><Link to={"/NewReview/" + option.id}>
+                            <Button className="btn btn-primary center-block">Oceń</Button>
                         </Link></td>
-                   <td width="10%"><Button onClick={this.addUser} className="btn btn-primary center-block" >Dołącz</Button></td>
+                        <td width="10%"><Button onClick={this.addUser}
+                                                className="btn btn-primary center-block">Dołącz</Button></td>
+                    </tr>
+                ));
+            }
+            else{
+                return <tr>
+                    <td></td>
+                    <td>To wydarzenie nia posiada wykładów</td>
+                    <td></td>
                 </tr>
-            ));
+            }
         }
     }
 
@@ -111,7 +122,7 @@ class ShowEvent extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderTable()}
+                        {this.renderTable()===null ? "To wydarzenie nia posiada wykładów" : this.renderTable() }
                     </tbody>
                 </Table>
                 </Col>
