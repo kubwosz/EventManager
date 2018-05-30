@@ -71,7 +71,7 @@ class NewEvent extends React.Component {
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
                         <Col sm={9}>
-                            <FormControl onBlur={this.onChangeName}  placeholder="Podaj nazwę wydarzenia"/>
+                            <FormControl onBlur={this.onChangeName}  placeholder="Podaj nazwę"/>
                         </Col>
                     </Row>
                     <Row>
@@ -105,7 +105,7 @@ class NewEvent extends React.Component {
                         <Col sm={9}>
                             <FormControl componentClass="textarea"
                                          onBlur={this.onChangeDescription}
-                                       // placeholder="Podaj opis"
+                                         placeholder="Podaj opis"
                             />
                         </Col>
                     </Row>
@@ -142,7 +142,7 @@ class NewEvent extends React.Component {
                         <br></br>
                         <Col sm={2}></Col>
                         <Col sm={4}>
-                            <Button onClick={() => addEvent(this.state, this.props)} className="btn btn-info">Dodaj wydarzenie</Button>
+                            <Button onClick={() => addEvent(this.state, this.props)} className="btn btn-primary">Dodaj wydarzenie</Button>
                         </Col>
                         <Col sm={1}></Col>
                     </Row>

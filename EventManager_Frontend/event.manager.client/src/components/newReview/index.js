@@ -71,7 +71,7 @@ class NewReview extends React.Component {
                     <Col componentClass={ControlLabel} sm={2}> Ocena (1-10): </Col>
                     <Col sm={9}>
                         <NumericInput className="form-control" onBlur={this.onChangeRate} 
-                        placeholder="Podaj ocene w skali 1-10" step={ 1 } max={10} min={0}/>
+                        placeholder="Podaj ocene" step={ 1 } max={10} min={0}/>
                     </Col>
                 </Row>
                 <Row>
@@ -85,7 +85,7 @@ class NewReview extends React.Component {
                     <br></br>
                     <Col sm={2}></Col>
                     <Col sm={4}>
-                    <Button onClick={this.addReview} className="btn btn-info">Dodaj opinie</Button>
+                    <Button onClick={this.addReview} className="btn btn-primary">Dodaj</Button>
                     </Col>
                     <Col sm={1}></Col>
                 </Row>

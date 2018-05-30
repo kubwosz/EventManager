@@ -8,6 +8,7 @@ import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader} from 'rea
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import 'antd/dist/antd.css';
+import NumericInput from 'react-numeric-input';
 
 class EditEvent extends React.Component {
     constructor(){
@@ -124,8 +125,8 @@ class EditEvent extends React.Component {
                     <Row>
                         <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
                         <Col sm={9}>
-                        <FormControl onBlur={this.onChangeParticipantNumber} 
-                        defaultValue={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber}
+                        <NumericInput className="form-control" onBlur={this.onChangeParticipantNumber} min={ 0 }
+                         defaultValue={this.state.eventParticipantNumber === null ? "" : this.state.eventParticipantNumber}
                          placeholder={this.state.eventParticipantNumber} />
                     </Col>
                     </Row>
