@@ -3,9 +3,12 @@ import { withRouter, Link } from 'react-router-dom';
 import addLecture from '../../apiCalls/lectureApiCall';
 import { DateRangePicker} from 'react-dates';
 import NumericInput from 'react-numeric-input';
-import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader} from 'react-bootstrap';
+import {Row ,Button, Form, FormControl, ControlLabel, Col, PageHeader,Label} from 'react-bootstrap';
 import { TimePicker } from 'antd';
 import moment from "moment/moment";
+import axios from "axios/index";
+const pathEvent = '/event/';
+
 
 class NewLecture extends React.Component {
     constructor()
@@ -19,14 +22,35 @@ class NewLecture extends React.Component {
             endTime: '',
             participantNumber:null,
             description: '',
-            eventId: null
+            eventId: null,
+            eventStartTime: '',
+            eventEndTime:'',
+            eventName: ''
         };
     }
 
     componentDidMount() {
+        this.getEvent();
+
         this.setState({
             eventId: this.props.match.params.id,
         });
+    }
+
+    getEvent() {
+        axios.get(pathEvent + this.props.match.params.id)
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    eventStartTime: response.data.startDate,
+                    eventEndTime: response.data.endDate,
+                    eventName: response.data.name
+                });
+            })
+            .catch(function (error) {
+                console.log("err2");
+                console.log(error);
+            });
     }
 
     onChangeName = (event) =>{
@@ -55,9 +79,30 @@ class NewLecture extends React.Component {
             <Form horizontal>
                 <Row>
                     <Col sm={2}> </Col>
-                    <Col sm={9}> 
+                    <Col sm={9}>
                         <PageHeader>Dodawanie wykładu</PageHeader>
+                        <Row>
+                            <h4>Informacje o wydarzeniu:</h4>
+                        </Row>
+                        <Row>
+                            <h4>
+                                <Label > Nazwa </Label> {this.state.eventName}
+                            </h4>
+                        </Row>
+                        <Row>
+                            <h4>
+                                <Label > Czas rozpoczęcia </Label> {moment(this.state.eventStartTime).format("DD-MM-YYYY")}
+                            </h4>
+                        </Row>
+                        <Row>
+                            <h4>
+                                <Label > Czas zakończenia </Label> {moment(this.state.eventEndTime).format("DD-MM-YYYY")}
+                            </h4>
+                        </Row>
                     </Col>
+                </Row>
+                <Row>
+
                 </Row>
                 <Row>
                     <Col componentClass={ControlLabel} sm={2}> Nazwa </Col>
@@ -68,7 +113,7 @@ class NewLecture extends React.Component {
                 <Row>
                     <Col componentClass={ControlLabel} sm={2}> Liczba uczestników </Col>
                     <Col sm={9}>
-                        <NumericInput className="form-control" onBlur={this.onChangeParticipantNumber} 
+                        <NumericInput className="form-control" onBlur={this.onChangeParticipantNumber}
                         placeholder="Podaj liczbę uczestników" step={ 1 }
                         value={this.state.participantNumber===null ? "" : this.state.participantNumber} />
                     </Col>
