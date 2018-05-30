@@ -41,6 +41,7 @@ class NewReview extends React.Component {
     addReview = () => {
         axios.post('/review', {nickname: this.state.nickname, rate: this.state.rate, comment: this.state.comment, lectureId: this.state.lectureId, reviewerId: this.state.reviewerId})
             .then(()=>{
+                window.confirm("Dodano recenzję!");
             })
             .catch((err)=>{
                 console.log(err);
@@ -70,8 +71,14 @@ class NewReview extends React.Component {
                 <Row>
                     <Col componentClass={ControlLabel} sm={2}> Ocena (1-10): </Col>
                     <Col sm={9}>
-                        <NumericInput className="form-control" onBlur={this.onChangeRate} 
-                        placeholder="Podaj ocene" step={ 1 } max={10} min={0}/>
+                        <NumericInput className="form-control"
+                                      onBlur={this.onChangeRate}
+                                      value={ this.state.rate }
+                                      placeholder="Podaj ocene"
+                                      step={ 1 }
+                                      min={0}
+                                      max={10}
+                        />
                     </Col>
                 </Row>
                 <Row>

@@ -43,6 +43,7 @@ class ListEvents extends React.Component {
             axios.delete(`/event/${eventId}`)
                 .then(() => {
                     console.log("usunieto");
+                    this.getAllEvents();
                 })
                 .catch(err => {
                     console.log("errDelete");
