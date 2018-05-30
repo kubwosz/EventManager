@@ -38,6 +38,7 @@ class ListEvents extends React.Component {
             });
     }
 
+
     deleteEvent = (eventId) => {
         if (window.confirm('Na pewno chcesz usunąć wydarzenie?'))
             axios.delete(`/event/${eventId}`)

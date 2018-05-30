@@ -98,10 +98,14 @@ class ShowEvent extends React.Component {
                     </Row>
 
                     <Row>
-                    <Col componentClass={ControlLabel} sm={5}> Opis </Col>
-                    <Col componentClass={Badge} sm={5}>{this.state.event.description} </Col>
+                    <Col componentClass={ControlLabel} sm={10}> Opis </Col>
                     </Row>
 
+                    <Row>
+                            <div style={{background:"gray",borderRadius:"15px",padding:"10px",color:"white"}}>
+                                {this.state.event.description}
+                            </div>
+                    </Row>
                     <Row>
                     <br></br>
                     <Col sm={5}>
