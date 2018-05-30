@@ -5,8 +5,7 @@ using EventManager.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-
-
+using Microsoft.EntityFrameworkCore;
 
 namespace EventManager.Domain.Services
 {
@@ -22,17 +21,17 @@ namespace EventManager.Domain.Services
         public EventDto CreateEvent(EventDto eventDto)
         {
 
-            if (!_context.SimpleUsers.Any(x=>x.Id == eventDto.OwnerId))
+            if (!_context.SimpleUsers.Any(x => x.Id == eventDto.OwnerId))
             {
                 return null;
             }
-             
+
             var @event = Mapper.Map<Event>(eventDto);
 
             _context.Events.Add(@event);
             _context.SaveChanges();
 
-           eventDto = Mapper.Map<EventDto>(@event);
+            eventDto = Mapper.Map<EventDto>(@event);
 
             return eventDto;
         }
@@ -40,7 +39,7 @@ namespace EventManager.Domain.Services
         public SimpleUserDto CreateSimpleUser(SimpleUserDto simpleUserDto)
         {
             var simpleUser = _context.SimpleUsers.SingleOrDefault(x => (x.FirstName == simpleUserDto.FirstName && x.Surname == simpleUserDto.Surname));
-            if (simpleUser !=null)
+            if (simpleUser != null)
             {
                 simpleUserDto.Id = simpleUser.Id;
                 simpleUserDto.FirstName = simpleUser.FirstName;
@@ -79,7 +78,8 @@ namespace EventManager.Domain.Services
 
         public EventDto GetEventById(int id)
         {
-            var @event = _context.Events.SingleOrDefault(x => x.Id == id);
+            var @event = _context.Events.Include(b => b.Lectures)
+                         .SingleOrDefault(x => x.Id == id);
 
             if (@event == null)
             {
@@ -114,7 +114,7 @@ namespace EventManager.Domain.Services
 
             _context.Events.Remove(@event);
             var result = _context.SaveChanges();
-            
+
             return result > 0;
         }
     }
