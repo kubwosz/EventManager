@@ -51,7 +51,7 @@ class ListEvents extends React.Component {
     }
 
     signUpForEvent = () => {
-        window.confirm('Zostałeś zapisany na wydarzenie!');
+        window.confirm('Zostałeś(-aś) zapisany na wydarzenie!');
     }
 
 

@@ -24,9 +24,9 @@ class NewLecture extends React.Component {
     }
 
     componentDidMount() {
-                this.setState({
-                    eventId: this.props.match.params.id,
-                });
+        this.setState({
+            eventId: this.props.match.params.id,
+        });
     }
 
     onChangeName = (event) =>{
@@ -96,8 +96,6 @@ class NewLecture extends React.Component {
                         <Col componentClass={ControlLabel} sm={2}> Data rozpoczęcia oraz zakończenia </Col>
                         <Col sm={9}>
                             <DateRangePicker
-                                startDateId = "1"
-                                endDateId = "1"
                                 startDate={this.state.startDate}
                                 startDateId="your_unique_start_date_id"
                                 endDate={this.state.endDate}
@@ -115,7 +113,7 @@ class NewLecture extends React.Component {
                     <Col sm={2}></Col>
                     <Col sm={4}>
                     <Link to={"/showEvent/" + this.state.eventId}>
-                    <Button onClick={() => addLecture(this.state,this.props)} className="btn btnprimary">Dodaj wykład</Button>
+                    <Button onClick={() => addLecture(this.state,this.props)} className="btn btn-primary">Dodaj wykład</Button>
                     </Link>
                     </Col>
                     <Col sm={1}></Col>
