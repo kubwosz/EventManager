@@ -42,11 +42,15 @@ ___
 
 ### Some screens from the application
 
-##### Event details page
+#### Event details page
 ![alt text](https://github.com/kubwosz/EventManager/blob/images/images/event_details.png)
 
-##### Events to show page
+___
+
+#### Events to show page
 ![alt text](https://github.com/kubwosz/EventManager/blob/images/images/events.png)
 
-##### New event page
+___
+
+#### New event page
 ![alt text](https://github.com/kubwosz/EventManager/blob/images/images/new_event.png)
